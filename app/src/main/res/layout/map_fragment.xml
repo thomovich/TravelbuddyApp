@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MapFragment">
+
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RelativeLayout
+        android:background="@color/teal_700"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mapView"
+        android:layout_marginTop="-90dp"
+        android:id="@+id/relative2">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:text="see more"
+            android:textColor="@color/teal_700"
+            android:backgroundTint="@color/black"
+            android:id="@+id/seemorebutton"
+            >
+
+        </Button>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/seemorebutton"
+            android:layout_centerHorizontal="true"
+            android:text="Here is where you can do stuff">
+
+        </TextView>
+    </RelativeLayout>
+
+</RelativeLayout>
