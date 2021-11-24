@@ -8,35 +8,18 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <RelativeLayout
-        android:background="@color/teal_700"
-        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/mapView"
-        android:layout_marginTop="-90dp"
-        android:id="@+id/relative2">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:text="see more"
-            android:textColor="@color/teal_700"
-            android:backgroundTint="@color/black"
-            android:id="@+id/seemorebutton"
-            >
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp" />
 
-        </Button>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@id/seemorebutton"
-            android:layout_centerHorizontal="true"
-            android:text="Here is where you can do stuff">
-
-        </TextView>
-    </RelativeLayout>
+    <Button
+        android:id="@+id/buttonFetch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:text="Button" />
 
 </RelativeLayout>
