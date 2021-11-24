@@ -42,15 +42,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        previewView = findViewById(R.id.cameraview);
+        previewView = findViewById(R.id.previewview);
         qrCodeFoundButton = findViewById(R.id.qrcodefound);
         qrCodeFoundButton.setVisibility(View.INVISIBLE);
-        qrCodeFoundButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), qrCode, Toast.LENGTH_SHORT).show();
-                Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
-            }
+        qrCodeFoundButton.setOnClickListener(view -> {
+            Toast.makeText(getApplicationContext(), qrCode, Toast.LENGTH_SHORT).show();
+            Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
         });
 
         cameraProviderFuture = ProcessCameraProvider.getInstance(this);
@@ -104,6 +101,8 @@ public class MainActivity extends AppCompatActivity {
 
         preview.setSurfaceProvider(previewView.createSurfaceProvider());
 
+        Camera camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview);
+
         ImageAnalysis imageAnalysis =
                 new ImageAnalysis.Builder()
                         .setTargetResolution(new Size(1280, 720))
@@ -123,6 +122,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }));
 
-        Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner)this, cameraSelector, preview);
+
     }
 }

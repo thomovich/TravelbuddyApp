@@ -21,6 +21,10 @@ import java.nio.ByteBuffer;
 
 public class QRCodeImageAnalyzer implements ImageAnalysis.Analyzer {
     private  QRCodeFoundListener listener;
+
+    public QRCodeImageAnalyzer(QRCodeFoundListener listener){
+        this.listener = listener;
+    }
     @Override
     public void analyze(@NonNull ImageProxy image) {
 
@@ -51,7 +55,5 @@ public class QRCodeImageAnalyzer implements ImageAnalysis.Analyzer {
     }
 
 
-    public QRCodeImageAnalyzer(QRCodeFoundListener listener){
-        this.listener = listener;
-    }
+
 }
