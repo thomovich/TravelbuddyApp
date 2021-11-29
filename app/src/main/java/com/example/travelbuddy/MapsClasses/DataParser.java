@@ -49,15 +49,33 @@ public class DataParser {
     }
     private List<HashMap<String, String>> getItems(JSONArray array){
         int count = array.length();
-        List<HashMap<String, String>> itemMap = null;
+        List<HashMap<String, String>> itemList = null;
+        HashMap<String, String> itemMap;
 
         for(int i = 0; i<count; i++){
             try {
-                placeMap = getItems((JSONObject) array.get(i));
+                itemMap = getItems((JSONObject) array.get(i));
+                itemList.add(itemMap);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+        return itemList;
     }
+
+    public List<HashMap<String, String>> parse(String jsonData){
+        JSONArray jsonArray = null;
+        JSONObject jsonObject;
+
+        try {
+            jsonObject = new JSONObject(jsonData);
+            jsonArray = jsonObject.getJSONArray("results");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return getItems(jsonArray);
+    }
+
+
 }
