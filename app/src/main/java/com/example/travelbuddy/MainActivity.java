@@ -1,39 +1,34 @@
 package com.example.travelbuddy;
 
-import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.Camera;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageAnalysis;
-import androidx.camera.core.Preview;
-import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.LifecycleOwner;
-
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
+import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Size;
-import android.view.View;
+
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.google.common.util.concurrent.ListenableFuture;
 
-import java.util.concurrent.ExecutionException;
+import com.google.zxing.Result;
 
-import tools.QRCodeFoundListener;
-import tools.QRCodeImageAnalyzer;
 
-public class MainActivity extends AppCompatActivity {
 
-    private PreviewView previewView;
-    private ListenableFuture<ProcessCameraProvider> cameraProviderFuture;
-    private static final int PERMISSION_REQUEST_CAMERA = 0;
-    private Button qrCodeFoundButton;
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
+
+public class MainActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
+
+    private ZXingScannerView scannerView;
+    private static final int REQUEST_CAMERA = 1;
+    private static int cam = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private Button scanbutton;
+    int currentapiversion = Build.VERSION.SDK_INT;
     private String qrCode;
 
 
@@ -42,86 +37,102 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        previewView = findViewById(R.id.previewview);
-        qrCodeFoundButton = findViewById(R.id.qrcodefound);
-        qrCodeFoundButton.setVisibility(View.INVISIBLE);
-        qrCodeFoundButton.setOnClickListener(view -> {
-            Toast.makeText(getApplicationContext(), qrCode, Toast.LENGTH_SHORT).show();
-            Log.i(MainActivity.class.getSimpleName(), "QR Code Found: " + qrCode);
-        });
+        scannerView = new ZXingScannerView(this);
+        setContentView(scannerView);
 
-        cameraProviderFuture = ProcessCameraProvider.getInstance(this);
 
-        requestcamera();
+        if(currentapiversion>= Build.VERSION_CODES.M){
+            if(checkPermission()){
+                Toast.makeText(this,"Permission granted", Toast.LENGTH_SHORT);
+            } else {
+                requestpermission();
+            }
+        }
+        scannerView = findViewById(R.id.scannerview);
+        //scanbutton = findViewById(R.id.scanbtn);
+        //scanbutton.setOnClickListener(view -> {
+
+        //});
+
+
     }
 
-    private void requestcamera() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            startCamera();
-        } else {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
-            } else {
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, PERMISSION_REQUEST_CAMERA);
+    private boolean checkPermission(){
+        return(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
+
+    }
+
+    private void requestpermission(){
+        ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onRequestPermissionResult(int requestcode, String permission[], int[] grantResult){
+        switch(requestcode){
+            case REQUEST_CAMERA:
+                if(grantResult.length > 0){
+                    boolean cameraAccept = grantResult[0] == PackageManager.PERMISSION_GRANTED;
+                    if(cameraAccept){
+                        Toast.makeText(this, "Tilladelse givet", Toast.LENGTH_SHORT).show();
+                    } else{
+                        Toast.makeText(this, "Giv tilladelse for at bruge app", Toast.LENGTH_SHORT).show();
+                        requestpermission();
+                    }
+                }
+                break;
+        }
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int currentapiversion = Build.VERSION.SDK_INT;
+        if(currentapiversion >= Build.VERSION_CODES.M){
+            if(checkPermission()){
+                if(scannerView == null){
+                    scannerView = new ZXingScannerView(this);
+                    setContentView(scannerView);
+                }
+                scannerView.setResultHandler(this);
+                scannerView.startCamera();
             }
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == PERMISSION_REQUEST_CAMERA) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startCamera();
-            } else {
-                Toast.makeText(this, "Camera Permission Denied", Toast.LENGTH_SHORT).show();
-            }
-        }
+    protected void onDestroy() {
+        super.onDestroy();
+        scannerView.stopCamera();
+        scannerView = null;
     }
 
-    private void startCamera() {
-        cameraProviderFuture.addListener(() -> {
-            try {
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-                bindCameraPreview(cameraProvider);
-            } catch (ExecutionException | InterruptedException e) {
-                Toast.makeText(this, "Error starting camera " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        }, ContextCompat.getMainExecutor(this));
-    }
+    @Override
+    public void handleResult(Result result) {
+        final String rawresult = result.getText();
 
-    private void bindCameraPreview(@NonNull ProcessCameraProvider cameraProvider) {
-        previewView.setPreferredImplementationMode(PreviewView.ImplementationMode.SURFACE_VIEW);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("scan result");
 
-        Preview preview = new Preview.Builder()
-                .build();
+        builder.setPositiveButton(
+                "ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        scannerView.resumeCameraPreview(MainActivity.this);
+                    }
+                }
+        );
 
-        CameraSelector cameraSelector = new CameraSelector.Builder()
-                .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                .build();
-
-        preview.setSurfaceProvider(previewView.createSurfaceProvider());
-
-        Camera camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview);
-
-        ImageAnalysis imageAnalysis =
-                new ImageAnalysis.Builder()
-                        .setTargetResolution(new Size(1280, 720))
-                        .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
-                        .build();
-
-        imageAnalysis.setAnalyzer(ContextCompat.getMainExecutor(this), new QRCodeImageAnalyzer(new QRCodeFoundListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
-            public void onQRCOdeFound(String _qrCode) {
-                qrCode = _qrCode;
-                qrCodeFoundButton.setVisibility(View.VISIBLE);
+            public void onClick(DialogInterface dialogInterface, int i) {
+                onDestroy();
             }
+        });
 
-            @Override
-            public void qrcodenotfound() {
-                qrCodeFoundButton.setVisibility(View.INVISIBLE);
-            }
-        }));
-
-
+        builder.setMessage(result.getText());
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 }
