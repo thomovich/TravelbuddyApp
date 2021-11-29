@@ -1,4 +1,4 @@
-package com.example.travelbuddy;
+package com.example.travelbuddy.View;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -11,6 +11,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.travelbuddy.ViewModels.MapViewModel;
+import com.example.travelbuddy.R;
 
 public class MapFragment extends Fragment {
 

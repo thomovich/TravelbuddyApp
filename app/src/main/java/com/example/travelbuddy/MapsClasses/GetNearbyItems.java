@@ -3,6 +3,8 @@ package com.example.travelbuddy.MapsClasses;
 import android.os.AsyncTask;
 import android.telephony.CarrierConfigManager;
 
+import com.example.travelbuddy.Main.MainActivity;
+import com.example.travelbuddy.Reposity.DatabaseConnector;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,6 +14,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,6 +26,10 @@ public class GetNearbyItems extends AsyncTask<Object, String, String> {
     String url;
     @Override
     protected String doInBackground(Object... objects) {
+
+
+        DatabaseConnector dbConnector = new DatabaseConnector();
+        //Connection connection =
 
         map = (GoogleMap) objects[0];
         url =(String) objects[1];
