@@ -1,4 +1,4 @@
-package com.example.travelbuddy;
+package com.example.travelbuddy.Main;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 
+import com.example.travelbuddy.R;
 import com.google.zxing.Result;
 
 
