@@ -44,7 +44,7 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
                 requestpermission();
             }
         }
-        scannerView = findViewById(R.id.scannerview);
+
 
 
     }
