@@ -6,22 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".Main.MainActivity">
 
-    <me.dm7.barcodescanner.zxing.ZXingScannerView
-        android:id="@+id/scannerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-    </me.dm7.barcodescanner.zxing.ZXingScannerView>
 
     <Button
         android:id="@+id/scanbtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="QR code found"
-        app:layout_constraintBottom_toBottomOf="@+id/scannerview"
-        >
+        app:layout_constraintTop_toTopOf="parent">
 
     </Button>
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
