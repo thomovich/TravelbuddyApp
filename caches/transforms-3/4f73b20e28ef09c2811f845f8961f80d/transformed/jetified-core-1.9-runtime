@@ -1,0 +1,13 @@
+me.dm7.barcodescanner.core.BarcodeScannerView
+me.dm7.barcodescanner.core.BuildConfig
+me.dm7.barcodescanner.core.CameraHandlerThread
+me.dm7.barcodescanner.core.CameraHandlerThread$1
+me.dm7.barcodescanner.core.CameraHandlerThread$1$1
+me.dm7.barcodescanner.core.CameraPreview
+me.dm7.barcodescanner.core.CameraPreview$1
+me.dm7.barcodescanner.core.CameraPreview$2
+me.dm7.barcodescanner.core.CameraUtils
+me.dm7.barcodescanner.core.CameraWrapper
+me.dm7.barcodescanner.core.DisplayUtils
+me.dm7.barcodescanner.core.IViewFinder
+me.dm7.barcodescanner.core.ViewFinderView

@@ -1,0 +1,4 @@
+me.dm7.barcodescanner.zxing.BuildConfig
+me.dm7.barcodescanner.zxing.ZXingScannerView
+me.dm7.barcodescanner.zxing.ZXingScannerView$1
+me.dm7.barcodescanner.zxing.ZXingScannerView$ResultHandler

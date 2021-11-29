@@ -1,0 +1,8 @@
+me.dm7.barcodescanner.zxing
+attr shouldScaleToFill
+color viewfinder_border
+color viewfinder_laser
+color viewfinder_mask
+integer viewfinder_border_length
+integer viewfinder_border_width
+styleable BarcodeScannerView shouldScaleToFill
