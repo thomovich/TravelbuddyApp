@@ -29,7 +29,7 @@ android {
 
 dependencies {
 
-    //qr implementation
+   //qr implementation
     implementation 'com.google.zxing:core:3.4.1'
     implementation 'com.journeyapps:zxing-android-embedded:3.2.0@aar'
     implementation 'me.dm7.barcodescanner:zxing:1.9'
@@ -44,4 +44,5 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
 }
