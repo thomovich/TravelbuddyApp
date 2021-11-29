@@ -3,6 +3,7 @@
     package="com.example.travelbuddy">
 
     <uses-feature android:name="android.hardware.camera.any" />
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -12,6 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Travelbuddy">
+        <activity
+            android:name=".Main.QRActivity"
+            android:exported="true" />
         <activity
             android:name=".Main.MainActivity"
             android:exported="true">
