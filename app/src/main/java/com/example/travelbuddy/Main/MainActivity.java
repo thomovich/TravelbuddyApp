@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity{
         scanbutton = findViewById(R.id.scanbtn);
 
         scanbutton.setOnClickListener(view ->{
-            Intent intent = new Intent(MainActivity.this,QRActivity.class);
+            Intent intent = new Intent(MainActivity.this,QRscanactivity.class);
             startActivity(intent);
         });
 
