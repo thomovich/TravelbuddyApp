@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.travelbuddy.R;
+import com.example.travelbuddy.Reposity.GetDataFromDb;
+import com.example.travelbuddy.Reposity.dblookups;
 import com.example.travelbuddy.ViewModels.MainActivityViewModel;
 import com.example.travelbuddy.ViewModels.SharedViewModel;
 import com.google.zxing.Result;
@@ -86,7 +88,9 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
     }
 
     private boolean Checkindb(String qrcode) {
-        return true;
+        dblookups dbl = new GetDataFromDb();
+        boolean check = dbl.checkqr(qrcode);
+        return check;
     }
 
     private boolean checkPermission(){
