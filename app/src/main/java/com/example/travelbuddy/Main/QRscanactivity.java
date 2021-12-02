@@ -5,37 +5,44 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.travelbuddy.R;
+import com.example.travelbuddy.ViewModels.MainActivityViewModel;
+import com.example.travelbuddy.ViewModels.SharedViewModel;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class QRActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+public class QRscanactivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     private ZXingScannerView scannerView;
+    private MainActivityViewModel mainviewmodel;
+    private Button manualbtn;
     private static final int REQUEST_CAMERA = 1;
     private static int cam = Camera.CameraInfo.CAMERA_FACING_BACK;
     int currentapiversion = Build.VERSION.SDK_INT;
     private String qrCode;
+    private SharedViewModel shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        scannerView = new ZXingScannerView(this);
-        setContentView(scannerView);
-
+        setContentView(R.layout.qractivity);
+        scannerView = findViewById(R.id.zxscanner);
+        manualbtn = findViewById(R.id.typeinbtn);
+        shared = new ViewModelProvider(this).get(SharedViewModel.class);
 
         if(currentapiversion>= Build.VERSION_CODES.M){
             if(checkPermission()){
@@ -45,8 +52,41 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
             }
         }
 
+        manualbtn.setOnClickListener(v->{
+            final Dialog dialog = new Dialog(QRscanactivity.this);
+            dialog.setContentView(R.layout.custom_dialog);
+
+            Button buttonok, buttoncancel;
+            buttonok = dialog.findViewById(R.id.btn_ok);
+            buttoncancel = dialog.findViewById(R.id.btn_cancel);
+
+            buttonok.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view) {
+                    EditText edit = dialog.findViewById(R.id.typeinqr);
+                    String qrcode = edit.getText().toString();
+                    shared.setQrscanned(Checkindb(qrcode));
+                    dialog.dismiss();
+                }
+            });
+
+            buttoncancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        });
 
 
+
+
+    }
+
+    private boolean Checkindb(String qrcode) {
+        return true;
     }
 
     private boolean checkPermission(){
@@ -55,7 +95,7 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
     }
 
     private void requestpermission(){
-        ActivityCompat.requestPermissions(QRActivity.this,new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+        ActivityCompat.requestPermissions(QRscanactivity.this,new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -84,12 +124,12 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
         if(currentapiversion >= Build.VERSION_CODES.M){
             if(checkPermission()){
                 if(scannerView == null){
-                    scannerView = new ZXingScannerView(this);
-                    setContentView(scannerView);
+                    scannerView = findViewById(R.id.zxscanner);
                 }
                 scannerView.setResultHandler(this);
                 scannerView.startCamera();
-            }
+            } else
+                requestpermission();
         }
     }
 
@@ -111,7 +151,8 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
                 "ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        scannerView.resumeCameraPreview(QRActivity.this);
+                        shared.setQrscanned(Checkindb(rawresult));
+                        scannerView.resumeCameraPreview(QRscanactivity.this);
                     }
                 }
         );

@@ -1,9 +1,12 @@
 package com.example.travelbuddy.Reposity;
 
+import android.media.MediaPlayer;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.ArrayList;
 
-public class DatabaseConnector {
+public class DatabaseConnector{
 
     private static Connection connection = null;
 
@@ -22,6 +25,11 @@ public class DatabaseConnector {
     }
 
     public static Connection getConnection() {
+
         return connection;
     }
+
+
+
+
 }

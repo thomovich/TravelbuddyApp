@@ -14,11 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Travelbuddy">
         <activity
-            android:name=".Main.QRActivity"
+            android:name=".Main.QRscanactivity"
             android:exported="true" />
         <activity
             android:name=".Main.MainActivity"
-
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

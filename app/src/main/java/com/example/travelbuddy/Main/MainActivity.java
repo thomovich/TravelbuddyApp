@@ -1,47 +1,48 @@
 package com.example.travelbuddy.Main;
-
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import android.Manifest;
-import android.content.DialogInterface;
+import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.hardware.Camera;
-import android.os.Build;
 import android.os.Bundle;
-
+import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
-
 import com.example.travelbuddy.R;
-import com.google.zxing.Result;
-
-
-
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import com.example.travelbuddy.ViewModels.MainActivityViewModel;
+import com.example.travelbuddy.ViewModels.SharedViewModel;
 
 public class MainActivity extends AppCompatActivity{
 
     Button scanbutton;
+    private MainActivityViewModel viewModel;
+    private SharedViewModel sharedViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        chekifqrscanned();
         setContentView(R.layout.activity_main);
         scanbutton = findViewById(R.id.scanbtn);
 
         scanbutton.setOnClickListener(view ->{
-            Intent intent = new Intent(MainActivity.this,QRActivity.class);
+            Intent intent = new Intent(MainActivity.this,QRscanactivity.class);
             startActivity(intent);
         });
 
 
     }
 
+    private void chekifqrscanned() {
+        if(sharedViewModel.getQrscanned()){
+            scanbutton.setVisibility(View.INVISIBLE);
+        } else {
 
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        chekifqrscanned();
+        super.onResume();
+    }
 }
