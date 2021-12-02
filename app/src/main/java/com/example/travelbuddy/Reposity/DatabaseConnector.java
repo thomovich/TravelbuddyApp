@@ -1,9 +1,10 @@
 package com.example.travelbuddy.Reposity;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-public class DatabaseConnector {
+public class DatabaseConnector{
 
     private static Connection connection = null;
 
@@ -22,6 +23,11 @@ public class DatabaseConnector {
     }
 
     public static Connection getConnection() {
+
         return connection;
     }
+
+
+
+
 }

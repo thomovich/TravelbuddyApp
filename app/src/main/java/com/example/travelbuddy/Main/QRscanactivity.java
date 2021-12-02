@@ -5,48 +5,77 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
-import android.content.DialogInterface;
+import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.travelbuddy.R;
+import com.example.travelbuddy.Reposity.GetDataFromDb;
+import com.example.travelbuddy.Reposity.dblookups;
+import com.example.travelbuddy.ViewModels.SharedViewModel;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class QRActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
+public class QRscanactivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     private ZXingScannerView scannerView;
     private static final int REQUEST_CAMERA = 1;
-    private static int cam = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private static final int cam = Camera.CameraInfo.CAMERA_FACING_BACK;
     int currentapiversion = Build.VERSION.SDK_INT;
     private String qrCode;
+    private SharedViewModel shared;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        scannerView = new ZXingScannerView(this);
-        setContentView(scannerView);
-
+        setContentView(R.layout.qractivity);
+        scannerView = findViewById(R.id.zxscanner);
+        Button manualbtn = findViewById(R.id.typeinbtn);
+        shared = new ViewModelProvider(this).get(SharedViewModel.class);
 
         if(currentapiversion>= Build.VERSION_CODES.M){
             if(checkPermission()){
-                Toast.makeText(this,"Permission granted", Toast.LENGTH_SHORT);
+                Toast.makeText(this,"Permission granted", Toast.LENGTH_SHORT).show();
             } else {
                 requestpermission();
             }
         }
 
+        manualbtn.setOnClickListener(v->{
+            final Dialog dialog = new Dialog(QRscanactivity.this);
+            dialog.setContentView(R.layout.custom_dialog);
+
+            Button buttonok, buttoncancel;
+            buttonok = dialog.findViewById(R.id.btn_ok);
+            buttoncancel = dialog.findViewById(R.id.btn_cancel);
+
+            buttonok.setOnClickListener(view -> {
+                EditText edit = dialog.findViewById(R.id.typeinqr);
+                String qrcode = edit.getText().toString();
+                shared.setQrscanned(Checkindb(qrcode));
+                dialog.dismiss();
+            });
+
+            buttoncancel.setOnClickListener(view -> dialog.dismiss());
+            dialog.show();
+        });
 
 
+
+
+    }
+
+    private boolean Checkindb(String qrcode) {
+        dblookups dbl = new GetDataFromDb();
+        return dbl.checkqr(qrcode);
     }
 
     private boolean checkPermission(){
@@ -55,11 +84,11 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
     }
 
     private void requestpermission(){
-        ActivityCompat.requestPermissions(QRActivity.this,new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+        ActivityCompat.requestPermissions(QRscanactivity.this,new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void onRequestPermissionResult(int requestcode, String permission[], int[] grantResult){
+    public void onRequestPermissionResult(int requestcode, String[] permission, int[] grantResult){
         switch(requestcode){
             case REQUEST_CAMERA:
                 if(grantResult.length > 0){
@@ -67,7 +96,7 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
                     if(cameraAccept){
                         Toast.makeText(this, "Tilladelse givet", Toast.LENGTH_SHORT).show();
                     } else{
-                        Toast.makeText(this, "Giv tilladelse for at bruge app", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Giv tilladelse til kamera for at bruge app", Toast.LENGTH_SHORT).show();
                         requestpermission();
                     }
                 }
@@ -84,12 +113,12 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
         if(currentapiversion >= Build.VERSION_CODES.M){
             if(checkPermission()){
                 if(scannerView == null){
-                    scannerView = new ZXingScannerView(this);
-                    setContentView(scannerView);
+                    scannerView = findViewById(R.id.zxscanner);
                 }
                 scannerView.setResultHandler(this);
                 scannerView.startCamera();
-            }
+            } else
+                requestpermission();
         }
     }
 
@@ -108,20 +137,13 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
         builder.setTitle("scan result");
 
         builder.setPositiveButton(
-                "ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        scannerView.resumeCameraPreview(QRActivity.this);
-                    }
+                "ok", (dialogInterface, i) -> {
+                    shared.setQrscanned(Checkindb(rawresult));
+                    scannerView.resumeCameraPreview(QRscanactivity.this);
                 }
         );
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                onDestroy();
-            }
-        });
+        builder.setNegativeButton("Cancel", (dialogInterface, i) -> onDestroy());
 
         builder.setMessage(result.getText());
 
