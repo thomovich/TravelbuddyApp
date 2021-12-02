@@ -8,26 +8,7 @@
     android:id="@+id/relativelayout"
     >
 
- <ImageButton
-     android:id="@+id/switch_off"
-     android:layout_width="120dp"
-     android:layout_height="120dp"
-     android:layout_centerHorizontal="true"
-     android:background="@drawable/gray_round"
-     android:src="@drawable/ic_power" />
 
-
- <ImageButton
-     android:id="@+id/switch_on"
-     android:layout_width="120dp"
-     android:layout_height="120dp"
-     android:layout_centerHorizontal="true"
-     android:visibility="gone"
-     android:elevation="10dp"
-     android:src="@drawable/ic_power"
-     android:background="@drawable/green_round"
-
-        />
 
  <me.dm7.barcodescanner.zxing.ZXingScannerView
      android:id="@+id/zxscanner"
@@ -45,6 +26,23 @@
      android:text="type in qr code">
 
  </Button>
+ <ImageButton
+     android:id="@+id/switch_off"
+     android:layout_width="120dp"
+     android:layout_height="120dp"
+     android:layout_centerHorizontal="true"
+     android:background="@drawable/gray_round"
+     android:src="@drawable/ic_power" />
+
+
+ <ImageButton
+     android:id="@+id/switch_on"
+     android:layout_width="120dp"
+     android:layout_height="120dp"
+     android:layout_centerHorizontal="true"
+     android:elevation="10dp"
+     android:src="@drawable/ic_power"
+     android:background="@drawable/green_round" />
 
 
 </RelativeLayout>

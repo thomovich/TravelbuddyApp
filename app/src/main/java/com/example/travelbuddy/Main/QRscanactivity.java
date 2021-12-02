@@ -11,6 +11,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.hardware.camera2.*;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -30,10 +31,11 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
 
     private ZXingScannerView scannerView;
     private static final int REQUEST_CAMERA = 1;
-    private static final int cam = Camera.CameraInfo.CAMERA_FACING_BACK;
     int currentapiversion = Build.VERSION.SDK_INT;
     private String qrCode;
     private SharedViewModel shared;
+
+     boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
 
     ImageButton switchOff,switchOn;
     Camera camera;
@@ -49,29 +51,39 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         camera = Camera.open();
         Camera.Parameters parameters = Camera.open().getParameters();
 
+    if(hasFlash){
+            if (parameters.getFlashMode() == Camera.Parameters.FLASH_MODE_TORCH) {
+                switchOff.setVisibility(View.VISIBLE);
+                switchOn.setVisibility(View.INVISIBLE);
+
+            } else {
+                switchOn.setVisibility(View.VISIBLE);
+                switchOff.setVisibility(View.INVISIBLE);
+
+            }
+        }else {
+        switchOn.setVisibility(View.INVISIBLE);
+        switchOff.setVisibility(View.INVISIBLE);
+    }
+
         switchOff.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                switchOff.setVisibility(View.GONE);
+                switchOff.setVisibility(View.INVISIBLE);
                 switchOn.setVisibility(View.VISIBLE);
-                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
-                camera.setParameters((parameters));
-                camera.startPreview();
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
             }
         });
         switchOn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 switchOff.setVisibility(View.VISIBLE);
-                switchOn.setVisibility(View.GONE);
-                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-                camera.setParameters((parameters));
-                camera.stopPreview();
+                switchOn.setVisibility(View.INVISIBLE);
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+
             }
         });
-
-
 
         scannerView = findViewById(R.id.zxscanner);
         Button manualbtn = findViewById(R.id.typeinbtn);
