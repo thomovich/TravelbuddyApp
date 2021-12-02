@@ -9,19 +9,16 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.travelbuddy.R;
 import com.example.travelbuddy.Reposity.GetDataFromDb;
 import com.example.travelbuddy.Reposity.dblookups;
-import com.example.travelbuddy.ViewModels.MainActivityViewModel;
 import com.example.travelbuddy.ViewModels.SharedViewModel;
 import com.google.zxing.Result;
 
@@ -30,10 +27,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class QRscanactivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
     private ZXingScannerView scannerView;
-    private MainActivityViewModel mainviewmodel;
-    private Button manualbtn;
     private static final int REQUEST_CAMERA = 1;
-    private static int cam = Camera.CameraInfo.CAMERA_FACING_BACK;
+    private static final int cam = Camera.CameraInfo.CAMERA_FACING_BACK;
     int currentapiversion = Build.VERSION.SDK_INT;
     private String qrCode;
     private SharedViewModel shared;
@@ -43,12 +38,12 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qractivity);
         scannerView = findViewById(R.id.zxscanner);
-        manualbtn = findViewById(R.id.typeinbtn);
+        Button manualbtn = findViewById(R.id.typeinbtn);
         shared = new ViewModelProvider(this).get(SharedViewModel.class);
 
         if(currentapiversion>= Build.VERSION_CODES.M){
             if(checkPermission()){
-                Toast.makeText(this,"Permission granted", Toast.LENGTH_SHORT);
+                Toast.makeText(this,"Permission granted", Toast.LENGTH_SHORT).show();
             } else {
                 requestpermission();
             }
@@ -62,23 +57,14 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
             buttonok = dialog.findViewById(R.id.btn_ok);
             buttoncancel = dialog.findViewById(R.id.btn_cancel);
 
-            buttonok.setOnClickListener(new View.OnClickListener(){
-
-                @Override
-                public void onClick(View view) {
-                    EditText edit = dialog.findViewById(R.id.typeinqr);
-                    String qrcode = edit.getText().toString();
-                    shared.setQrscanned(Checkindb(qrcode));
-                    dialog.dismiss();
-                }
+            buttonok.setOnClickListener(view -> {
+                EditText edit = dialog.findViewById(R.id.typeinqr);
+                String qrcode = edit.getText().toString();
+                shared.setQrscanned(Checkindb(qrcode));
+                dialog.dismiss();
             });
 
-            buttoncancel.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
+            buttoncancel.setOnClickListener(view -> dialog.dismiss());
             dialog.show();
         });
 
@@ -89,8 +75,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
 
     private boolean Checkindb(String qrcode) {
         dblookups dbl = new GetDataFromDb();
-        boolean check = dbl.checkqr(qrcode);
-        return check;
+        return dbl.checkqr(qrcode);
     }
 
     private boolean checkPermission(){
@@ -103,7 +88,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public void onRequestPermissionResult(int requestcode, String permission[], int[] grantResult){
+    public void onRequestPermissionResult(int requestcode, String[] permission, int[] grantResult){
         switch(requestcode){
             case REQUEST_CAMERA:
                 if(grantResult.length > 0){
@@ -111,7 +96,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
                     if(cameraAccept){
                         Toast.makeText(this, "Tilladelse givet", Toast.LENGTH_SHORT).show();
                     } else{
-                        Toast.makeText(this, "Giv tilladelse for at bruge app", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Giv tilladelse til kamera for at bruge app", Toast.LENGTH_SHORT).show();
                         requestpermission();
                     }
                 }
@@ -152,21 +137,13 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         builder.setTitle("scan result");
 
         builder.setPositiveButton(
-                "ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        shared.setQrscanned(Checkindb(rawresult));
-                        scannerView.resumeCameraPreview(QRscanactivity.this);
-                    }
+                "ok", (dialogInterface, i) -> {
+                    shared.setQrscanned(Checkindb(rawresult));
+                    scannerView.resumeCameraPreview(QRscanactivity.this);
                 }
         );
 
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                onDestroy();
-            }
-        });
+        builder.setNegativeButton("Cancel", (dialogInterface, i) -> onDestroy());
 
         builder.setMessage(result.getText());
 
