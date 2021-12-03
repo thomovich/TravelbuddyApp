@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.hardware.camera2.*;
 import android.os.Build;
 import android.os.Bundle;
@@ -34,55 +34,42 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
     int currentapiversion = Build.VERSION.SDK_INT;
     private String qrCode;
     private SharedViewModel shared;
+    CameraManager cameraManager;
 
-     boolean hasFlash = this.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH);
+
 
     ImageButton switchOff,switchOn;
-    Camera camera;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.qractivity);
-
+        cameraManager = (CameraManager) getSystemService(CAMERA_SERVICE);
         switchOff = findViewById(R.id.switch_off);
         switchOn = findViewById(R.id.switch_on);
 
-        camera = Camera.open();
-        Camera.Parameters parameters = Camera.open().getParameters();
-
-    if(hasFlash){
-            if (parameters.getFlashMode() == Camera.Parameters.FLASH_MODE_TORCH) {
-                switchOff.setVisibility(View.VISIBLE);
-                switchOn.setVisibility(View.INVISIBLE);
-
+        if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
+            if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
+                switchOn.setVisibility(View.VISIBLE);
             } else {
-                switchOn.setVisibility(View.VISIBLE);
-                switchOff.setVisibility(View.INVISIBLE);
-
+                //Device has no flash
             }
-        }else {
-        switchOn.setVisibility(View.INVISIBLE);
-        switchOff.setVisibility(View.INVISIBLE);
-    }
+        } else {
+            //Device has no camera
+        }
 
-        switchOff.setOnClickListener(new View.OnClickListener(){
+        switchOff.setOnClickListener(v -> {
+            switchOff.setVisibility(View.INVISIBLE);
+            switchOn.setVisibility(View.VISIBLE);
+            flashcontrol(false);
 
-            @Override
-            public void onClick(View v) {
-                switchOff.setVisibility(View.INVISIBLE);
-                switchOn.setVisibility(View.VISIBLE);
-                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
-            }
         });
-        switchOn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchOff.setVisibility(View.VISIBLE);
-                switchOn.setVisibility(View.INVISIBLE);
-                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_TORCH);
+        switchOn.setOnClickListener(view -> {
+            switchOff.setVisibility(View.VISIBLE);
+            switchOn.setVisibility(View.INVISIBLE);
+            flashcontrol(true);
 
-            }
+
         });
 
         scannerView = findViewById(R.id.zxscanner);
@@ -186,16 +173,35 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
 
         builder.setPositiveButton(
                 "ok", (dialogInterface, i) -> {
-                    shared.setQrscanned(Checkindb(rawresult));
+                    boolean check = Checkindb(rawresult);
+                    if(check){
+                        shared.setQrscanned(check);
+                        Intent intent = new Intent(QRscanactivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                     scannerView.resumeCameraPreview(QRscanactivity.this);
                 }
         );
 
-        builder.setNegativeButton("Cancel", (dialogInterface, i) -> onDestroy());
+        builder.setNegativeButton(
+                "Cancel", (dialogInterface, i) -> {
+                    scannerView.resumeCameraPreview(QRscanactivity.this);
+                });
 
         builder.setMessage(result.getText());
 
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    void flashcontrol(boolean flash){
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                cameraManager.setTorchMode("0", flash);
+            }
+        } catch (CameraAccessException e) {
+            e.printStackTrace();
+        }
     }
 }
