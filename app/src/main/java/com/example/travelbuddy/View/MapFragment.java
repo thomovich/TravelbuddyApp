@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.travelbuddy.Main.MainActivity;
 import com.example.travelbuddy.ViewModels.MapViewModel;
 import com.example.travelbuddy.R;
 import com.google.android.gms.maps.GoogleMap;
@@ -99,14 +101,18 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
             @Override
             public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
-                Intent intent = new Intent();
+                /*Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.setAction(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+                Uri  uri =Uri.fromParts("package",getActivity().getPackageName(),"");
+                intent.setData(uri);
+                startActivity(intent);*/
 
             }
 
             @Override
             public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
 
+                permissionToken.continuePermissionRequest();
             }
         }).check();
     }

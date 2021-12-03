@@ -19,9 +19,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import android.provider.Settings;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity{
         navview = findViewById(R.id.nav_view);
         navview.bringToFront();
         scanbutton = findViewById(R.id.scanbtn);
+
+
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
 
         scanbutton.setOnClickListener(view -> {
