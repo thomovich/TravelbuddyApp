@@ -160,17 +160,17 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        cameraManager = null;
         scannerView.stopCamera();
         scannerView = null;
+
     }
 
     @Override
     public void handleResult(Result result) {
         final String rawresult = result.getText();
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("scan result");
-
         builder.setPositiveButton(
                 "ok", (dialogInterface, i) -> {
                     boolean check = Checkindb(rawresult);
@@ -183,16 +183,18 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
                     scannerView.resumeCameraPreview(QRscanactivity.this);
                 }
         );
-
         builder.setNegativeButton(
                 "Cancel", (dialogInterface, i) -> {
                     scannerView.resumeCameraPreview(QRscanactivity.this);
+
                 });
-
         builder.setMessage(result.getText());
-
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+
+        if(getApplicationContext() == null){
+            alertDialog.dismiss();
+        }
     }
 
     void flashcontrol(boolean flash){
@@ -200,7 +202,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 cameraManager.setTorchMode("0", flash);
             }
-        } catch (CameraAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
