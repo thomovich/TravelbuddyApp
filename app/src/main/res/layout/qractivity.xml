@@ -32,7 +32,8 @@
      android:layout_height="120dp"
      android:layout_centerHorizontal="true"
      android:background="@drawable/gray_round"
-     android:src="@drawable/ic_power" />
+     android:src="@drawable/ic_power"
+     android:visibility="invisible"/>
 
 
  <ImageButton
@@ -42,7 +43,8 @@
      android:layout_centerHorizontal="true"
      android:elevation="10dp"
      android:src="@drawable/ic_power"
-     android:background="@drawable/green_round" />
+     android:background="@drawable/green_round"
+     android:visibility="invisible"/>
 
 
 </RelativeLayout>

@@ -13,7 +13,8 @@ public class GetDataFromDb implements dblookups{
     }
     @Override
     public boolean checkqr(String Qrcode) {
-        return false;
+
+        return true;
     }
 
     @Override
