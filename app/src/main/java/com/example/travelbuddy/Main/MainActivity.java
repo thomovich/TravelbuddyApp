@@ -24,6 +24,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import android.provider.Settings;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -31,10 +32,14 @@ import android.widget.Toast;
 
 
 import com.example.travelbuddy.R;
+import com.example.travelbuddy.View.AboutFragment;
+import com.example.travelbuddy.View.HomeFragment;
+import com.example.travelbuddy.View.MapFragment;
 import com.example.travelbuddy.ViewModels.SharedViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.zxing.Result;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 // import com.example.travelbuddy.databinding.ActivityMainBinding;
 
@@ -47,14 +52,56 @@ public class MainActivity extends AppCompatActivity{
     BottomNavigationView  navview;
     SharedViewModel sharedViewModel;
    // private ActivityMainBinding binding;
+   ChipNavigationBar chipNavigationBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //setContentView(R.layout.activity_main);
+        //navview = findViewById(R.id.nav_view);
+        //navview.bringToFront();
         setContentView(R.layout.activity_main);
-        navview = findViewById(R.id.nav_view);
-        navview.bringToFront();
-        scanbutton = findViewById(R.id.scanbtn);
+        chipNavigationBar = findViewById(R.id.bottom_nav_menu);
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+
+        bottomMenu();
+
+    }
+    private void bottomMenu() {
+
+        chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(int i) {
+                Fragment fragment=null;
+                Log.d("State",""+i);
+                switch (i){
+
+                    case 2131231185:
+                        Log.d("State","home");
+                        fragment = new HomeFragment();
+                        break;
+
+                    case 2131231186:
+                        Log.d("State","nave");
+                        fragment = new MapFragment();
+                        break;
+
+                    case 2131231184:
+                        Log.d("State","about");
+                        fragment = new AboutFragment();
+                        break;
+
+                }
+                Log.d("State","none");
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
+            }
+        });
+    }
+
+
+        /*scanbutton = findViewById(R.id.scanbtn);
 
 
         sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
@@ -72,7 +119,7 @@ public class MainActivity extends AppCompatActivity{
                 }
                 return true;
             }
-        });
+        });*/
 
       /*  binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -93,7 +140,9 @@ public class MainActivity extends AppCompatActivity{
         });
         */
 
-    }
+
+
+
 
 
     void checkifscannedqr(){
@@ -109,7 +158,7 @@ public class MainActivity extends AppCompatActivity{
         String classpath = "com.example.travelbuddy.View." + fragment;
         try {
             Class<?> cls = Class.forName(classpath);
-            fragmentManager.beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container_view, (Class<? extends Fragment>) cls,null).commit();
+            fragmentManager.beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, (Class<? extends Fragment>) cls,null).commit();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
