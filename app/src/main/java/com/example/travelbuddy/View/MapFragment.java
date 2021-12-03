@@ -2,18 +2,25 @@ package com.example.travelbuddy.View;
 
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+
+import android.Manifest;
 import android.annotation.SuppressLint;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +34,13 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.DexterBuilder;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.ArrayList;
 
@@ -36,8 +50,10 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
 
     private GoogleMap googleMap;
     private MapViewModel model;
+    SupportMapFragment supportMapFragment;
     MapView mMapView;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+
 
     public static MapFragment newInstance() {
         return new MapFragment();
@@ -47,20 +63,53 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
 
-
-        try {
-            MapsInitializer.initialize(getActivity().getApplicationContext());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        SupportMapFragment mapFragment = (SupportMapFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.fragment_container_view);
-        mapFragment.getMapAsync(this);
+        checkPermission();
 
 
-        return inflater.inflate(R.layout.map_fragment, container, false);
+
+
+        View rootView = inflater.inflate(R.layout.map_fragment, container, false);
+       // mMapView = rootView.findViewById(R.id.mapView);
+        //mMapView.onCreate(savedInstanceState);
+
+        return rootView;
     }
 
+    private void checkPermission() {
+        Dexter.withContext(getActivity()).withPermission(Manifest.permission.ACCESS_FINE_LOCATION).withListener(new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse permissionGrantedResponse) {
+                /*
+                try {
+                    MapsInitializer.initialize(getActivity().getApplicationContext());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
+                FragmentManager mapFragment=  getActivity().getSupportFragmentManager();
+                supportMapFragment = (SupportMapFragment) mapFragment.findFragmentById(R.id.mapView);
+                if (supportMapFragment == null) {
+                    supportMapFragment = SupportMapFragment.newInstance();
+                    mapFragment.beginTransaction().replace(R.id.mapView, supportMapFragment).commit();
+                }
+
+                supportMapFragment.getMapAsync(this);*/
+
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse permissionDeniedResponse) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permissionRequest, PermissionToken permissionToken) {
+
+            }
+        }).check();
+    }
 
 
     @Override
@@ -89,6 +138,7 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
 
+
             /*googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
                 @Override
                 public boolean onMyLocationButtonClick() {
@@ -100,5 +150,3 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
             googleMap.setMyLocationEnabled(true);
         }
     }
-
-}
