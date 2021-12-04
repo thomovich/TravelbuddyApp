@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/home"
-        android:name="com.example.travelbuddy.View.MapFragment"
+        android:name="com.example.travelbuddy.View.HomeFragment"
         android:label="home"
         tools:layout="@layout/fragment_home" />
 
@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/about"
-        android:name="com.example.travelbuddy.View.MapFragment"
+        android:name="com.example.travelbuddy.View.AboutFragment"
         android:label="about"
         tools:layout="@layout/about_fragment" />
 </navigation>

@@ -58,9 +58,11 @@ public class MainActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //setContentView(R.layout.activity_main);
-        //navview = findViewById(R.id.nav_view);
-        //navview.bringToFront();
+
+
+        //onBoarding features for the app
+        //Intent intent = new Intent (MainActivity.this,OnboardingActivity.class);
+        //startActivity(intent);
         setContentView(R.layout.activity_main);
         chipNavigationBar = findViewById(R.id.bottom_nav_menu);
 
@@ -76,25 +78,28 @@ public class MainActivity extends AppCompatActivity{
             public void onItemSelected(int i) {
                 Fragment fragment=null;
                 Log.d("State",""+i);
+                Log.d("State",""+R.id.home);
+                Log.d("State",""+R.id.map);
+                Log.d("State",""+R.id.about);
                 switch (i){
 
-                    case 2131231185:
-                        Log.d("State","home");
+                    case R.id.home:
+
                         fragment = new HomeFragment();
                         break;
 
-                    case 2131231186:
-                        Log.d("State","nave");
+                    case R.id.map:
+
                         fragment = new MapFragment();
                         break;
 
-                    case 2131231184:
-                        Log.d("State","about");
+                    case R.id.about:
+
                         fragment = new AboutFragment();
                         break;
 
                 }
-                Log.d("State","none");
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
             }
         });
