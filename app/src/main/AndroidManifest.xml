@@ -19,14 +19,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Travelbuddy">
-        <activity
-            android:name=".Main.OnboardingActivity"
-            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDhhAxLCcgEoiBvPkExO7W9ULwI-gjv-j0" />
-
+        <activity
+            android:name=".Main.OnboardingActivity"
+            android:exported="false" />
         <activity
             android:name=".Main.QRscanactivity"
             android:exported="true" />
