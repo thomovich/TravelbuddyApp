@@ -21,5 +21,5 @@
         android:id="@+id/about"
         android:name="com.example.travelbuddy.View.AboutFragment"
         android:label="about"
-        tools:layout="@layout/about_fragment" />
+        tools:layout="@layout/fragment_about" />
 </navigation>
