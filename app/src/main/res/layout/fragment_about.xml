@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.AboutFragment"
-    android:background="#6B9E33">
+    android:background="#748F57">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -66,10 +66,9 @@
 
     <TextView
         android:id="@+id/textView_frederik"
-        android:layout_width="63dp"
-        android:layout_height="148dp"
-        android:text="This is Frederik. He is 26 years old and work
-        in the company as the CEO"
+        android:layout_width="65dp"
+        android:layout_height="150dp"
+        android:text="@string/text_frederik"
         app:layout_constraintStart_toEndOf="@+id/imageView_frederik"
         app:layout_constraintTop_toBottomOf="@+id/text_view_about2"
         />
@@ -78,24 +77,23 @@
         android:id="@+id/textView_simon"
         android:layout_width="65dp"
         android:layout_height="150dp"
-        android:padding="8dp"
-        android:text="This is Simon. He is 22 years old, and work as CEO"
+        android:text="@string/text_simon"
         app:layout_constraintStart_toEndOf="@+id/imageView_simon"
         app:layout_constraintTop_toBottomOf="@+id/textView_frederik" />
 
     <TextView
         android:id="@+id/textView_thomas"
-        android:layout_width="67dp"
-        android:layout_height="153dp"
-        android:text="This is Thomas. He is head og the janitors in the company"
+        android:layout_width="65dp"
+        android:layout_height="150dp"
+        android:text="@string/text_thomas"
         app:layout_constraintStart_toEndOf="@+id/imageView_thomas"
         app:layout_constraintTop_toBottomOf="@+id/text_view_about2" />
 
     <TextView
         android:id="@+id/textView_rasmus"
-        android:layout_width="66dp"
-        android:layout_height="142dp"
-        android:text="This is rasmus. He is 25 years old. He is in charge of all pickles."
+        android:layout_width="65dp"
+        android:layout_height="150dp"
+        android:text="@string/text_ralle"
         app:layout_constraintStart_toEndOf="@+id/imageView_rasmus"
         app:layout_constraintTop_toBottomOf="@+id/textView_thomas" />
 
@@ -110,21 +108,19 @@
 
     <TextView
         android:id="@+id/textView_asbjørn"
-        android:layout_width="57dp"
-        android:layout_height="161dp"
-        android:text="This is Asbjørn. He is 24 years old and is our lead designer"
+        android:layout_width="65dp"
+        android:layout_height="150dp"
+        android:text="@string/text_asbjorn"
         app:layout_constraintStart_toEndOf="@+id/imageView_asbjørn"
         app:layout_constraintTop_toBottomOf="@+id/textView_simon" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/textView_info"
         android:layout_width="209dp"
         android:layout_height="161dp"
         android:padding="15dp"
         android:textStyle="italic"
-        android:text="The company is 6 months and our goal is to
-        make an application that can help people experience great citites
-        and wonders around the world while being active physicaly and mentally"
+        android:text="@string/text_info"
         app:layout_constraintStart_toEndOf="@+id/textView_asbjørn"
         app:layout_constraintTop_toBottomOf="@+id/textView_rasmus" />
 
