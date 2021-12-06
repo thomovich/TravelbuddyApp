@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     tools:context=".View.MapFragment">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_margin="100dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Map" />
+    <fragment
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        />
 </RelativeLayout>

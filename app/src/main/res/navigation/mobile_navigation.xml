@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    >
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.travelbuddy.View.MapFragment"
+        android:id="@+id/home"
+        android:name="com.example.travelbuddy.View.HomeFragment"
         android:label="home"
-        tools:layout="@layout/activity_main" />
+        tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_map"
+        android:id="@+id/map"
         android:name="com.example.travelbuddy.View.MapFragment"
         android:label="map"
         tools:layout="@layout/map_fragment" />
 
     <fragment
-        android:id="@+id/navigation_about"
-        android:name="com.example.travelbuddy.View.MapFragment"
+        android:id="@+id/about"
+        android:name="com.example.travelbuddy.View.AboutFragment"
         android:label="about"
         tools:layout="@layout/about_fragment" />
 </navigation>
