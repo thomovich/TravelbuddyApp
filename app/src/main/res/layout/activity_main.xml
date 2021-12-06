@@ -5,10 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Main.MainActivity"
-    android:id="@+id/fragment_container">
+    android:id="@+id/fragment_container"
+    android:background="#6B9E33">
 
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/bottom_nav_menu"
+        android:backgroundTint="#F3F024"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
