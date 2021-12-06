@@ -22,6 +22,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,11 +31,13 @@ import android.widget.Toast;
 import com.example.travelbuddy.Main.MainActivity;
 import com.example.travelbuddy.ViewModels.MapViewModel;
 import com.example.travelbuddy.R;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.DexterBuilder;
@@ -46,7 +49,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.ArrayList;
 
-public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickListener, GoogleMap.OnMyLocationButtonClickListener,OnMapReadyCallback{
+public class MapFragment extends SupportMapFragment implements OnMapReadyCallback {
 
     private MapViewModel mViewModel;
 
@@ -68,10 +71,10 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         checkPermission();
 
 
-
-
+        //SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
+        //mapFragment.getMapAsync(this);
         View rootView = inflater.inflate(R.layout.map_fragment, container, false);
-       // mMapView = rootView.findViewById(R.id.mapView);
+        // mMapView = rootView.findViewById(R.id.mapView);
         //mMapView.onCreate(savedInstanceState);
 
         return rootView;
@@ -125,11 +128,10 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         // TODO: Use the ViewModel
     }
 
-    @Override
+    /*@Override
     public boolean onMarkerClick(@NonNull Marker marker) {
         return false;
     }
-
 
 
     @Override
@@ -139,11 +141,10 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
         // Return false so that we don't consume the event and the default behavior still occurs
         // (the camera animates to the user's current position).
         return false;
-    }
-    @SuppressLint("MissingPermission")
+    }*/
+
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
-
 
             /*googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
                 @Override
@@ -153,6 +154,19 @@ public class MapFragment extends Fragment implements GoogleMap.OnMarkerClickList
                 }
             });
             googleMap.setOnMyLocationClickListener((GoogleMap.OnMyLocationClickListener) getActivity());*/
-            googleMap.setMyLocationEnabled(true);
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Log.d("State","called OnReady");
+        googleMap.setMyLocationEnabled(true);
+        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+
         }
     }

@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity{
                         fragment = new HomeFragment();
                         break;
 
-                    case R.id.map:
+                    case 2131230728:
 
                         fragment = new MapFragment();
                         break;
