@@ -40,7 +40,7 @@
     <ImageView
         android:id="@+id/imageView_thomas"
         android:padding="10dp"
-        android:layout_width="149dp"
+        android:layout_width="131dp"
         android:layout_height="147dp"
         android:src="@drawable/thomas"
         app:layout_constraintStart_toEndOf="@+id/textView_frederik"
@@ -49,7 +49,7 @@
     <ImageView
         android:id="@+id/imageView_simon"
         android:padding="10dp"
-        android:layout_width="134dp"
+        android:layout_width="131dp"
         android:layout_height="145dp"
         android:src="@drawable/simon"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,8 +57,8 @@
 
     <ImageView
         android:id="@+id/imageView_rasmus"
-        android:padding="10dp"
-        android:layout_width="149dp"
+
+        android:layout_width="131dp"
         android:layout_height="146dp"
         android:src="@drawable/rasmus"
         app:layout_constraintStart_toEndOf="@+id/textView_simon"
@@ -101,7 +101,7 @@
 
     <ImageView
         android:id="@+id/imageView_asbjørn"
-        android:layout_width="139dp"
+        android:layout_width="131dp"
         android:layout_height="166dp"
         android:padding="10dp"
         android:src="@drawable/asbjorn"
