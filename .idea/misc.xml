@@ -14,7 +14,7 @@
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.1" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/layout/about.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/layout/about_fragment.xml" value="0.12395833333333334" />
-        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/layout/activity_main.xml" value="0.2" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/layout/activity_onboarding.xml" value="0.12395833333333334" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/layout/custom_dialog.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/layout/fragment_about.xml" value="0.264" />
@@ -27,8 +27,6 @@
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/mipmap-anydpi-v26/ic_listen.xml" value="0.14635416666666667" />
-        <entry key="..\:/Users/skouv/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/fragment_about.xml" value="0.13020833333333334" />
-        <entry key="..\:/Users/skouv/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/fragment_home.xml" value="0.2" />
         <entry key="..\:/Users/thoma/AndroidStudioProjects/Travelbuddy/app/src/main/res/layout/activity_main.xml" value="0.17753623188405798" />
         <entry key="..\:/Users/thoma/AndroidStudioProjects/Travelbuddy/app/src/main/res/layout/map_fragment.xml" value="0.17753623188405798" />
         <entry key="..\:/Users/thoma/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/activity_main.xml" value="0.10144927536231885" />
@@ -36,7 +34,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
