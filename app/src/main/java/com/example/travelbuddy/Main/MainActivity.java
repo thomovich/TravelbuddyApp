@@ -76,28 +76,22 @@ public class MainActivity extends AppCompatActivity{
         chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
             @Override
             public void onItemSelected(int i) {
+
                 Fragment fragment=null;
-                Log.d("State",""+i);
-                Log.d("State",""+R.id.home);
-                Log.d("State",""+R.id.map);
-                Log.d("State",""+R.id.about);
-                switch (i){
-
-                    case R.id.HomeFragment:
-
-                        fragment = new HomeFragment();
-                        break;
-
-                    case R.id.MapFragment:
-
-                        fragment = new MapFragment();
-                        break;
-
-                    case R.id.AboutFragment:
-
-                        fragment = new AboutFragment();
-                        break;
-
+                try {
+                    switch (i) {
+                        case R.id.HomeFragment:
+                            fragment = new HomeFragment();
+                            break;
+                        case R.id.MapFragment:
+                            fragment = new MapFragment();
+                            break;
+                        case R.id.AboutFragment:
+                            fragment = new AboutFragment();
+                            break;
+                    }
+                } catch (Exception e){
+                    e.printStackTrace();
                 }
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
