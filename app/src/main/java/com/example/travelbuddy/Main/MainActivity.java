@@ -83,17 +83,17 @@ public class MainActivity extends AppCompatActivity{
                 Log.d("State",""+R.id.about);
                 switch (i){
 
-                    case R.id.home:
+                    case R.id.HomeFragment:
 
                         fragment = new HomeFragment();
                         break;
 
-                    case 2131230728:
+                    case R.id.MapFragment:
 
                         fragment = new MapFragment();
                         break;
 
-                    case R.id.about:
+                    case R.id.AboutFragment:
 
                         fragment = new AboutFragment();
                         break;

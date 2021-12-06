@@ -71,8 +71,8 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
         checkPermission();
 
 
-        //SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
-        //mapFragment.getMapAsync(this);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.mapView);
+        mapFragment.getMapAsync(this);
         View rootView = inflater.inflate(R.layout.map_fragment, container, false);
         // mMapView = rootView.findViewById(R.id.mapView);
         //mMapView.onCreate(savedInstanceState);
@@ -164,9 +164,9 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
             // for ActivityCompat#requestPermissions for more details.
             return;
         }
-        Log.d("State","called OnReady");
+
         googleMap.setMyLocationEnabled(true);
-        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+
 
         }
     }
