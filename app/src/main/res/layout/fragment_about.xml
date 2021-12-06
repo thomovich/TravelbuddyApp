@@ -42,7 +42,7 @@
         android:padding="10dp"
         android:layout_width="149dp"
         android:layout_height="147dp"
-        android:src="@drawable/Thomas"
+        android:src="@drawable/thomas"
         app:layout_constraintStart_toEndOf="@+id/textView_frederik"
         app:layout_constraintTop_toBottomOf="@+id/text_view_about2" />
 
@@ -51,7 +51,7 @@
         android:padding="10dp"
         android:layout_width="134dp"
         android:layout_height="145dp"
-        android:src="@drawable/Simon"
+        android:src="@drawable/simon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_frederik" />
 
@@ -103,7 +103,7 @@
         android:layout_width="139dp"
         android:layout_height="166dp"
         android:padding="10dp"
-        android:src="@drawable/Asbjørn"
+        android:src="@drawable/asbjorn"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_simon" />
 
@@ -121,7 +121,6 @@
         android:layout_height="161dp"
         android:padding="15dp"
         android:textStyle="italic"
-        android:
         android:text="The company is 6 months and our goal is to
         make an application that can help people experience great citites
         and wonders around the world while being active physicaly and mentally"
