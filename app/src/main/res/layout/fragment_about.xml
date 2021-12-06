@@ -76,8 +76,9 @@
 
     <TextView
         android:id="@+id/textView_simon"
-        android:layout_width="62dp"
+        android:layout_width="65dp"
         android:layout_height="150dp"
+        android:padding="8dp"
         android:text="This is Simon. He is 22 years old, and work as CEO"
         app:layout_constraintStart_toEndOf="@+id/imageView_simon"
         app:layout_constraintTop_toBottomOf="@+id/textView_frederik" />
