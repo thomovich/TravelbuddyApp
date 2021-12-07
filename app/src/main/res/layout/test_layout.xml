@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/test_layout"
+    android:background="@drawable/travelbuddy2"
+    >
+
+    <TextView
+        android:id="@+id/text_view_about1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:textAlignment="center"
+        android:textSize="50sp"
+        android:textStyle="italic"
+        android:text="@string/wellcome"/>
+
+    <TextView
+        android:id="@+id/text_view_about2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:padding="5dp"
+        android:text="@string/hello_blank_fragment"
+        android:layout_below="@id/text_view_about1"/>
+
+    <ImageView
+        android:id="@+id/imageView_frederik"
+        android:padding="10dp"
+        android:layout_width="131dp"
+        android:layout_height="152dp"
+        android:src="@drawable/frederik"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_about2"
+        android:layout_below="@id/text_view_about2"/>
+
+    <TextView
+        android:id="@+id/textView_frederik"
+        android:layout_width="65dp"
+        android:layout_height="150dp"
+        android:text="@string/text_frederik"
+        android:layout_below="@id/text_view_about2"
+        android:layout_toRightOf="@id/imageView_frederik"/>
+
+    <ImageView
+        android:id="@+id/imageView_thomas"
+        android:padding="10dp"
+        android:layout_width="131dp"
+        android:layout_height="152dp"
+        android:src="@drawable/thomas"
+        android:layout_toRightOf="@id/textView_frederik"
+        android:layout_below="@id/text_view_about2"/>
+
+    <TextView
+        android:id="@+id/textView_thomas"
+        android:layout_width="65dp"
+        android:layout_height="150dp"
+        android:text="@string/text_thomas"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_below="@id/text_view_about2"
+        android:layout_toRightOf="@id/imageView_thomas"
+        />
+
+    <ImageView
+        android:id="@+id/imageView_simon"
+        android:padding="10dp"
+        android:layout_width="131dp"
+        android:layout_height="145dp"
+        android:src="@drawable/simon"
+        android:layout_below="@id/imageView_frederik"/>
+    <TextView
+        android:id="@+id/textView_simon"
+        android:layout_width="65dp"
+        android:layout_height="150dp"
+        android:text="@string/text_simon"
+        android:layout_below="@id/imageView_frederik"
+        android:layout_toRightOf="@id/imageView_simon" />
+
+    <ImageView
+        android:id="@+id/imageView_rasmus"
+        android:layout_width="131dp"
+        android:layout_height="146dp"
+        android:src="@drawable/rasmus"
+        android:layout_toRightOf="@id/textView_simon"
+        android:layout_below="@id/imageView_frederik"/>
+
+
+
+    <TextView
+        android:id="@+id/textView_rasmus"
+        android:layout_width="65dp"
+        android:layout_height="150dp"
+        android:text="@string/text_ralle"
+        android:layout_below="@id/imageView_frederik"
+        android:layout_toRightOf="@id/imageView_rasmus"
+
+         />
+
+    <ImageView
+        android:id="@+id/imageView_asbjørn"
+        android:layout_width="131dp"
+        android:layout_height="166dp"
+        android:padding="10dp"
+        android:src="@drawable/asbjorn"
+        android:layout_below="@id/imageView_simon"
+         />
+
+    <TextView
+        android:id="@+id/textView_asbjørn"
+        android:layout_width="65dp"
+        android:layout_height="150dp"
+        android:text="@string/text_asbjorn"
+        android:layout_below="@id/imageView_simon"
+        android:layout_toRightOf="@id/imageView_asbjørn"
+        />
+
+    <TextView
+        android:id="@+id/textView_info"
+        android:layout_width="209dp"
+        android:layout_height="161dp"
+        android:padding="15dp"
+        android:text="@string/text_info"
+        android:textStyle="italic"
+        android:layout_below="@id/imageView_simon"
+        android:layout_toRightOf="@id/textView_asbjørn"/>
+
+</RelativeLayout>
