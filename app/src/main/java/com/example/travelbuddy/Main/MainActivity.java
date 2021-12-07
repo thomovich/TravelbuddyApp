@@ -77,24 +77,23 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onItemSelected(int i) {
 
-                Fragment fragment=null;
+
                 try {
                     switch (i) {
                         case R.id.HomeFragment:
-                            fragment = new HomeFragment();
+                            Fragmenthandler("HomeFragment");
                             break;
                         case R.id.MapFragment:
-                            fragment = new MapFragment();
+                            Fragmenthandler("MapFragment");
                             break;
                         case R.id.AboutFragment:
-                            fragment = new AboutFragment();
+                            Fragmenthandler("AboutFragment");
                             break;
                     }
                 } catch (Exception e){
                     e.printStackTrace();
                 }
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
             }
         });
     }

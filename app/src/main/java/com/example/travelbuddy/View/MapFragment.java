@@ -63,87 +63,71 @@ public class MapFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
-
                 LatLng latLng = new LatLng(sights.getLat(), sights.getLong());
                 googleMap.addMarker(new MarkerOptions().position(latLng).title("dummy").icon(BitmapDescriptorFactory.fromResource(R.drawable.asbjorn)));
-                googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
-
-
                 if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
                 googleMap.setMyLocationEnabled(true);
 
-
-
                 googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-
                     @Override
                     public boolean onMyLocationButtonClick() {
                         CheckGPS();
                         return true;
                     }
 
-                    private void CheckGPS() {
-                        locationRequest = com.google.android.gms.location.LocationRequest.create();
-                        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-                        locationRequest.setInterval(5000);
-                        locationRequest.setFastestInterval(3000);
-
-                        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
-                                .addLocationRequest(locationRequest).setAlwaysShow(true);
-
-                        Task<LocationSettingsResponse> locationSettingsResponseTask = LocationServices.getSettingsClient(getActivity().getApplicationContext()).checkLocationSettings(builder.build());
-                        locationSettingsResponseTask.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
-                            @Override
-                            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
-                                try {
-                                    LocationSettingsResponse request = task.getResult(ApiException.class);
-                                    if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                                        googleMap.setMyLocationEnabled(true);
-                                        return;
-                                    }
-
-                                    Toast.makeText(getActivity(),"GPS is already enabled",Toast.LENGTH_LONG).show();
-                                } catch (ApiException e) {
-                                    if(e.getStatusCode()== LocationSettingsStatusCodes.RESOLUTION_REQUIRED){
-                                        ResolvableApiException resolvableApiException = (ResolvableApiException) e;
-                                        try {
-                                            resolvableApiException.startResolutionForResult(getActivity(),101);
-                                        } catch (IntentSender.SendIntentException sendIntentException) {
-                                            sendIntentException.printStackTrace();
-                                        }
-                                    }
-                                    if(e.getStatusCode()== LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE){
-                                        Toast.makeText(getActivity(),"Settings not avaiable",Toast.LENGTH_LONG).show();
-
-                                    }
-                                }
-                            }
-                        });
-                    }
                 });
-
-
-
-
             }
         });
 
         super.onViewCreated(view, savedInstanceState);
     }
 
+    private void CheckGPS() {
+        locationRequest = com.google.android.gms.location.LocationRequest.create();
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        locationRequest.setInterval(5000);
+        locationRequest.setFastestInterval(3000);
 
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest).setAlwaysShow(true);
+
+        Task<LocationSettingsResponse> locationSettingsResponseTask = LocationServices.getSettingsClient(getActivity().getApplicationContext()).checkLocationSettings(builder.build());
+        locationSettingsResponseTask.addOnCompleteListener(new OnCompleteListener<LocationSettingsResponse>() {
+            @Override
+            public void onComplete(@NonNull Task<LocationSettingsResponse> task) {
+                try {
+                    LocationSettingsResponse request = task.getResult(ApiException.class);
+                    if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                        googleMap.setMyLocationEnabled(true);
+                        return;
+                    }
+
+                    Toast.makeText(getActivity(),"GPS is already enabled",Toast.LENGTH_LONG).show();
+                } catch (ApiException e) {
+                    if(e.getStatusCode()== LocationSettingsStatusCodes.RESOLUTION_REQUIRED){
+                        ResolvableApiException resolvableApiException = (ResolvableApiException) e;
+                        try {
+                            resolvableApiException.startResolutionForResult(getActivity(),101);
+                        } catch (IntentSender.SendIntentException sendIntentException) {
+                            sendIntentException.printStackTrace();
+                        }
+                    }
+                    if(e.getStatusCode()== LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE){
+                        Toast.makeText(getActivity(),"Settings not avaiable",Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            }
+        });
+    }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.map_fragment, container, false);
         mMapView = rootView.findViewById(R.id.mapview);
         mMapView.onCreate(savedInstanceState);
-
-
-
         mMapView.onResume(); // needed to get the map to display immediately
 
         try {
