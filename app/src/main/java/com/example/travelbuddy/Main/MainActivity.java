@@ -1,58 +1,45 @@
 package com.example.travelbuddy.Main;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
-import android.Manifest;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.hardware.Camera;
-import android.net.Uri;
-import android.os.Build;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+
 import android.os.Bundle;
 
-import android.provider.Settings;
-import android.util.Log;
-import android.view.MenuItem;
+
 import android.view.View;
+
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
 import com.example.travelbuddy.R;
-import com.example.travelbuddy.View.AboutFragment;
+
 import com.example.travelbuddy.View.HomeFragment;
-import com.example.travelbuddy.View.MapFragment;
+
 import com.example.travelbuddy.ViewModels.SharedViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationView;
-import com.google.zxing.Result;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
-// import com.example.travelbuddy.databinding.ActivityMainBinding;
+import java.io.IOException;
 
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class MainActivity extends AppCompatActivity{
-
-
-    Button scanbutton;
+    private boolean playing = false;
+    Button scanbutton, playbtn;
     BottomNavigationView  navview;
     SharedViewModel sharedViewModel;
+    MediaPlayer mediaPlayer;
+    RelativeLayout relativeLayout;
    // private ActivityMainBinding binding;
    ChipNavigationBar chipNavigationBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +51,54 @@ public class MainActivity extends AppCompatActivity{
         //Intent intent = new Intent (MainActivity.this,OnboardingActivity.class);
         //startActivity(intent);
         setContentView(R.layout.activity_main);
+
+
+        playbtn = findViewById(R.id.btnplay);
+        playbtn.setOnClickListener(v->{
+            playbtn.setText("sound is playing");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    playaudio();
+                }
+            }).start();
+
+        });
         chipNavigationBar = findViewById(R.id.bottom_nav_menu);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new HomeFragment()).commit();
+        Fragmenthandler("HomeFragment");
 
         bottomMenu();
 
     }
+
+    private void playaudio() {
+        String audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
+
+        // initializing media player
+        mediaPlayer = new MediaPlayer();
+
+        // below line is use to set the audio
+        // stream type for our media player.
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+
+        // below line is use to set our
+        // url to our media player.
+        try {
+            mediaPlayer.setDataSource(audioUrl);
+            // below line is use to prepare
+            // and start our media player.
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // below line is use to display a toast message.
+        //Toast.makeText(this, "Audio started playing..", Toast.LENGTH_SHORT).show();
+    }
+
+
     private void bottomMenu() {
 
         chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
