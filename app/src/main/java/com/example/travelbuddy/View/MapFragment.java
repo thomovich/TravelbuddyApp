@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.example.travelbuddy.Main.MainActivity;
@@ -24,6 +26,8 @@ import com.example.travelbuddy.R;
 
 import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApi;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -37,6 +41,8 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -65,7 +71,15 @@ public class MapFragment extends Fragment {
                 googleMap = mMap;
 
                 LatLng latLng = new LatLng(sights.getLat(), sights.getLong());
-                googleMap.addMarker(new MarkerOptions().position(latLng).title("dummy").icon(BitmapDescriptorFactory.fromResource(R.drawable.asbjorn)));
+                googleMap.addMarker(new MarkerOptions().position(latLng).title("dummy"));//.icon(BitmapDescriptorFactory.fromResource(R.drawable.asbjorn)));
+
+                CircleOptions circly = new CircleOptions()
+                        .center(latLng)
+                        .radius(10);
+
+                Circle circle = googleMap.addCircle(circly);
+                circle.setFillColor(Color.BLUE);
+
                 googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
 
 
@@ -154,8 +168,6 @@ public class MapFragment extends Fragment {
 
         return rootView;
     }
-
-
 
 
 }
