@@ -2,7 +2,6 @@ package com.example.travelbuddy.View;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -24,7 +23,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.travelbuddy.Main.MainActivity;
-import com.example.travelbuddy.Models.Senddata;
+import com.example.travelbuddy.MapsClasses.IMapsModel;
+import com.example.travelbuddy.MapsClasses.MapsModel;
 import com.example.travelbuddy.Models.Sight;
 import com.example.travelbuddy.R;
 
@@ -65,11 +65,15 @@ public class MapFragment extends Fragment{
     public static final int FAST_UPDATE_INTERVAL = 5;
     private GoogleMap googleMap;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
-    private Senddata senddata;
+    IMapsModel imap;
     MapView mMapView;
     Sight sights = new Sight();
 
     Circle circle;
+    ArrayList<LatLng> locationList = new ArrayList<>();
+    ArrayList<Circle> cirleList=new ArrayList<>();
+    ArrayList<MarkerOptions> markerOptions;
+    ArrayList<CircleOptions> radiusContainer=new ArrayList<>();
 
     //google's API for location services. Majority of the app functions using this class.
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -120,30 +124,35 @@ public class MapFragment extends Fragment{
 
 
                 //markers to explore
-                LatLng latLng = new LatLng(56.1562, 10.1920);
-                googleMap.addMarker(new MarkerOptions().position(latLng).title("dummy"));
+
+                    LatLng arhus = new LatLng(56.1562, 10.1920);
 
                 //zoom to current location
                 CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(latLng)
+                        .target(arhus)
                         .zoom(12)
                         .build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
 
                 googleMap.setMyLocationEnabled(true);
 
 
-                CircleOptions circly = new CircleOptions()
-                        .center(latLng)
-                        .radius(1000);
+                 markerOptions = new MapsModel().getMarkerLocation();
 
-                circle = googleMap.addCircle(circly);
-                circle.setFillColor(Color.BLUE);
+                for(int i=0; i<markerOptions.size();i++){
+                    CircleOptions circly = new CircleOptions()
+                            .center(markerOptions.get(i).getPosition())
+                            .radius(10000)
+                            .fillColor(Color.BLUE);
+                    radiusContainer.add(circly);
+                    googleMap.addMarker(markerOptions.get(i));
+                    googleMap.addCircle(circly);
+                }
 
 
 
 
-
+                //virker ikke
                 googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
 
                     @Override
@@ -173,13 +182,7 @@ public class MapFragment extends Fragment{
         //get current location from the fused client
         //update UI
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        checkpermission();
-        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                Toast.makeText(getContext(),"working getting location: ",Toast.LENGTH_LONG).show();
-            }
-        });
+
 
     }
 
@@ -193,22 +196,6 @@ public class MapFragment extends Fragment{
         }
     }
 
-
-    /*@Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode){
-            case 99:
-                if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
-                    checkGPS();
-                }
-                else{
-
-
-                }
-        }
-    }*/
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -227,34 +214,29 @@ public class MapFragment extends Fragment{
         return rootView;
     }
 
-
     private void checkLocationToMarker(Location location){
 
+for(int i = 0; i<1;i++){
 
-        float[] distance = new float[2];
-        Location.distanceBetween( location.getLatitude(),location.getLongitude(),
-                circle.getCenter().latitude, circle.getCenter().longitude,distance);
+    float[] distance = new float[1];
+    Location.distanceBetween( location.getLatitude(),location.getLongitude(),
+            markerOptions.get(i).getPosition().latitude, markerOptions.get(i).getPosition().longitude,distance);
 
-        if( distance[0] > circle.getRadius()  ){
-            Toast.makeText(getActivity().getBaseContext(), "Outside", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(getActivity().getBaseContext(), "Inside", Toast.LENGTH_LONG).show();
-            senddata.senddata("Url til sang");
-        }
-        //Toast.makeText(getContext(),location.getLongitude()+":"+location.getLatitude(),Toast.LENGTH_LONG).show();
-        //Toast.makeText(getContext(),"updating",Toast.LENGTH_LONG).show();
+    if( distance[0] > radiusContainer.get(i).getRadius()  ){
+        Toast.makeText(getActivity().getBaseContext(), "Outside", Toast.LENGTH_LONG).show();
+    } else {
+        playAudio();
+        Toast.makeText(getActivity().getBaseContext(), "Inside", Toast.LENGTH_LONG).show();
+    }
+}
+
+
 
     }
 
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        Activity activity = (Activity) context;
-        try{
-            senddata = (Senddata) activity;
+    private void playAudio() {
 
-        } catch (Exception e){
-            e.printStackTrace();
-        }
     }
+
+
 }
