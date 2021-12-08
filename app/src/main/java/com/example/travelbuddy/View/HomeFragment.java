@@ -34,12 +34,11 @@ public class HomeFragment extends Fragment {
 
     }
 
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         sdgbutton.setOnClickListener(v->{
-            img2.setVisibility(View.VISIBLE);
-            img1.setVisibility(View.VISIBLE);
+                img2.setVisibility(View.VISIBLE);
+                img1.setVisibility(View.VISIBLE);
         });
         super.onViewCreated(view, savedInstanceState);
     }
