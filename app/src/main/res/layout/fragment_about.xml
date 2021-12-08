@@ -19,16 +19,21 @@
         android:textAlignment="center"
         android:textSize="50sp"
         android:textStyle="italic"
+        android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/wellcome"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_about"
+        android:paddingBottom="85dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-
-
+    <TextView
+        android:layout_marginTop="-85dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
 
 
 </LinearLayout>

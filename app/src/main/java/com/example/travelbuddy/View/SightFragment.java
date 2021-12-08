@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -39,6 +40,23 @@ public class SightFragment extends Fragment implements SightAdapter.OnListItemCl
 
     @Override
     public void onListItemClick(int clickedItemIndex) {
-
+        int sightNumber = clickedItemIndex + 1;
+        switch (sightNumber) {
+            case 1:
+                Toast.makeText(getActivity(), "Møllestien was created in 1915 and showcases some of the most beautiful houses in Århus.: " + sightNumber, Toast.LENGTH_LONG).show();
+                break;
+            case 2:
+                Toast.makeText(getActivity(), "Marselisborg Slot is the place the royal family spend some of their holidays and vacations: " + sightNumber, Toast.LENGTH_LONG).show();
+                break;
+            case 3:
+                Toast.makeText(getActivity(), "Beautiful spring in the center of Århus! Student often spend time bathing in its waters: " + sightNumber, Toast.LENGTH_LONG).show();
+                break;
+            case 4:
+                Toast.makeText(getActivity(), "Created as a gift for Århus, this statue, is located near the trainstation in a little park: " + sightNumber, Toast.LENGTH_LONG).show();
+                break;
+            case 5:
+                Toast.makeText(getActivity(), "This statue is great for kids, since the stones surrounding it are met for climbing: " + sightNumber, Toast.LENGTH_LONG).show();
+                break;
+        }
     }
 }
