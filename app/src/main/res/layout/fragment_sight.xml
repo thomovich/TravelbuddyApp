@@ -3,16 +3,16 @@
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/text_about"
+    android:id="@+id/text_sight"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F5F5DC"
     android:orientation="vertical"
-    tools:context=".View.AboutFragment">
+    tools:context=".View.SightFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/text_view_about1"
+        android:id="@+id/text_view_sight1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="5dp"
@@ -21,18 +21,20 @@
         android:textStyle="italic"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/wellcome"/>
+        android:text="Sights"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_about"
+        android:id="@+id/rv_sight"
         android:paddingBottom="85dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
     <TextView
         android:layout_marginTop="-85dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
+
+
+
 
 </LinearLayout>
