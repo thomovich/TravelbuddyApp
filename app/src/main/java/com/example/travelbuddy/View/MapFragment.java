@@ -225,7 +225,7 @@ for(int i = 0; i<1;i++){
     if( distance[0] > radiusContainer.get(i).getRadius()  ){
         Toast.makeText(getActivity().getBaseContext(), "Outside", Toast.LENGTH_LONG).show();
     } else {
-        playAudio();
+       //Her skal der kaldes til main activity for at loade ny lyd
         Toast.makeText(getActivity().getBaseContext(), "Inside", Toast.LENGTH_LONG).show();
     }
 }
@@ -234,9 +234,7 @@ for(int i = 0; i<1;i++){
 
     }
 
-    private void playAudio() {
 
-    }
 
 
 }
