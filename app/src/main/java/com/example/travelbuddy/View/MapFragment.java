@@ -125,15 +125,14 @@ public class MapFragment extends Fragment{
 
                 //markers to explore
 
-                    LatLng latLng = new LatLng(56.1562, 10.1920);
-                googleMap.addMarker(new MarkerOptions().position(latLng).title("dummy"));
+                    LatLng arhus = new LatLng(56.1562, 10.1920);
 
                 //zoom to current location
                 CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(latLng)
+                        .target(arhus)
                         .zoom(12)
                         .build();
-                //googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
 
                 googleMap.setMyLocationEnabled(true);
 
@@ -153,7 +152,7 @@ public class MapFragment extends Fragment{
 
 
 
-
+                //virker ikke
                 googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
 
                     @Override
@@ -183,13 +182,7 @@ public class MapFragment extends Fragment{
         //get current location from the fused client
         //update UI
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getActivity());
-        checkpermission();
-        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                Toast.makeText(getContext(),"working getting location: ",Toast.LENGTH_LONG).show();
-            }
-        });
+
 
     }
 
@@ -203,22 +196,6 @@ public class MapFragment extends Fragment{
         }
     }
 
-
-    /*@Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-        switch (requestCode){
-            case 99:
-                if(grantResults[0]== PackageManager.PERMISSION_GRANTED){
-                    checkGPS();
-                }
-                else{
-
-
-                }
-        }
-    }*/
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -237,10 +214,9 @@ public class MapFragment extends Fragment{
         return rootView;
     }
 
-
     private void checkLocationToMarker(Location location){
 
-for(int i = 0; i<markerOptions.size();i++){
+for(int i = 0; i<1;i++){
 
     float[] distance = new float[1];
     Location.distanceBetween( location.getLatitude(),location.getLongitude(),
@@ -253,10 +229,6 @@ for(int i = 0; i<markerOptions.size();i++){
         Toast.makeText(getActivity().getBaseContext(), "Inside", Toast.LENGTH_LONG).show();
     }
 }
-
-
-        //Toast.makeText(getContext(),location.getLongitude()+":"+location.getLatitude(),Toast.LENGTH_LONG).show();
-        //Toast.makeText(getContext(),"updating",Toast.LENGTH_LONG).show();
 
 
 
