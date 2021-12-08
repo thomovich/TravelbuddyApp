@@ -16,4 +16,10 @@
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="about" />
 
+    <item
+    android:id="@+id/SightFragment"
+        android:icon="@drawable/ic_search_standard_foreground"
+        android:title="sights"
+    />
+
 </menu>
