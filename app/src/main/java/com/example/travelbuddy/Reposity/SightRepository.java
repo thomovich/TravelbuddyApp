@@ -18,11 +18,11 @@ public class SightRepository {
 
     public SightRepository() {
 
-        sightList.add(new Sights("Drinking Coffee", R.drawable.thomas));
-        sightList.add(new Sights("Getting a Beer", R.drawable.frederik));
-        sightList.add(new Sights("Taking a Walk", R.drawable.rasmus));
-        sightList.add(new Sights("Enjoying the Sun", R.drawable.asbjorn));
-        sightList.add(new Sights("Having a good time with friends", R.drawable.simon));
+        sightList.add(new Sights("Møllestien", R.drawable.mollestien));
+        sightList.add(new Sights("Marselisborg slot", R.drawable.slot));
+        sightList.add(new Sights("Agnete og Havmanden", R.drawable.agnete));
+        sightList.add(new Sights("Den svangre", R.drawable.densvangre));
+        sightList.add(new Sights("Flodhesteungen", R.drawable.flodhesteungen));
 
 
         Sights.setValue(sightList);
