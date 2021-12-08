@@ -22,4 +22,12 @@
         android:name="com.example.travelbuddy.View.AboutFragment"
         android:label="about"
         tools:layout="@layout/fragment_about" />
+
+    <fragment
+        android:id="@+id/sight"
+        android:name="com.example.travelbuddy.View.SightFragment"
+        android:label="sight"
+        tools:layout="@layout/fragment_sight"
+
+        />
 </navigation>

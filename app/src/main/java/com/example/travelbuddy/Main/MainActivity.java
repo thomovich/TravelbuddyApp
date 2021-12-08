@@ -89,6 +89,9 @@ public class MainActivity extends AppCompatActivity{
                         case R.id.AboutFragment:
                             Fragmenthandler("AboutFragment");
                             break;
+                        case R.id.SightFragment:
+                            Fragmenthandler("SightFragment");
+                            break;
                     }
                 } catch (Exception e){
                     e.printStackTrace();
