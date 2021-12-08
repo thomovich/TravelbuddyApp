@@ -2,6 +2,7 @@ package com.example.travelbuddy.View;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.travelbuddy.Main.MainActivity;
+import com.example.travelbuddy.Models.Senddata;
 import com.example.travelbuddy.Models.Sight;
 import com.example.travelbuddy.R;
 
@@ -63,6 +65,7 @@ public class MapFragment extends Fragment{
     public static final int FAST_UPDATE_INTERVAL = 5;
     private GoogleMap googleMap;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
+    private Senddata senddata;
     MapView mMapView;
     Sight sights = new Sight();
 
@@ -236,11 +239,22 @@ public class MapFragment extends Fragment{
             Toast.makeText(getActivity().getBaseContext(), "Outside", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(getActivity().getBaseContext(), "Inside", Toast.LENGTH_LONG).show();
+            senddata.senddata("Url til sang");
         }
         //Toast.makeText(getContext(),location.getLongitude()+":"+location.getLatitude(),Toast.LENGTH_LONG).show();
         //Toast.makeText(getContext(),"updating",Toast.LENGTH_LONG).show();
 
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        Activity activity = (Activity) context;
+        try{
+            senddata = (Senddata) activity;
 
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.travelbuddy.Main;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.fragment.app.Fragment;
@@ -9,34 +10,42 @@ import androidx.fragment.app.FragmentManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 
+import android.util.Log;
 import android.view.View;
 
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 
+import com.example.travelbuddy.Models.Senddata;
+import com.example.travelbuddy.Models.Soundplayer;
 import com.example.travelbuddy.R;
 
 import com.example.travelbuddy.View.HomeFragment;
 
 import com.example.travelbuddy.ViewModels.SharedViewModel;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.io.IOException;
 
 
-public class MainActivity extends AppCompatActivity{
-    private boolean playing = false;
+public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPreparedListener, Senddata {
+    String currentlyloaded;
     Button scanbutton, playbtn;
-    BottomNavigationView  navview;
     SharedViewModel sharedViewModel;
     MediaPlayer mediaPlayer;
-    RelativeLayout relativeLayout;
+    SeekBar seekbar;
    // private ActivityMainBinding binding;
    ChipNavigationBar chipNavigationBar;
 
@@ -51,17 +60,27 @@ public class MainActivity extends AppCompatActivity{
         //Intent intent = new Intent (MainActivity.this,OnboardingActivity.class);
         //startActivity(intent);
         setContentView(R.layout.activity_main);
-
-
+        mediaPlayer = new MediaPlayer();
         playbtn = findViewById(R.id.btnplay);
+        seekbar = findViewById(R.id.playbar);
+
+        playbtn.setClickable(false);
+        playbtn.setText("Audio is loading");
+        fetchnewsound("gs://travelbuddy-2b732.appspot.com/Ta' og fuck af Video + Lyrics.mp3");
+
+
+
         playbtn.setOnClickListener(v->{
-            playbtn.setText("sound is playing");
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    playaudio();
-                }
-            }).start();
+
+            if(mediaPlayer.isPlaying()){
+                mediaPlayer.pause();
+                playbtn.setText("sound is paused");
+            } else {
+                playbtn.setText("sound is playing");
+                mediaPlayer.start();
+            }
+
+
 
         });
         chipNavigationBar = findViewById(R.id.bottom_nav_menu);
@@ -72,31 +91,61 @@ public class MainActivity extends AppCompatActivity{
 
     }
 
-    private void playaudio() {
-        String audioUrl = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
 
-        // initializing media player
-        mediaPlayer = new MediaPlayer();
 
-        // below line is use to set the audio
-        // stream type for our media player.
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
+    private void fetchAudioUrlFromFirebase(String url) {
+        final FirebaseStorage storage = FirebaseStorage.getInstance();
+        // Create a storage reference from our app
+        StorageReference storageRef = storage.getReferenceFromUrl(url);
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                try {
+                    // Download url of file
+                    final String url = uri.toString();
+                    mediaPlayer.setDataSource(url);
+                    // wait for media player to get prepare
+                    mediaPlayer.setOnPreparedListener(MainActivity.this);
+                    mediaPlayer.prepareAsync();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 
-        // below line is use to set our
-        // url to our media player.
-        try {
-            mediaPlayer.setDataSource(audioUrl);
-            // below line is use to prepare
-            // and start our media player.
-            mediaPlayer.prepare();
-            mediaPlayer.start();
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.i("TAG", e.getMessage());
+                    }
+                });
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // below line is use to display a toast message.
-        //Toast.makeText(this, "Audio started playing..", Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onPrepared(MediaPlayer mp) {
+        playbtn.setText("audio is ready");
+        playbtn.setClickable(true);
+        mediaPlayer = mp;
+    }
+
+    private void fetchnewsound(String data){
+        if(currentlyloaded != data){
+            currentlyloaded = data;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    playbtn.setClickable(false);
+                    playbtn.setText("Audio is loading");
+                    fetchAudioUrlFromFirebase(data);
+                }
+            }).start();
+        } else {
+            // no new sounds to get
+        }
+    }
+
+
 
 
     private void bottomMenu() {
@@ -194,5 +243,9 @@ public class MainActivity extends AppCompatActivity{
     }
 
 
+    @Override
+    public void senddata(String data) {
+        fetchnewsound(data);
 
+    }
 }
