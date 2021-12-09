@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -14,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 
@@ -29,6 +32,7 @@ import com.example.travelbuddy.R;
 
 import com.example.travelbuddy.View.HomeFragment;
 
+import com.example.travelbuddy.ViewModels.MainActivityViewModel;
 import com.example.travelbuddy.ViewModels.SharedViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,9 +45,10 @@ import java.io.IOException;
 
 
 public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPreparedListener, Senddata {
-    String currentlyloaded;
+    String currentlyloaded, btntext;
     Button scanbutton, playbtn;
     SharedViewModel sharedViewModel;
+    MainActivityViewModel mainActivityViewModel;
     MediaPlayer mediaPlayer;
     SeekBar seekbar;
    // private ActivityMainBinding binding;
@@ -60,13 +65,30 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
         //Intent intent = new Intent (MainActivity.this,OnboardingActivity.class);
         //startActivity(intent);
         setContentView(R.layout.activity_main);
-        mediaPlayer = new MediaPlayer();
+
         playbtn = findViewById(R.id.btnplay);
         seekbar = findViewById(R.id.playbar);
+        mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
+        btntext = mainActivityViewModel.getBtntext();
+        currentlyloaded = mainActivityViewModel.getCrnsong();
+        playbtn.setText(btntext);
+        mediaPlayer = mainActivityViewModel.getSong();
 
-        playbtn.setClickable(false);
-        playbtn.setText("Audio is loading");
+
+        mainActivityViewModel.getButtontext().observe(this, s -> playbtn.setText(s));
+
+        mainActivityViewModel.getCurrentsong().observe(this, s -> currentlyloaded = s);
+        mainActivityViewModel.getSeekbar().observe(this, new Observer<Integer>(){
+            @Override
+            public void onChanged(Integer integer) {
+                seekbar.setProgress(integer);
+            }
+        });
+
         fetchnewsound("gs://travelbuddy-2b732.appspot.com/Ta' og fuck af Video + Lyrics.mp3");
+        if(mediaPlayer != null){
+            seekbar.setMax(mediaPlayer.getDuration());
+        }
 
 
 
@@ -74,18 +96,36 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
 
             if(mediaPlayer.isPlaying()){
                 mediaPlayer.pause();
-                playbtn.setText("sound is paused");
+                mainActivityViewModel.selectbtntext("sound is paused");
             } else {
-                playbtn.setText("sound is playing");
+                mainActivityViewModel.selectbtntext("sound is playing");
                 mediaPlayer.start();
             }
-
-
 
         });
         chipNavigationBar = findViewById(R.id.bottom_nav_menu);
 
         Fragmenthandler("HomeFragment");
+
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean fromuser) {
+                if(fromuser){
+                    mediaPlayer.seekTo(i);
+                    seekBar.setProgress(i);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         bottomMenu();
 
@@ -94,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
 
 
     private void fetchAudioUrlFromFirebase(String url) {
+        mediaPlayer = new MediaPlayer();
         final FirebaseStorage storage = FirebaseStorage.getInstance();
         // Create a storage reference from our app
         StorageReference storageRef = storage.getReferenceFromUrl(url);
@@ -124,19 +165,36 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
 
     @Override
     public void onPrepared(MediaPlayer mp) {
-        playbtn.setText("audio is ready");
+        mainActivityViewModel.selectbtntext("Song is ready");
+        mainActivityViewModel.setSong(mp);
         playbtn.setClickable(true);
+        updateSeekbar();
+        seekbar.setMax(mediaPlayer.getDuration());
         mediaPlayer = mp;
+    }
+
+    private void updateSeekbar() {
+        int currpos = mediaPlayer.getCurrentPosition();
+        mainActivityViewModel.selectseekbar(currpos);
+
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                updateSeekbar();
+            }
+        };
+        Handler handler = new Handler();
+        handler.postDelayed(runnable, 1000);
     }
 
     private void fetchnewsound(String data){
         if(currentlyloaded != data){
-            currentlyloaded = data;
+            mainActivityViewModel.selectcurrentsong(data);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     playbtn.setClickable(false);
-                    playbtn.setText("Audio is loading");
+                    mainActivityViewModel.selectbtntext("song is loading");
                     fetchAudioUrlFromFirebase(data);
                 }
             }).start();
@@ -150,31 +208,27 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
 
     private void bottomMenu() {
 
-        chipNavigationBar.setOnItemSelectedListener(new ChipNavigationBar.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(int i) {
+        chipNavigationBar.setOnItemSelectedListener(i -> {
 
-
-                try {
-                    switch (i) {
-                        case R.id.HomeFragment:
-                            Fragmenthandler("HomeFragment");
-                            break;
-                        case R.id.MapFragment:
-                            Fragmenthandler("MapFragment");
-                            break;
-                        case R.id.AboutFragment:
-                            Fragmenthandler("AboutFragment");
-                            break;
-                        case R.id.SightFragment:
-                            Fragmenthandler("SightFragment");
-                            break;
-                    }
-                } catch (Exception e){
-                    e.printStackTrace();
+            try {
+                switch (i) {
+                    case R.id.HomeFragment:
+                        Fragmenthandler("HomeFragment");
+                        break;
+                    case R.id.MapFragment:
+                        Fragmenthandler("MapFragment");
+                        break;
+                    case R.id.AboutFragment:
+                        Fragmenthandler("AboutFragment");
+                        break;
+                    case R.id.SightFragment:
+                        Fragmenthandler("SightFragment");
+                        break;
                 }
-
+            } catch (Exception e){
+                e.printStackTrace();
             }
+
         });
     }
 

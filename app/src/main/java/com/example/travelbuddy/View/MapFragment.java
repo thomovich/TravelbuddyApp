@@ -187,13 +187,15 @@ public class MapFragment extends Fragment{
     }
 
     private void checkpermission() {
-        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED  ){
-            requestPermissions(new String[]{
-                            android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    REQUEST_CODE_ASK_PERMISSIONS);
-            return ;
-        }
+            if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                    PackageManager.PERMISSION_GRANTED  ){
+                requestPermissions(new String[]{
+                                android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        REQUEST_CODE_ASK_PERMISSIONS);
+                return ;
+            }
+
+
     }
 
 
@@ -234,7 +236,9 @@ for(int i = 0; i<1;i++){
 
     }
 
-
-
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        callback = null;
+    }
 }
