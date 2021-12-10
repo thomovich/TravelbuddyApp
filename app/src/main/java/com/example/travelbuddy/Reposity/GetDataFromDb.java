@@ -11,7 +11,7 @@ public class GetDataFromDb implements dblookups{
     Connection connection;
 
     public GetDataFromDb(){
-        connection = DatabaseConnector.getConnection();
+        //connection = DatabaseConnector.getConnection();
     }
     @Override
     public boolean checkqr(String Qrcode) {

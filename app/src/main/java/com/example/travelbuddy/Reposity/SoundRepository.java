@@ -15,10 +15,17 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class SoundRepository
 {
     private static SoundRepository singletonisntance = null;
+
     private final MutableLiveData <MediaPlayer> media = new MutableLiveData<MediaPlayer>();
 
     public static SoundRepository getSoundRepositoryInstance(){
@@ -36,23 +43,24 @@ public class SoundRepository
         return media;
     }
 
+
     public MediaPlayer getMediaplayer(String media, Context context){
-        String base64 = "";
-        StringBuffer sbuffer = new StringBuffer();
-        InputStream ins = context.getResources().openRawResource(R.raw.base64);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(ins));{
-            if(ins != null){
-                try {
-                    while((base64 = reader.readLine()) != null){
-                        sbuffer.append(base64);
-                    }
-                    base64 = sbuffer.toString();
-                    ins.close();
-                } catch (Exception e){
-                    e.printStackTrace();
-                }
+        String base64 = null;
+        Connection con;
+        ConnectionManager connectionManager = new ConnectionManager();
+        con = connectionManager.connectionclass();
+
+        try {
+            PreparedStatement pstmt = con.
+                    prepareStatement("Select sight_audio from travelbuddy.sight_variants");
+            ResultSet rs = pstmt.executeQuery();
+
+            if(rs.next()){
+                base64 = rs.getString(1);
             }
-        };
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
         MediaPlayer mediaPlayer = new MediaPlayer();
         byte[] data = Base64.decode(base64, Base64.DEFAULT);
         mediaPlayer.setDataSource(new MediaDataSource() {
@@ -80,6 +88,23 @@ public class SoundRepository
 
             }
         });
+
+        /*StringBuffer sbuffer = new StringBuffer();
+        InputStream ins = context.getResources().openRawResource(R.raw.base64);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(ins));{
+            if(ins != null){
+                try {
+                    while((base64 = reader.readLine()) != null){
+                        sbuffer.append(base64);
+                    }
+                    base64 = sbuffer.toString();
+                    ins.close();
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
+        };*/
+
 
         return mediaPlayer;
     }
