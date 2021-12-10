@@ -11,21 +11,16 @@ import java.util.ArrayList;
 
 public class MapsModel implements IMapsModel{
 
-    ArrayList<MarkerOptions> markers=new ArrayList<>();
+    ArrayList<MarkerOptions> markers = new ArrayList<>();
 
     @Override
     public ArrayList<MarkerOptions> getMarkerLocation() {
-
-        for(int i=0;i<5;i++){
-
+        for(int i=0;i < 5;i++){
             MarkerOptions marker = new MarkerOptions();
             LatLng latLng = new LatLng(55.1562, 10.1920);
-
             marker.position(latLng)
                     .title("something from db");
-
             markers.add(marker);
-
         }
         return markers;
     }
