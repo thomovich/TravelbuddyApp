@@ -1,6 +1,5 @@
 package com.example.travelbuddy.Models;
 
-import android.media.Image;
 
 import com.example.travelbuddy.R;
 

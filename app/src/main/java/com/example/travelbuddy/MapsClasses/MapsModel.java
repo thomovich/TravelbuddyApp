@@ -1,9 +1,5 @@
 package com.example.travelbuddy.MapsClasses;
 
-import android.graphics.Color;
-
-import com.google.android.gms.maps.model.Circle;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 

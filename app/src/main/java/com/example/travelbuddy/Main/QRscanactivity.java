@@ -5,7 +5,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -24,7 +23,6 @@ import com.example.travelbuddy.Models.GlobalVariable;
 import com.example.travelbuddy.R;
 import com.example.travelbuddy.Reposity.GetDataFromDb;
 import com.example.travelbuddy.Reposity.dblookups;
-import com.example.travelbuddy.ViewModels.SharedViewModel;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -35,7 +33,6 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
     private static final int REQUEST_CAMERA = 1;
     int currentapiversion = Build.VERSION.SDK_INT;
     private String qrCode;
-    private SharedViewModel shared;
     CameraManager cameraManager;
 
 
@@ -76,7 +73,6 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
 
         scannerView = findViewById(R.id.zxscanner);
         Button manualbtn = findViewById(R.id.typeinbtn);
-        shared = new ViewModelProvider(this).get(SharedViewModel.class);
 
         if(currentapiversion>= Build.VERSION_CODES.M){
             if(checkPermission()){
@@ -184,7 +180,6 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
                 "ok", (dialogInterface, i) -> {
                     boolean check = Checkindb(rawresult);
                     if(check){
-                        shared.setQrscanned(check);
                         builder.setTitle("QR succesful press ok");
                         goNextActivity();
                     } else {

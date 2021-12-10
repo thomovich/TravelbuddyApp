@@ -13,10 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.travelbuddy.Adapters.AboutAdapter;
-import com.example.travelbuddy.Adapters.SightAdapter;
 import com.example.travelbuddy.R;
 import com.example.travelbuddy.ViewModels.AboutViewModel;
-import com.example.travelbuddy.ViewModels.SightViewModel;
 
 
 public class AboutFragment extends Fragment implements AboutAdapter.OnListItemClickListener {

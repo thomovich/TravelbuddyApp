@@ -1,14 +1,10 @@
 package com.example.travelbuddy.ViewModels;
 
 
-import android.content.Context;
-import android.media.MediaPlayer;
 
 import androidx.lifecycle.ViewModel;
 
 import com.example.travelbuddy.Reposity.MapsReposity;
-import com.example.travelbuddy.Reposity.SoundRepository;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;

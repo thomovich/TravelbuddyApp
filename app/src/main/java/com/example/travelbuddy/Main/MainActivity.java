@@ -1,54 +1,30 @@
 package com.example.travelbuddy.Main;
 
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
-import android.media.MediaDataSource;
 import android.media.MediaPlayer;
-
 import android.os.Bundle;
-
-
 import android.os.Handler;
-import android.os.Parcelable;
-import android.util.Base64;
-import android.view.View;
-
 import android.widget.Button;
 import android.widget.SeekBar;
-
-
 import com.example.travelbuddy.Models.GlobalVariable;
-import com.example.travelbuddy.Models.Senddata;
 import com.example.travelbuddy.R;
-
 import com.example.travelbuddy.ViewModels.MainActivityViewModel;
-import com.example.travelbuddy.ViewModels.SharedViewModel;
-import com.example.travelbuddy.ViewModels.SightViewModel;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
-
-import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 
 public class MainActivity extends AppCompatActivity {
-    Button scanbutton, playbtn;
+    Button playbtn;
     MainActivityViewModel mainActivityViewModel;
     MediaPlayer mediaPlayer;
     SeekBar seekbar;
    ChipNavigationBar chipNavigationBar;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
-        //onBoarding features for the app
-        //Intent intent = new Intent(MainActivity.this,OnboardingActivity.class);
-        //startActivity(intent);
         setContentView(R.layout.activity_main);
         playbtn = findViewById(R.id.btnplay);
         seekbar = findViewById(R.id.playbar);
@@ -169,44 +142,6 @@ public class MainActivity extends AppCompatActivity {
 
         });
     }
-        /*scanbutton = findViewById(R.id.scanbtn);
-
-
-        sharedViewModel = new ViewModelProvider(this).get(SharedViewModel.class);
-
-        scanbutton.setOnClickListener(view -> {
-            Intent intent = new Intent (MainActivity.this,QRscanactivity.class);
-            startActivity(intent);
-        });
-
-        navview.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if(item.getItemId()==R.id.MapFragment){
-                    Fragmenthandler("MapFragment");
-                }
-                return true;
-            }
-        });*/
-
-      /*  binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-       */
-
-       /* BottomNavigationView navView = findViewById(R.id.nav_view);
-
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-                .build();
-        NavController navController = Navigation.findNavController(this, R.id.fragment_container_view);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
-
-        scanbutton.setOnClickListener(view ->{
-            Intent intent = new Intent(MainActivity.this,QRscanactivity.class);
-            startActivity(intent);
-        });
-        */
 
 
     void Fragmenthandler(String fragment){
