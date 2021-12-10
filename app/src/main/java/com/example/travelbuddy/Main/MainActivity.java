@@ -25,11 +25,13 @@ import android.widget.Button;
 import android.widget.SeekBar;
 
 
+import com.example.travelbuddy.Models.GlobalVariable;
 import com.example.travelbuddy.Models.Senddata;
 import com.example.travelbuddy.R;
 
 import com.example.travelbuddy.ViewModels.MainActivityViewModel;
 import com.example.travelbuddy.ViewModels.SharedViewModel;
+import com.example.travelbuddy.ViewModels.SightViewModel;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.io.BufferedReader;
@@ -41,19 +43,20 @@ import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
     Button scanbutton, playbtn;
-    SharedViewModel sharedViewModel;
     MainActivityViewModel mainActivityViewModel;
     MediaPlayer mediaPlayer;
-    boolean isprepared = false;
     SeekBar seekbar;
-    int seekbarmax;
-   // private ActivityMainBinding binding;
    ChipNavigationBar chipNavigationBar;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(!GlobalVariable.getInstance().isscan){
+            Intent intent = new Intent(MainActivity.this,QRscanactivity.class);
+            startActivity(intent);
+            finish();
+        }
         //onBoarding features for the app
         //Intent intent = new Intent(MainActivity.this,OnboardingActivity.class);
         //startActivity(intent);
@@ -95,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         });
         chipNavigationBar = findViewById(R.id.bottom_nav_menu);
 
-        //Fragmenthandler("HomeFragment");
 
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -206,23 +208,18 @@ public class MainActivity extends AppCompatActivity {
         });
         */
 
-    void checkifscannedqr(){
-        if(sharedViewModel.getQrscanned()){
-            scanbutton.setVisibility(View.INVISIBLE);
-        } else {
-            // do something else
-        }
-    }
 
     void Fragmenthandler(String fragment){
         String classpath = "com.example.travelbuddy.View." + fragment;
         try {
             Class<?> cls = Class.forName(classpath);
-            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, (Class<? extends Fragment>) cls,null).addToBackStack(null).commit();
+            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, (Class<? extends Fragment>) cls,null).commit();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
+
+
 
 
 }

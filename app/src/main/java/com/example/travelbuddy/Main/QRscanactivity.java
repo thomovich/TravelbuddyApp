@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import com.example.travelbuddy.Models.GlobalVariable;
 import com.example.travelbuddy.R;
 import com.example.travelbuddy.Reposity.GetDataFromDb;
 import com.example.travelbuddy.Reposity.dblookups;
@@ -61,13 +63,13 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         switchOff.setOnClickListener(v -> {
             switchOff.setVisibility(View.INVISIBLE);
             switchOn.setVisibility(View.VISIBLE);
-            flashcontrol(false);
+            //flashcontrol(false);
 
         });
         switchOn.setOnClickListener(view -> {
             switchOff.setVisibility(View.VISIBLE);
             switchOn.setVisibility(View.INVISIBLE);
-            flashcontrol(true);
+            //flashcontrol(true);
 
 
         });
@@ -78,7 +80,6 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
 
         if(currentapiversion>= Build.VERSION_CODES.M){
             if(checkPermission()){
-                Toast.makeText(this,"Permission granted", Toast.LENGTH_SHORT).show();
             } else {
                 requestpermission();
             }
@@ -95,7 +96,8 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
             buttonok.setOnClickListener(view -> {
                 EditText edit = dialog.findViewById(R.id.typeinqr);
                 String qrcode = edit.getText().toString();
-                shared.setQrscanned(Checkindb(qrcode));
+                goNextActivity();
+                finish();
                 dialog.dismiss();
             });
 
@@ -166,6 +168,13 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
 
     }
 
+    void goNextActivity(){
+        GlobalVariable.getInstance().isscan = true;
+        Intent intent = new Intent(QRscanactivity.this, OnboardingActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     @Override
     public void handleResult(Result result) {
         final String rawresult = result.getText();
@@ -176,9 +185,10 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
                     boolean check = Checkindb(rawresult);
                     if(check){
                         shared.setQrscanned(check);
-                        Intent intent = new Intent(QRscanactivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
+                        builder.setTitle("QR succesful press ok");
+                        goNextActivity();
+                    } else {
+                        builder.setTitle("scan unsuccesful try again");
                     }
                     scannerView.resumeCameraPreview(QRscanactivity.this);
                 }
@@ -186,7 +196,6 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         builder.setNegativeButton(
                 "Cancel", (dialogInterface, i) -> {
                     scannerView.resumeCameraPreview(QRscanactivity.this);
-
                 });
         builder.setMessage(result.getText());
         AlertDialog alertDialog = builder.create();

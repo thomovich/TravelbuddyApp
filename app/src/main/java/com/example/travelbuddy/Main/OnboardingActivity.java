@@ -59,5 +59,6 @@ public class OnboardingActivity extends AppCompatActivity {
     public void navigateToMain(View view) {
         Intent intent = new Intent(OnboardingActivity.this,MainActivity.class);
         startActivity(intent);
+        finish();
     }
 }
