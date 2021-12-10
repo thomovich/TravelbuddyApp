@@ -21,7 +21,7 @@
         android:textStyle="italic"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="Sights"/>
+        android:text="@string/sights"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_sight"

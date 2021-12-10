@@ -7,6 +7,7 @@ import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.travelbuddy.Reposity.SoundRepository;
@@ -18,6 +19,18 @@ public class MainActivityViewModel extends ViewModel {
     SoundRepository soundRepository = SoundRepository.getSoundRepositoryInstance();
     private final MutableLiveData<Integer> seekbarprgs = new MutableLiveData<Integer>();
     private final MutableLiveData<String> Buttontext = new MutableLiveData<String>();
+
+    public MainActivityViewModel(){
+        soundRepository.getMedia().observeForever(new Observer<MediaPlayer>() {
+            @Override
+            public void onChanged(MediaPlayer mediaPlayer) {
+                //Update song in viewmodel
+            }
+        });
+
+
+    }
+
 
     public void selectbtntext(String buttontext){
 
