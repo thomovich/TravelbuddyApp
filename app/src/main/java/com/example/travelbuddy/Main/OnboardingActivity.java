@@ -35,13 +35,13 @@ public class OnboardingActivity extends AppCompatActivity {
 
     private ArrayList<PaperOnboardingPage> getDataForOnboarding() {
 
-        PaperOnboardingPage src = new PaperOnboardingPage("Search","Now that you have scanned your QR code, a set of sights have been unlocked so that you now can find the ones you find interesting",
+        PaperOnboardingPage src = new PaperOnboardingPage("Search","Now that you have scanned your QR code, a set of sights have been unlocked for you to search",
                 Color.parseColor("#dce9f1"),R.mipmap.ic_searchicon_foreground,R.drawable.ic_search_standard_foreground);
 
-        PaperOnboardingPage src1 = new PaperOnboardingPage("Navigate","With the items in place, you can now explore the places! so what are you waiting for?",
+        PaperOnboardingPage src1 = new PaperOnboardingPage("Navigate","Navigate through the landscape to the places you find interesting by looking at the map",
                 Color.parseColor("#dce9f1"),R.mipmap.ic_navigate_foreground,R.drawable.ic_navigate_standard_foreground);
 
-        PaperOnboardingPage src2 = new PaperOnboardingPage("Listen","Now that you have found a item, you can sit back, relax and listen to the sight",
+        PaperOnboardingPage src2 = new PaperOnboardingPage("Listen","Listen to the story by entering the blue circle and hit the play button",
                 Color.parseColor("#dce9f1"),R.mipmap.ic_listen_foreground,R.drawable.ic_listen_standard_foreground);
         ArrayList<PaperOnboardingPage> elements = new ArrayList<>();
         elements.add(src);
