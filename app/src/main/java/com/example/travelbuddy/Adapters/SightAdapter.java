@@ -58,7 +58,7 @@ public class SightAdapter extends RecyclerView.Adapter<SightAdapter.ViewHolder> 
     //Get the data from the single craving java object into the views of our cravingholder.
     public void onBindViewHolder(@NonNull SightAdapter.ViewHolder holder, int position) {
         holder.SightDescription.setText(sightList.get(position).getName());
-        holder.icon.setImageResource(sightList.get(position).getId());
+        holder.icon.setImageResource(sightList.get(position).getImg());
     }
 
     public void updateList(List<Sights> sightList) {

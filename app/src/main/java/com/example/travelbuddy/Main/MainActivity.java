@@ -30,7 +30,6 @@ import com.example.travelbuddy.ViewModels.SharedViewModel;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -297,11 +296,10 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
     }
 
     void Fragmenthandler(String fragment){
-        FragmentManager fragmentManager = getSupportFragmentManager();
         String classpath = "com.example.travelbuddy.View." + fragment;
         try {
             Class<?> cls = Class.forName(classpath);
-            fragmentManager.beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, (Class<? extends Fragment>) cls,null).commit();
+            getSupportFragmentManager().beginTransaction().setReorderingAllowed(true).replace(R.id.fragment_container, (Class<? extends Fragment>) cls,null).addToBackStack(null).commit();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
