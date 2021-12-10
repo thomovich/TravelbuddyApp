@@ -6,6 +6,9 @@ import android.media.MediaPlayer;
 import android.provider.MediaStore;
 import android.util.Base64;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.example.travelbuddy.R;
 
 import java.io.BufferedReader;
@@ -16,12 +19,21 @@ import java.io.InputStreamReader;
 public class SoundRepository
 {
     private static SoundRepository singletonisntance = null;
+    private final MutableLiveData <MediaPlayer> media = new MutableLiveData<MediaPlayer>();
 
     public static SoundRepository getSoundRepositoryInstance(){
         if(singletonisntance == null){
             singletonisntance = new SoundRepository();
         }
         return singletonisntance;
+    }
+
+    public void selectMedia(MediaPlayer mediaPlayer){
+        media.postValue(mediaPlayer);
+    }
+
+    public LiveData<MediaPlayer> getMedia(){
+        return media;
     }
 
     public MediaPlayer getMediaplayer(String media, Context context){
