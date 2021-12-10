@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModel;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,6 +30,7 @@ import com.example.travelbuddy.MapsClasses.MapsModel;
 import com.example.travelbuddy.Models.Sight;
 import com.example.travelbuddy.R;
 
+import com.example.travelbuddy.ViewModels.MapViewModel;
 import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.ResolvableApiException;
@@ -57,10 +59,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 
-public class MapFragment extends Fragment{
+public class MapFragment extends Fragment {
 
     public static final int DEFAULT_UPDATE_INTERVAL = 30;
     public static final int FAST_UPDATE_INTERVAL = 5;
@@ -71,13 +75,13 @@ public class MapFragment extends Fragment{
     Sight sights = new Sight();
 
 
-
-    Location currentLocation  = null;
+    MapViewModel viewModel = null;
+    Location currentLocation = null;
     Circle circle;
     ArrayList<LatLng> locationList = new ArrayList<>();
-    ArrayList<Circle> cirleList=new ArrayList<>();
+    ArrayList<Circle> cirleList = new ArrayList<>();
     ArrayList<MarkerOptions> markerOptions;
-    ArrayList<CircleOptions> radiusContainer=new ArrayList<>();
+    ArrayList<CircleOptions> radiusContainer = new ArrayList<>();
 
     //google's API for location services. Majority of the app functions using this class.
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -107,14 +111,13 @@ public class MapFragment extends Fragment{
 
                 //set properties for locationRequest
                 locationRequest = new LocationRequest();
-                locationRequest.setInterval(1000* DEFAULT_UPDATE_INTERVAL);
-                locationRequest.setFastestInterval(1000* FAST_UPDATE_INTERVAL);
+                locationRequest.setInterval(1000 * DEFAULT_UPDATE_INTERVAL);
+                locationRequest.setFastestInterval(1000 * FAST_UPDATE_INTERVAL);
                 locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
 
-
                 //triggers when interval is triggered
-                callback = new LocationCallback(){
+                callback = new LocationCallback() {
 
                     @Override
                     public void onLocationResult(LocationResult locationResult) {
@@ -126,10 +129,9 @@ public class MapFragment extends Fragment{
                 startLocationUpdates();
 
 
-
                 //markers to explore
 
-                    LatLng arhus = new LatLng(56.1562, 10.1920);
+                LatLng arhus = new LatLng(56.1562, 10.1920);
 
                 //zoom to current location
                 CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -137,15 +139,33 @@ public class MapFragment extends Fragment{
                         .zoom(12)
                         .build();
 
-                googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-
-
                 googleMap.setMyLocationEnabled(true);
+                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 
-                 markerOptions = new MapsModel().getMarkerLocation();
+                googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
 
-                for(int i=0; i<markerOptions.size();i++){
+                    @Override
+                    public boolean onMyLocationButtonClick() {
+                        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
+                                .target(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
+                                .zoom(15)
+                                .build()));
+                        return true;
+                    }
+
+
+                });
+
+                googleMap.getUiSettings().setZoomControlsEnabled(true);
+                googleMap.getUiSettings().setRotateGesturesEnabled(true);
+                googleMap.getUiSettings().setScrollGesturesEnabled(true);
+                googleMap.getUiSettings().setTiltGesturesEnabled(true);
+                mapView = getView();
+
+                markerOptions = new MapsModel().getMarkerLocation();
+
+                for (int i = 0; i < markerOptions.size(); i++) {
                     CircleOptions circly = new CircleOptions()
                             .center(markerOptions.get(i).getPosition())
                             .radius(10000)
@@ -156,34 +176,10 @@ public class MapFragment extends Fragment{
                 }
 
 
-                googleMap.getUiSettings().setZoomControlsEnabled(true);
-
-                googleMap.getUiSettings().setRotateGesturesEnabled(true);
-                googleMap.getUiSettings().setScrollGesturesEnabled(true);
-                googleMap.getUiSettings().setTiltGesturesEnabled(true);
-                mapView = getView();
-
-
-                moveZoomControls(mapView, -20,-20,950,1350,true,true);
-
-
-
+                moveZoomControls(mapView, -20, -20, 950, 1350, true, true);
 
 
                 //virker ikke
-                googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-
-                    @Override
-                    public boolean onMyLocationButtonClick() {
-                        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition( new CameraPosition.Builder()
-                                .target(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
-                                .zoom(15)
-                                .build()));
-                        return true;
-                    }
-
-
-                });
 
 
             }
@@ -191,11 +187,20 @@ public class MapFragment extends Fragment{
 
         super.onViewCreated(view, savedInstanceState);
     }
+
     @SuppressLint("MissingPermission")
     private void startLocationUpdates() {
-        fusedLocationProviderClient.requestLocationUpdates(locationRequest,callback,null);
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, callback, null);
 
     }
+
+    /*
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        mapView = getView();
+        moveZoomControls(mapView,  20,20,-1000,-300,true,false);
+        super.onSaveInstanceState(outState);
+    }*/
 
     @SuppressLint("MissingPermission")
     private void checkGPS() {
@@ -208,13 +213,13 @@ public class MapFragment extends Fragment{
     }
 
     private void checkpermission() {
-            if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-                    PackageManager.PERMISSION_GRANTED  ){
-                requestPermissions(new String[]{
-                                android.Manifest.permission.ACCESS_FINE_LOCATION},
-                        REQUEST_CODE_ASK_PERMISSIONS);
-                return ;
-            }
+        if (ActivityCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{
+                            android.Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_CODE_ASK_PERMISSIONS);
+            return;
+        }
 
 
     }
@@ -223,6 +228,7 @@ public class MapFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.map_fragment, container, false);
+        viewModel = new MapViewModel();
         mMapView = rootView.findViewById(R.id.mapview);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume(); // needed to get the map to display immediately
@@ -237,24 +243,23 @@ public class MapFragment extends Fragment{
         return rootView;
     }
 
-    private void checkLocationToMarker(Location location){
+    private void checkLocationToMarker(Location location) {
 
         this.currentLocation = location;
-for(int i = 0; i<1;i++){
+        for (int i = 0; i < 1; i++) {
 
-    float[] distance = new float[1];
-    Location.distanceBetween( location.getLatitude(),location.getLongitude(),
-            markerOptions.get(i).getPosition().latitude, markerOptions.get(i).getPosition().longitude,distance);
+            float[] distance = new float[1];
+            Location.distanceBetween(location.getLatitude(), location.getLongitude(),
+                    markerOptions.get(i).getPosition().latitude, markerOptions.get(i).getPosition().longitude, distance);
 
-    if( distance[0] > radiusContainer.get(i).getRadius()  ){
-        Toast.makeText(getActivity().getBaseContext(), "Outside", Toast.LENGTH_LONG).show();
-    } else {
-
-       //Her skal der kaldes til main activity for at loade ny lyd
-        Toast.makeText(getActivity().getBaseContext(), "Inside", Toast.LENGTH_LONG).show();
-    }
-}
-
+            if (distance[0] > radiusContainer.get(i).getRadius()) {
+                //Toast.makeText(getActivity().getBaseContext(), "Outside", Toast.LENGTH_LONG).show();
+            } else {
+                //viewModel.getMarkerLocation();
+                //Her skal der kaldes til main activity for at loade ny lyd
+                //Toast.makeText(getActivity().getBaseContext(), "Inside", Toast.LENGTH_LONG).show();
+            }
+        }
 
 
     }
@@ -268,7 +273,7 @@ for(int i = 0; i<1;i++){
     //zoomControl bar relocated
     MapView mMapView;
     private static final String GOOGLEMAP_ZOOMIN_BUTTON = "GoogleMapZoomInButton";
-    private View mapView=null;
+    private View mapView = null;
 
     private void moveZoomControls(View mapView, int left, int top, int right, int bottom, boolean horizontal, boolean vertical) {
 
@@ -281,7 +286,7 @@ for(int i = 0; i<1;i++){
         View zoomInOut = (View) zoomIn.getParent();
 
         if (zoomInOut != null) {
-            moveView(zoomInOut,left,top,right,bottom,horizontal,vertical);
+            moveView(zoomInOut, left, top, right, bottom, horizontal, vertical);
         }
     }
 
@@ -326,10 +331,16 @@ for(int i = 0; i<1;i++){
             Log.e("sometinh", "moveView() - failed: " + ex.getLocalizedMessage());
             ex.printStackTrace();
         }
+
     }
 
 
-    //finger Zoom
+
+    //finger pushPull
+
+
+
+
 
 
 }

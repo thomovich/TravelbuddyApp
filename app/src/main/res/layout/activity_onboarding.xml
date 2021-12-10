@@ -16,5 +16,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
+        android:onClick="navigateToMain"
         android:text="skip" />
 </RelativeLayout>

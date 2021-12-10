@@ -9,6 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.media.MediaDataSource;
 import android.media.MediaPlayer;
 
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //onBoarding features for the app
-        //Intent intent = new Intent (MainActivity.this,OnboardingActivity.class);
+        //Intent intent = new Intent(MainActivity.this,OnboardingActivity.class);
         //startActivity(intent);
         setContentView(R.layout.activity_main);
         playbtn = findViewById(R.id.btnplay);
