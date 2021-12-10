@@ -1,30 +1,55 @@
 package com.example.travelbuddy.ViewModels;
 
+import android.content.Context;
 import android.media.MediaPlayer;
+import android.provider.MediaStore;
 import android.view.View;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.travelbuddy.Reposity.SoundRepository;
+
 public class MainActivityViewModel extends ViewModel {
-    boolean scannedin;
-    String btntext;
-    String crnsong;
-    MediaPlayer song;
+    private MediaPlayer preparedsong;
+   private final MutableLiveData<MediaPlayer> song = new MutableLiveData<MediaPlayer>();
+   private final MutableLiveData<Boolean> isprepared = new MutableLiveData<Boolean>();
+    SoundRepository soundRepository = SoundRepository.getSoundRepositoryInstance();
     private final MutableLiveData<Integer> seekbarprgs = new MutableLiveData<Integer>();
     private final MutableLiveData<String> Buttontext = new MutableLiveData<String>();
-    private final MutableLiveData<String> Currentsong = new MutableLiveData<String>();
 
     public void selectbtntext(String buttontext){
-        btntext = buttontext;
+
         Buttontext.postValue(buttontext);
     }
 
-    public void selectcurrentsong(String currentsong){
-        crnsong = currentsong;
-        Currentsong.postValue(currentsong);
+    public void setPreparedsong(MediaPlayer media){
+        this.preparedsong = media;
     }
+
+    public MediaPlayer getPreparedsong() {
+        return preparedsong;
+    }
+
+    public LiveData<Boolean> getIsprepared(){
+        return this.isprepared;
+    }
+
+    public void selectIsprepared(Boolean bool){
+        this.isprepared.postValue(bool);
+    }
+
+    public void selectSong(String song, Context context){
+
+        this.song.postValue(soundRepository.getMediaplayer(song, context));
+    }
+
+    public LiveData<MediaPlayer> getsong(){
+        return this.song;
+    }
+
+
 
     public void selectseekbar(Integer seekbar){
         seekbarprgs.postValue(seekbar);
@@ -34,9 +59,6 @@ public class MainActivityViewModel extends ViewModel {
         return seekbarprgs;
     }
 
-    public LiveData<String> getCurrentsong(){
-        return Currentsong;
-    }
 
     public LiveData<String> getButtontext(){
         if(Buttontext == null){
@@ -46,24 +68,7 @@ public class MainActivityViewModel extends ViewModel {
         return Buttontext;
     }
 
-    public boolean getscannedin(){
-        return scannedin;
-    }
-    public String getBtntext(){
-        return btntext;
-    }
 
-    public String getCrnsong(){
-        return crnsong;
-    }
-
-    public void setSong(MediaPlayer mediaPlayer){
-        song = mediaPlayer;
-    }
-
-    public MediaPlayer getSong(){
-        return song;
-    }
 
 
 }
