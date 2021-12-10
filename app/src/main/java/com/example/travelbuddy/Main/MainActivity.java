@@ -1,6 +1,7 @@
 package com.example.travelbuddy.Main;
 
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 
 
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Base64;
 import android.view.View;
 
@@ -36,13 +38,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 
-public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPreparedListener, Senddata {
-    String currentlyloaded;
+public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPreparedListener {
     Button scanbutton, playbtn;
     SharedViewModel sharedViewModel;
     MainActivityViewModel mainActivityViewModel;
     MediaPlayer mediaPlayer;
+    boolean isprepared = false;
     SeekBar seekbar;
+    int seekbarmax;
    // private ActivityMainBinding binding;
    ChipNavigationBar chipNavigationBar;
 
@@ -57,28 +60,45 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
         playbtn = findViewById(R.id.btnplay);
         seekbar = findViewById(R.id.playbar);
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        getData();
+        mainActivityViewModel.getIsprepared().observe(this, b -> isprepared = b);
+        mainActivityViewModel.getsong().observe(this, m ->{
+            if(!isprepared){
+                mediaPlayer = m;
+                mediaPlayer.setOnPreparedListener(this);
+                mediaPlayer.prepareAsync();
+            }
+        } );
         mainActivityViewModel.getButtontext().observe(this, s -> playbtn.setText(s));
-        mainActivityViewModel.getCurrentsong().observe(this, s -> currentlyloaded = s);
         mainActivityViewModel.getSeekbar().observe(this, new Observer<Integer>(){
             @Override
             public void onChanged(Integer integer) {
                 seekbar.setProgress(integer);
             }
         });
-        try {
-            fetchaudiofrombase64("tag og fuck af");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if(savedInstanceState != null){
+            mediaPlayer = mainActivityViewModel.getPreparedsong();
+            seekbar.setMax(mediaPlayer.getDuration());
         }
-        //fetchnewsound("gs://travelbuddy-2b732.appspot.com/Ta' og fuck af Video + Lyrics.mp3");
+
+
+        if(mediaPlayer == null){
+            try {
+                fetchaudiofromRepo("tag og fuck af");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+
         playbtn.setOnClickListener(v->{
             if(mediaPlayer.isPlaying()){
                 mediaPlayer.pause();
                 mainActivityViewModel.selectbtntext("sound is paused");
             } else {
-                mainActivityViewModel.selectbtntext("sound is playing");
                 mediaPlayer.start();
+                mainActivityViewModel.selectbtntext("sound is playing");
+
             }
         });
         chipNavigationBar = findViewById(R.id.bottom_nav_menu);
@@ -109,16 +129,6 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
 
     }
 
-    private void getData() {
-        currentlyloaded = mainActivityViewModel.getCrnsong();
-        playbtn.setText(mainActivityViewModel.getBtntext());
-        mediaPlayer = mainActivityViewModel.getSong();
-        if(mediaPlayer != null){
-            seekbar.setMax(mediaPlayer.getDuration());
-        }
-    }
-
-
     private void updateSeekbar() {
         int currpos = mediaPlayer.getCurrentPosition();
         mainActivityViewModel.selectseekbar(currpos);
@@ -131,89 +141,20 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
         Handler handler = new Handler();
         handler.postDelayed(runnable, 1000);
     }
-
-    private void fetchnewsound(String data){
-        if(currentlyloaded != data){
-            mainActivityViewModel.selectcurrentsong(data);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    playbtn.setClickable(false);
-                    mainActivityViewModel.selectbtntext("song is loading");
-                    //fetchAudioUrlFromFirebase(data);
-                }
-            }).start();
-        } else {
-            // no new sounds to get
-        }
-    }
-
-    private void fetchaudiofrombase64(String song) throws FileNotFoundException {
-        if(song.equals(mainActivityViewModel.getCrnsong())){
-            return;
-        }
-        mainActivityViewModel.selectcurrentsong(song);
-       String base64 = "";
-       StringBuffer sbuffer = new StringBuffer();
-       InputStream ins = this.getResources().openRawResource(R.raw.base64);
-       BufferedReader reader = new BufferedReader(new InputStreamReader(ins));{
-           if(ins != null){
-               try {
-                   while((base64 = reader.readLine()) != null){
-                       sbuffer.append(base64);
-                   }
-                   base64 = sbuffer.toString();
-                   ins.close();
-               } catch (Exception e){
-                   e.printStackTrace();
-               }
-           }
-       };
+    private void fetchaudiofromRepo(String song) throws FileNotFoundException {
+        mainActivityViewModel.selectSong("test", this);
         mediaPlayer = new MediaPlayer();
-        mainActivityViewModel.selectbtntext("Song is loading");
-        byte[] data = Base64.decode(base64, Base64.DEFAULT);
-        mediaPlayer.setDataSource(new MediaDataSource() {
-            @Override
-            public long getSize() throws IOException {
-                return data.length;
-            }
-
-            @Override
-            public int readAt(long position, byte[] buffer, int offset, int size) throws IOException {
-                int length = (int)getSize();
-                if (position >= length) return -1; // EOF
-                if (position + size > length) // requested more than available
-                    size = length - (int)position; // set size to maximum size possible
-                // at given position
-
-                System.arraycopy(data, (int) position, buffer, offset, size);
-                return size;
-            }
-
-
-
-            @Override
-            public void close() throws IOException {
-
-            }
-        });
-        mediaPlayer.setOnPreparedListener(MainActivity.this);
-        try {
-            mediaPlayer.prepare();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
-
-
     @Override
     public void onPrepared(MediaPlayer mp) {
         mainActivityViewModel.selectbtntext("Song is ready");
-        mainActivityViewModel.setSong(mp);
         playbtn.setClickable(true);
         updateSeekbar();
-        seekbar.setMax(mediaPlayer.getDuration());
         mediaPlayer = mp;
+        mainActivityViewModel.setPreparedsong(mp);
+        seekbarmax = mediaPlayer.getDuration();
+        seekbar.setMax(seekbarmax);
+        mainActivityViewModel.selectIsprepared(true);
     }
 
     private void bottomMenu() {
@@ -241,8 +182,6 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
 
         });
     }
-
-
         /*scanbutton = findViewById(R.id.scanbtn);
 
 
@@ -282,11 +221,6 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
         });
         */
 
-
-
-
-
-
     void checkifscannedqr(){
         if(sharedViewModel.getQrscanned()){
             scanbutton.setVisibility(View.INVISIBLE);
@@ -303,13 +237,6 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-    }
-
-
-    @Override
-    public void senddata(String data) {
-        fetchnewsound(data);
-
     }
 
 
