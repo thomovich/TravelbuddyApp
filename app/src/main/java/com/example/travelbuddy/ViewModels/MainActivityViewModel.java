@@ -13,9 +13,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.travelbuddy.Reposity.SoundRepository;
 
 public class MainActivityViewModel extends ViewModel {
-    private MediaPlayer preparedsong;
    private final MutableLiveData<MediaPlayer> song = new MutableLiveData<MediaPlayer>();
-   private final MutableLiveData<Boolean> isprepared = new MutableLiveData<Boolean>();
     SoundRepository soundRepository = SoundRepository.getSoundRepositoryInstance();
     private final MutableLiveData<Integer> seekbarprgs = new MutableLiveData<Integer>();
     private final MutableLiveData<String> Buttontext = new MutableLiveData<String>();
@@ -24,7 +22,7 @@ public class MainActivityViewModel extends ViewModel {
         soundRepository.getMedia().observeForever(new Observer<MediaPlayer>() {
             @Override
             public void onChanged(MediaPlayer mediaPlayer) {
-                //Update song in viewmodel
+                song.postValue(mediaPlayer);
             }
         });
 
@@ -37,25 +35,11 @@ public class MainActivityViewModel extends ViewModel {
         Buttontext.postValue(buttontext);
     }
 
-    public void setPreparedsong(MediaPlayer media){
-        this.preparedsong = media;
-    }
 
-    public MediaPlayer getPreparedsong() {
-        return preparedsong;
-    }
 
-    public LiveData<Boolean> getIsprepared(){
-        return this.isprepared;
-    }
 
-    public void selectIsprepared(Boolean bool){
-        this.isprepared.postValue(bool);
-    }
-
-    public void selectSong(String song, Context context){
-
-        this.song.postValue(soundRepository.getMediaplayer(song, context));
+    public void selectSong(String song){
+        soundRepository.getMediaplayer(song);
     }
 
     public LiveData<MediaPlayer> getsong(){

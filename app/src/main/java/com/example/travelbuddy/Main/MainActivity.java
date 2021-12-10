@@ -39,7 +39,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 
-public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPreparedListener {
+public class MainActivity extends AppCompatActivity {
     Button scanbutton, playbtn;
     SharedViewModel sharedViewModel;
     MainActivityViewModel mainActivityViewModel;
@@ -61,13 +61,9 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
         playbtn = findViewById(R.id.btnplay);
         seekbar = findViewById(R.id.playbar);
         mainActivityViewModel = new ViewModelProvider(this).get(MainActivityViewModel.class);
-        mainActivityViewModel.getIsprepared().observe(this, b -> isprepared = b);
         mainActivityViewModel.getsong().observe(this, m ->{
-            if(!isprepared){
-                mediaPlayer = m;
-                mediaPlayer.setOnPreparedListener(this);
-                mediaPlayer.prepareAsync();
-            }
+            mediaPlayer = m;
+            seekbar.setMax(mediaPlayer.getDuration());
         } );
         mainActivityViewModel.getButtontext().observe(this, s -> playbtn.setText(s));
         mainActivityViewModel.getSeekbar().observe(this, new Observer<Integer>(){
@@ -76,21 +72,15 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
                 seekbar.setProgress(integer);
             }
         });
-        if(savedInstanceState != null){
-            mediaPlayer = mainActivityViewModel.getPreparedsong();
-            seekbar.setMax(mediaPlayer.getDuration());
-        }
 
-
-        if(mediaPlayer == null){
+        if(savedInstanceState == null){
             try {
-                fetchaudiofromRepo("tag og fuck af");
+                fetchaudiofromRepo("intro");
+                Fragmenthandler("HomeFragment");
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
         }
-
-
 
         playbtn.setOnClickListener(v->{
             if(mediaPlayer.isPlaying()){
@@ -98,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
                 mainActivityViewModel.selectbtntext("sound is paused");
             } else {
                 mediaPlayer.start();
+                updateSeekbar();
                 mainActivityViewModel.selectbtntext("sound is playing");
 
             }
@@ -131,8 +122,8 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
     }
 
     private void updateSeekbar() {
-        int currpos = mediaPlayer.getCurrentPosition();
-        mainActivityViewModel.selectseekbar(currpos);
+        int currpos = mediaPlayer.getCurrentPosition()/100;
+        mainActivityViewModel.selectseekbar(currpos*100);
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -140,23 +131,16 @@ public class MainActivity extends AppCompatActivity implements MediaPlayer.OnPre
             }
         };
         Handler handler = new Handler();
-        handler.postDelayed(runnable, 1000);
+        handler.postDelayed(runnable, 10);
     }
+
+
     private void fetchaudiofromRepo(String song) throws FileNotFoundException {
-        mainActivityViewModel.selectSong("test", this);
-        mediaPlayer = new MediaPlayer();
+        mainActivityViewModel.selectbtntext("Loading sound");
+        mainActivityViewModel.selectSong("test");
+        mainActivityViewModel.selectbtntext("Sound ready");
     }
-    @Override
-    public void onPrepared(MediaPlayer mp) {
-        mainActivityViewModel.selectbtntext("Song is ready");
-        playbtn.setClickable(true);
-        updateSeekbar();
-        mediaPlayer = mp;
-        mainActivityViewModel.setPreparedsong(mp);
-        seekbarmax = mediaPlayer.getDuration();
-        seekbar.setMax(seekbarmax);
-        mainActivityViewModel.selectIsprepared(true);
-    }
+
 
     private void bottomMenu() {
 

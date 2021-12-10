@@ -7,5 +7,5 @@ import java.util.ArrayList;
 public interface dblookups {
     boolean checkqr (String Qrcode);
     ArrayList<String> getcoord(String Qrcode);
-    ArrayList<MediaPlayer> getsound(String Qrcode);
+    MediaPlayer getsound(String Qrcode);
 }
