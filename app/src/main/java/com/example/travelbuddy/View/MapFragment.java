@@ -349,8 +349,8 @@ public class MapFragment extends Fragment {
             if (distance[0] > radiusContainer.get(i).getRadius()) {
                 //Toast.makeText(getActivity().getBaseContext(), "Outside", Toast.LENGTH_LONG).show();
             } else {
-                //viewModel.getMarkerLocation();
-                //Her skal der kaldes til main activity for at loade ny lyd
+                //Todo: Lav kald til sound repository så der bliver loadet en ny lyd!
+                //Todo: Ikke load en lyd hvis den allerede er loadet
                 //Toast.makeText(getActivity().getBaseContext(), "Inside", Toast.LENGTH_LONG).show();
             }
         }
