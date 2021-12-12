@@ -24,7 +24,7 @@ public class SightViewModel extends ViewModel {
         Sights.setValue(sights);
     }
 
-    SightRepository repository = new SightRepository();
+    SightRepository repository = new SightRepository("");
 
     public LiveData<List<Sights>> getAllSights() {
 

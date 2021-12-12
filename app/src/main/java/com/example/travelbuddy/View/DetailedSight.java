@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.travelbuddy.R;
 import com.example.travelbuddy.ViewModels.SightViewModel;
 
@@ -45,7 +46,8 @@ public class DetailedSight extends Fragment {
         viewModel.getSights().observe(getViewLifecycleOwner(), Sights->{
             this.detailedtext.setText("test");
             this.detailedtext.setText(Sights.getDetailedinfo());
-            this.Img.setImageResource(Sights.getImg());
+            Glide.with(view).
+                    load(Sights.getImg()).into(this.Img);
         }  );
     }
 }
