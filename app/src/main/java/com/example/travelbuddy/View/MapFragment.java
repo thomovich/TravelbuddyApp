@@ -77,11 +77,8 @@ public class MapFragment extends Fragment {
 
 
     //Fingers
-    private int fingers = 0;
-    private long lastZoomTime = 0;
-    private float lastSpan = -1;
-    private Handler handler = new Handler();
-    private ScaleGestureDetector gestureDetector;
+
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -351,8 +348,9 @@ public class MapFragment extends Fragment {
                     markerOptions.get(i).getPosition().latitude, markerOptions.get(i).getPosition().longitude, distance);
 
             if (distance[0] > radiusContainer.get(i).getRadius()) {
-                //Toast.makeText(getActivity().getBaseContext(), "Outside", Toast.LENGTH_LONG).show();
+                //outside
             } else {
+                //inside
                 onMapsEnterListener.EnteredZone("whatever");
             }
         }

@@ -3,11 +3,27 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/drawable-v24/ic_background_green_foreground.xml" value="0.24635416666666668" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/drawable-v24/ic_green_foreground.xml" value="0.24635416666666668" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/drawable/background1.xml" value="0.2703125" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/drawable/gray_round.xml" value="0.2703125" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/drawable/green_round.xml" value="0.2703125" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/drawable/ic_listen_standard_background.xml" value="0.2703125" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/drawable/ic_navigate_standard_background.xml" value="0.2703125" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/drawable/ic_navigate_standard_foreground.xml" value="0.2703125" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.2703125" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/drawable/ic_power.xml" value="0.2703125" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/drawable/ic_search_background.xml" value="0.2703125" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/drawable/ic_search_standard_foreground.xml" value="0.2703125" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/drawable/ic_searchicon_background.xml" value="0.2703125" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/about_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/custom_dialog.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/fragment_about.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/fragment_sight.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/sight_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/mipmap-anydpi-v26/ic_background_green.xml" value="0.2703125" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/drawable/gray_round.xml" value="0.2703125" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/drawable/green_round.xml" value="0.2703125" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/drawable/ic_Frederik_background.xml" value="0.2703125" />

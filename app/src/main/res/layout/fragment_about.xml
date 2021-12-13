@@ -6,7 +6,7 @@
     android:id="@+id/text_about"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5DC"
+    android:background="@drawable/green"
     android:orientation="vertical"
     tools:context=".View.AboutFragment">
 
@@ -25,7 +25,6 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_about"
-        android:background="@drawable/travelbuddy2"
         android:paddingBottom="85dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

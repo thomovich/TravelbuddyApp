@@ -6,19 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".Main.MainActivity"
 
-    android:background="#6B9E33">
+    android:background="#738745">
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fragment_container">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/green">
 
     </androidx.fragment.app.FragmentContainerView>
 
 
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
         android:id="@+id/bottom_nav_menu"
-        android:backgroundTint="#F3F024"
+        android:backgroundTint="#F5F5DC"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="0dp"
@@ -54,7 +56,9 @@
             android:layout_height="40dp"
             android:text="play"
             android:id="@+id/btnplay"
-            android:visibility="visible">
+            android:visibility="visible"
+            android:backgroundTint="@color/green"
+            android:textColor="@color/black">
 
         </Button>
         <SeekBar
