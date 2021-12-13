@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.HomeFragment"
-    android:background="#4B6330">
+    android:background="@drawable/green">
 
     <!-- TODO: Update blank fragment layout -->
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="191dp"
-        android:layout_height="154dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/travelbuddy2"
         app:layout_constraintEnd_toEndOf="parent"

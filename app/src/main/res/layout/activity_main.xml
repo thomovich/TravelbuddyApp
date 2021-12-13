@@ -6,13 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".Main.MainActivity"
 
-    android:background="#4B6330">
+    android:background="#738745">
 
     <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/fragment_container"
-       >
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/green">
 
     </androidx.fragment.app.FragmentContainerView>
 
