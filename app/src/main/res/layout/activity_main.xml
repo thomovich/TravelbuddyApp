@@ -57,7 +57,8 @@
             android:text="play"
             android:id="@+id/btnplay"
             android:visibility="visible"
-            android:backgroundTint="@color/black">
+            android:backgroundTint="@color/green"
+            android:textColor="@color/black">
 
         </Button>
         <SeekBar
