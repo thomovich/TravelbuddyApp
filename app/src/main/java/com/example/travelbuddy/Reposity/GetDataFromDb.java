@@ -89,10 +89,14 @@ public class GetDataFromDb implements dblookups{
         Connection con;
         ConnectionManager connectionManager = new ConnectionManager();
         con = connectionManager.connectionclass();
-        String preparedstatement = "select travelbuddy.tours.tour_image, travelbuddy.tour_variants.tour_name, travelbuddy.tour_variants.tour_description\n" +
-                "from travelbuddy.purchases\n" +
-                "inner join travelbuddy.tours on travelbuddy.tours.tour_id = travelbuddy.purchases.tour_id\n" +
-                "inner join travelbuddy.tour_variants on travelbuddy.tours.tour_id = travelbuddy.tour_variants.tour_id\n" +
+        String preparedstatement = "select travelbuddy.sight_variants.sight_name,\n" +
+                "travelbuddy.sight_variants.sight_description,\n" +
+                "travelbuddy.sights.sight_image\n" +
+                "from travelbuddy.sights\n" +
+                "inner join travelbuddy.sight_variants \n" +
+                "on travelbuddy.sight_variants.sight_id = travelbuddy.sights.sight_id\n" +
+                "inner join travelbuddy.purchases\n" +
+                "on travelbuddy.sights.tour_id = travelbuddy.purchases.tour_id\n" +
                 "where travelbuddy.purchases.ticket_id = ?";
         try {
             PreparedStatement pstmt = con.prepareStatement(preparedstatement);
@@ -100,8 +104,8 @@ public class GetDataFromDb implements dblookups{
             ResultSet rs = pstmt.executeQuery();
             con.close();
             while(rs.next()){
-                final byte[] decodedBytes = Base64.decode(rs.getString("tour_image"), Base64.DEFAULT);
-                Sights sights = new Sights(rs.getString("tour_name"),decodedBytes,rs.getString("tour_description"));
+                final byte[] decodedBytes = Base64.decode(rs.getString("sight_image"), Base64.DEFAULT);
+                Sights sights = new Sights(rs.getString("sight_name"),decodedBytes,rs.getString("sight_description"));
                 sightslist.add(sights);
             }
 

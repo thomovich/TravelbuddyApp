@@ -1,6 +1,13 @@
 package com.example.travelbuddy.View;
 
 import android.os.Bundle;
+import android.text.Layout;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,16 +34,15 @@ public class DetailedSight extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.detailedsight, container, false);
-
         detailedtext = view.findViewById(R.id.detailedtext);
         Img = view.findViewById(R.id.detailedphoto);
         backbtn = view.findViewById(R.id.backbutton);
         backbtn.setOnClickListener(view1 -> {
             requireActivity().getSupportFragmentManager().popBackStackImmediate();
         });
-    return view;
-    }
 
+        return view;
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
