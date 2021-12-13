@@ -1,7 +1,4 @@
 package com.example.travelbuddy.Main;
-
-
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
@@ -14,7 +11,6 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.SeekBar;
-
 import com.example.travelbuddy.Listener.OnMapsEnterListener;
 import com.example.travelbuddy.Models.GlobalVariable;
 import com.example.travelbuddy.R;
