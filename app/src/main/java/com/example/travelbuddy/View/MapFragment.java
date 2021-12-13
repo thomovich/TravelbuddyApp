@@ -1,6 +1,7 @@
 package com.example.travelbuddy.View;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -18,6 +19,8 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
+import com.example.travelbuddy.Listener.OnMapsEnterListener;
 import com.example.travelbuddy.MapsClasses.IMapsModel;
 import com.example.travelbuddy.MapsClasses.MapsModel;
 import com.example.travelbuddy.Models.Sight;
@@ -47,6 +50,7 @@ public class MapFragment extends Fragment {
     public static final int DEFAULT_UPDATE_INTERVAL = 30;
     public static final int FAST_UPDATE_INTERVAL = 5;
     private GoogleMap googleMap;
+    private OnMapsEnterListener onMapsEnterListener;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     IMapsModel imap;
 
@@ -349,9 +353,7 @@ public class MapFragment extends Fragment {
             if (distance[0] > radiusContainer.get(i).getRadius()) {
                 //Toast.makeText(getActivity().getBaseContext(), "Outside", Toast.LENGTH_LONG).show();
             } else {
-                //viewModel.getMarkerLocation();
-                //Her skal der kaldes til main activity for at loade ny lyd
-                //Toast.makeText(getActivity().getBaseContext(), "Inside", Toast.LENGTH_LONG).show();
+                onMapsEnterListener.EnteredZone("whatever");
             }
         }
 
@@ -362,6 +364,16 @@ public class MapFragment extends Fragment {
     public void onPause() {
         super.onPause();
         callback = null;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try{
+            onMapsEnterListener = (OnMapsEnterListener) context;
+        } catch (ClassCastException e){
+            e.printStackTrace();
+        }
     }
 
     //zoomControl bar relocated
