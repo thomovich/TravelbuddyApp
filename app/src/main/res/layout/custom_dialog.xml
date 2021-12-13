@@ -28,10 +28,10 @@
             android:id="@+id/btn_ok"
             android:layout_width="100dp"
             android:layout_height="30dp"
-            android:background="@android:color/white"
+            android:backgroundTint="@color/black"
             android:clickable="true"
             android:text="Ok"
-            android:textColor="#5DBCD2"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
         <Button
@@ -39,10 +39,10 @@
             android:layout_width="100dp"
             android:layout_height="30dp"
             android:layout_marginLeft="5dp"
-            android:background="@android:color/white"
+            android:backgroundTint="@color/black"
             android:clickable="true"
             android:text="Cancel"
-            android:textColor="#5DBCD2"
+            android:textColor="@color/white"
             android:textStyle="bold" />
 
 
@@ -54,7 +54,7 @@
         android:layout_height="40dp"
         android:hint="qrcode"
         android:textAlignment="center"
-        android:textColor="@android:color/white"
+        android:textColor="@color/white"
         android:id="@+id/typeinqr"
         >
 

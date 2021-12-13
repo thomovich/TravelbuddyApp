@@ -3,6 +3,7 @@ package com.example.travelbuddy.Reposity;
 import android.media.MediaPlayer;
 
 import com.example.travelbuddy.Models.MediaPlayerFactory;
+import com.example.travelbuddy.Models.Sight;
 import com.example.travelbuddy.Models.Sights;
 
 import java.sql.Connection;
@@ -51,7 +52,7 @@ public class GetDataFromDb implements dblookups{
     }
 
     @Override
-    public ArrayList<String> getcoord(String Qrcode) {
+    public ArrayList<Sight> getcoord(String Qrcode) {
         return null;
     }
 
@@ -66,6 +67,7 @@ public class GetDataFromDb implements dblookups{
             PreparedStatement pstmt = con.
                     prepareStatement("Select sight_audio from travelbuddy.sight_variants");
             ResultSet rs = pstmt.executeQuery();
+            con.close();
 
             if(rs.next()){
                 base64 = rs.getString(1);
@@ -73,6 +75,8 @@ public class GetDataFromDb implements dblookups{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+
 
         MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
         return mediaPlayerFactory.createPreparedmedia(base64);
@@ -84,18 +88,18 @@ public class GetDataFromDb implements dblookups{
         Connection con;
         ConnectionManager connectionManager = new ConnectionManager();
         con = connectionManager.connectionclass();
-        String preparedstatement = "Select Tour.Tour_image, Tourvariant.Tour_name, Tour_description from\n" +
-                "Tour\n" +
-                "left join\n" +
-                "tourvariant\n" +
-                "on Tour.ID = Tourvariant.Tour_ID " +
-                "where ?";
+        String preparedstatement = "select travelbuddy.tours.tour_image, travelbuddy.tour_variants.tour_name, travelbuddy.tour_variants.tour_description\n" +
+                "from travelbuddy.purchases\n" +
+                "inner join travelbuddy.tours on travelbuddy.tours.tour_id = travelbuddy.purchases.tour_id\n" +
+                "inner join travelbuddy.tour_variants on travelbuddy.tours.tour_id = travelbuddy.tour_variants.tour_id\n" +
+                "where travelbuddy.purchases.ticket_id = ?";
         try {
             PreparedStatement pstmt = con.prepareStatement(preparedstatement);
             pstmt.setString(1,Qrcode);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
 
 
         return sights;
