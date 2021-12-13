@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
-        android:src="@drawable/travelbuddy2"
+        android:src="@drawable/rasmus"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -50,6 +50,7 @@
         android:backgroundTint="@color/green"
         android:textColor="@color/black"
         android:text="@string/sdg_goals"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
