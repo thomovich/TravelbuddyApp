@@ -10,8 +10,11 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.SeekBar;
+
+import com.example.travelbuddy.Listener.OnMapsEnterListener;
 import com.example.travelbuddy.Models.GlobalVariable;
 import com.example.travelbuddy.R;
 import com.example.travelbuddy.ViewModels.MainActivityViewModel;
@@ -19,7 +22,7 @@ import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import java.io.FileNotFoundException;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnMapsEnterListener {
     Button playbtn;
     MainActivityViewModel mainActivityViewModel;
     MediaPlayer mediaPlayer;
@@ -50,12 +53,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if(savedInstanceState == null){
-            try {
-                fetchaudiofromRepo("intro");
                 Fragmenthandler("HomeFragment");
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
         }
 
         playbtn.setOnClickListener(v->{
@@ -155,6 +153,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void EnteredZone(String sound) {
+        if(sound != mainActivityViewModel.currentlyloaded){
+            mainActivityViewModel.currentlyloaded = sound;
+            try {
+                fetchaudiofromRepo(sound);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Log.d("Sound already loaded", "TAG");
+        }
 
-
+    }
 }

@@ -14,6 +14,7 @@ public class MainActivityViewModel extends ViewModel {
     SoundRepository soundRepository = SoundRepository.getSoundRepositoryInstance();
     private final MutableLiveData<Integer> seekbarprgs = new MutableLiveData<Integer>();
     private final MutableLiveData<String> Buttontext = new MutableLiveData<String>();
+    public String currentlyloaded;
 
     public MainActivityViewModel(){
         soundRepository.getMedia().observeForever(new Observer<MediaPlayer>() {
