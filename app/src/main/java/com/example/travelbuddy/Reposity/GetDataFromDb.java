@@ -1,6 +1,7 @@
 package com.example.travelbuddy.Reposity;
 
 import android.media.MediaPlayer;
+import android.util.Base64;
 
 import com.example.travelbuddy.Models.MediaPlayerFactory;
 import com.example.travelbuddy.Models.Sight;
@@ -83,8 +84,8 @@ public class GetDataFromDb implements dblookups{
     }
 
     @Override
-    public ArrayList<Sights> getSights(String Qrcode) {
-        ArrayList<Sights> sights = new ArrayList<>();
+    public ArrayList<Sights> getSights(int Qrcode) {
+        ArrayList<Sights> sightslist = new ArrayList<>();
         Connection con;
         ConnectionManager connectionManager = new ConnectionManager();
         con = connectionManager.connectionclass();
@@ -95,13 +96,19 @@ public class GetDataFromDb implements dblookups{
                 "where travelbuddy.purchases.ticket_id = ?";
         try {
             PreparedStatement pstmt = con.prepareStatement(preparedstatement);
-            pstmt.setString(1,Qrcode);
+            pstmt.setInt(1,Qrcode);
+            ResultSet rs = pstmt.executeQuery();
+            con.close();
+            if(rs.next()){
+                final byte[] decodedBytes = Base64.decode(rs.getString("tour_image"), Base64.DEFAULT);
+                Sights sights = new Sights(rs.getString("tour_name"),decodedBytes,rs.getString("tour_description"));
+                sightslist.add(sights);
+            }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-
-
-        return sights;
+        return sightslist;
     }
 }

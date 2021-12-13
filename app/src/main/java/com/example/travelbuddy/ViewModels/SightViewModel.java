@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
 
@@ -18,20 +19,28 @@ public class SightViewModel extends ViewModel {
     int posindex;
     int topview;
     private final MutableLiveData<Sights> Sights = new MutableLiveData<Sights>();
+    SightRepository repository = new SightRepository(2);
 
     public void selectSights(Sights sights){
 
         Sights.setValue(sights);
     }
 
-    SightRepository repository = new SightRepository("");
+
 
     public LiveData<List<Sights>> getAllSights() {
 
         return repository.getAllSights();
     }
 
-
+    public void selectsightlist(){
+        repository.getAllSights().observeForever(new Observer<List<com.example.travelbuddy.Models.Sights>>() {
+            @Override
+            public void onChanged(List<com.example.travelbuddy.Models.Sights> sights) {
+                repository.selectsights(sights);
+            }
+        });
+    }
 
     public LiveData<Sights> getSights(){
         return Sights;

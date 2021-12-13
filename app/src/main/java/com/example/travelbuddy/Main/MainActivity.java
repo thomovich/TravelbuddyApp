@@ -11,6 +11,8 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.SeekBar;
+
+import com.bumptech.glide.disklrucache.DiskLruCache;
 import com.example.travelbuddy.Listener.OnMapsEnterListener;
 import com.example.travelbuddy.Models.GlobalVariable;
 import com.example.travelbuddy.R;
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
         });
 
         bottomMenu();
+        EnteredZone("test");
 
     }
 

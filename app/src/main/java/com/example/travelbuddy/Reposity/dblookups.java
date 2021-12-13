@@ -11,5 +11,5 @@ public interface dblookups {
     boolean checkqr (String Qrcode);
     ArrayList<Sight> getcoord(String Qrcode);
     MediaPlayer getsound(String Qrcode);
-    ArrayList<Sights> getSights(String Qrcode);
+    ArrayList<Sights> getSights(int Qrcode);
 }
