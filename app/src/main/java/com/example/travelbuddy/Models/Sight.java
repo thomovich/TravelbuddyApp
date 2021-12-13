@@ -1,7 +1,10 @@
 package com.example.travelbuddy.Models;
 
 
+import android.media.Image;
+
 import com.example.travelbuddy.R;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 
 public class Sight {
 
@@ -11,52 +14,45 @@ public class Sight {
     private double Long=9.717303;
     private int radius=5;
     private int image = R.drawable.asbjorn;
+    private LanguageVariant languageVariant;
+
+    public Sight(int id, int tourId, double lat, double aLong, int radius, int image, LanguageVariant languageVariant) {
+        Id = id;
+        TourId = tourId;
+        Lat = lat;
+        Long = aLong;
+        this.radius = radius;
+        this.image = image;
+        this.languageVariant = languageVariant;
+    }
 
     public int getId() {
         return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
     }
 
     public int getTourId() {
         return TourId;
     }
 
-    public void setTourId(int tourId) {
-        TourId = tourId;
-    }
-
     public double getLat() {
         return Lat;
-    }
-
-    public void setLat(double lat) {
-        Lat = lat;
     }
 
     public double getLong() {
         return Long;
     }
 
-    public void setLong(double aLong) {
-        Long = aLong;
-    }
-
     public int getRadius() {
         return radius;
-    }
-
-    public void setRadius(int radius) {
-        this.radius = radius;
     }
 
     public int getImage() {
         return image;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public LanguageVariant  getLanguageVariant(){
+        return languageVariant;
     }
+
+
 }

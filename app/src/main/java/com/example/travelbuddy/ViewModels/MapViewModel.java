@@ -4,6 +4,7 @@ package com.example.travelbuddy.ViewModels;
 
 import androidx.lifecycle.ViewModel;
 
+import com.example.travelbuddy.Models.Sight;
 import com.example.travelbuddy.Reposity.MapsReposity;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -23,7 +24,7 @@ public class MapViewModel extends ViewModel {
 
 }
 
-    public ArrayList<MarkerOptions> getMarkerLocation() {
+    public ArrayList<Sight> getMarkerLocation() {
 
         return repo.getLocations();
     }

@@ -37,6 +37,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
@@ -54,14 +55,15 @@ public class MapFragment extends Fragment {
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     IMapsModel imap;
 
-    Sight sights = new Sight();
 
 
     MapViewModel viewModel = null;
     Location currentLocation = null;
+    ArrayList<Sight> sights;
     Circle circle;
     ArrayList<LatLng> locationList = new ArrayList<>();
     ArrayList<Circle> cirleList = new ArrayList<>();
+    ArrayList<MarkerOptions> markers =new ArrayList<>();
     ArrayList<MarkerOptions> markerOptions;
     ArrayList<CircleOptions> radiusContainer = new ArrayList<>();
 
@@ -75,8 +77,6 @@ public class MapFragment extends Fragment {
 
     LocationCallback callback;
 
-
-    //Fingers
 
 
 
@@ -150,17 +150,35 @@ public class MapFragment extends Fragment {
                 googleMap.getUiSettings().setTiltGesturesEnabled(true);
                 mapView = getView();
 
+
+                //marker
+
+                sights = new MapViewModel().getMarkerLocation();
+
                 markerOptions = new MapsModel().getMarkerLocation();
 
-                for (int i = 0; i < markerOptions.size(); i++) {
+
+
+
+                for(int i=0;i < sights.size();i++){
+
+                    MarkerOptions marker = new MarkerOptions();
+                    LatLng latLng = new LatLng(sights.get(i).getLat(), sights.get(i).getLong());
+                    marker.position(latLng)
+                            .title(sights.get(i).getLanguageVariant().getName())
+                            .icon(BitmapDescriptorFactory.fromResource(sights.get(i).getImage()));
+                    markerOptions.add(marker);
+
                     CircleOptions circly = new CircleOptions()
-                            .center(markerOptions.get(i).getPosition())
-                            .radius(10000)
+                            .center(marker.getPosition())
+                            .radius(sights.get(i).getRadius())
                             .fillColor(Color.BLUE);
                     radiusContainer.add(circly);
-                    googleMap.addMarker(markerOptions.get(i));
+                    googleMap.addMarker(marker);
                     googleMap.addCircle(circly);
+
                 }
+
 
 
                 moveZoomControls(mapView, -20, -20, 950, 1350, true, true);
@@ -173,108 +191,6 @@ public class MapFragment extends Fragment {
 
 
                 //virker ikke
-
-                /*
-
-
-
-
-    public CustomEventMapView(Context context, GoogleMapOptions options) {
-        super(context, options);
-    }
-
-    public CustomEventMapView(Context context) {
-        super(context);
-    }
-
-    @Override
-    public void getMapAsync(final OnMapReadyCallback callback) {
-        super.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(final GoogleMap googleMap) {
-                gestureDetector = new ScaleGestureDetector(getContext(), new ScaleGestureDetector.OnScaleGestureListener() {
-                    @Override
-                    public boolean onScale(ScaleGestureDetector detector) {
-                        if (lastSpan == -1) {
-                            lastSpan = detector.getCurrentSpan();
-                        } else if (detector.getEventTime() - lastZoomTime >= 50) {
-                            lastZoomTime = detector.getEventTime();
-                            googleMap.animateCamera(CameraUpdateFactory.zoomBy(getZoomValue(detector.getCurrentSpan(), lastSpan)), 50, null);
-                            lastSpan = detector.getCurrentSpan();
-                        }
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onScaleBegin(ScaleGestureDetector detector) {
-                        lastSpan = -1;
-                        return true;
-                    }
-
-                    @Override
-                    public void onScaleEnd(ScaleGestureDetector detector) {
-                        lastSpan = -1;
-
-                    }
-                });
-                CustomEventMapView.this.googleMap = googleMap;
-                callback.onMapReady(googleMap);
-            }
-        });
-    }
-
-    private float getZoomValue(float currentSpan, float lastSpan) {
-        double value = (Math.log(currentSpan / lastSpan) / Math.log(1.55d));
-        return (float) value;
-    }
-
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-
-        switch (ev.getAction() & MotionEvent.ACTION_MASK) {
-            case MotionEvent.ACTION_POINTER_DOWN:
-                fingers = fingers + 1;
-                break;
-            case MotionEvent.ACTION_POINTER_UP:
-                fingers = fingers - 1;
-                break;
-            case MotionEvent.ACTION_UP:
-                fingers = 0;
-                break;
-            case MotionEvent.ACTION_DOWN:
-                fingers = 1;
-                break;
-        }
-        if (fingers > 1) {
-            disableScrolling();
-        } else if (fingers < 1) {
-            enableScrolling();
-        }
-        if (fingers > 1) {
-            return gestureDetector.onTouchEvent(ev);
-        } else {
-            return super.dispatchTouchEvent(ev);
-        }
-    }
-
-    private void enableScrolling() {
-        if (googleMap != null && !googleMap.getUiSettings().isScrollGesturesEnabled()) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    googleMap.getUiSettings().setAllGesturesEnabled(true);
-                }
-            }, 50);
-        }
-    }
-
-    private void disableScrolling() {
-        handler.removeCallbacksAndMessages(null);
-        if (googleMap != null && googleMap.getUiSettings().isScrollGesturesEnabled()) {
-            googleMap.getUiSettings().setAllGesturesEnabled(false);
-        }
-    }
-                */
 
 
             }
@@ -341,7 +257,7 @@ public class MapFragment extends Fragment {
     private void checkLocationToMarker(Location location) {
 
         this.currentLocation = location;
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < markerOptions.size() ; i++) {
 
             float[] distance = new float[1];
             Location.distanceBetween(location.getLatitude(), location.getLongitude(),
@@ -351,7 +267,7 @@ public class MapFragment extends Fragment {
                 //outside
             } else {
                 //inside
-                onMapsEnterListener.EnteredZone("whatever");
+             //   onMapsEnterListener.EnteredZone(markerOptions.get(i).getTitle());
             }
         }
 
