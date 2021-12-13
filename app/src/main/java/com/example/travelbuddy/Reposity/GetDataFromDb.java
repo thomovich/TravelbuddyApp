@@ -13,12 +13,19 @@ import java.util.ArrayList;
 
 public class GetDataFromDb implements dblookups{
     Connection connection;
+    private static GetDataFromDb singleinstance = null;
 
 
     public GetDataFromDb(){
         ConnectionManager connectionManager = new ConnectionManager();
         connection = connectionManager.connectionclass();
-        //connection = DatabaseConnector.getConnection();
+    }
+
+    public static GetDataFromDb getSingleinstance(){
+        if(singleinstance == null){
+            singleinstance = new GetDataFromDb();
+        }
+        return singleinstance;
     }
     @Override
     public boolean checkqr(String Qrcode) {
