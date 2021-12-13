@@ -99,7 +99,7 @@ public class GetDataFromDb implements dblookups{
             pstmt.setInt(1,Qrcode);
             ResultSet rs = pstmt.executeQuery();
             con.close();
-            if(rs.next()){
+            while(rs.next()){
                 final byte[] decodedBytes = Base64.decode(rs.getString("tour_image"), Base64.DEFAULT);
                 Sights sights = new Sights(rs.getString("tour_name"),decodedBytes,rs.getString("tour_description"));
                 sightslist.add(sights);

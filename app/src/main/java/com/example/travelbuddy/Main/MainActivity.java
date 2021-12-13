@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
             mediaPlayer = m;
             seekbar.setMax(mediaPlayer.getDuration());
             playbtn.setClickable(true);
+            playbtn.setText("Sound ready");
             if(runnable == null){
                 updateSeekbar();
             }
@@ -118,8 +119,7 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
 
     private void fetchaudiofromRepo(String song) throws FileNotFoundException {
         mainActivityViewModel.selectbtntext("Loading sound");
-        mainActivityViewModel.selectSong("test");
-        mainActivityViewModel.selectbtntext("Sound ready");
+        mainActivityViewModel.createsong(song);
     }
 
 

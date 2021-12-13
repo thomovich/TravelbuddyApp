@@ -62,6 +62,7 @@ public class SightFragment extends Fragment implements SightAdapter.OnListItemCl
         recyclerView.setAdapter(adapter);
         viewModel = new ViewModelProvider(requireActivity()).get(SightViewModel.class);
         viewModel.getAllSights().observe(getViewLifecycleOwner(), adapter::updateList);
+        viewModel.createdata(2);
 
     }
 

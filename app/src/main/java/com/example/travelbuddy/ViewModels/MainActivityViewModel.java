@@ -25,14 +25,15 @@ public class MainActivityViewModel extends ViewModel {
         Buttontext.postValue(buttontext);
     }
 
-
-    public void selectSong(String song){
-
-        this.song.postValue(soundRepository.getMediaplayer(song));
+    public void createsong(String sql){
+      soundRepository.Startdb(sql);
     }
 
+
+
     public LiveData<MediaPlayer> getsong(){
-        return this.song;
+
+        return soundRepository.getALlmedia();
     }
 
 
