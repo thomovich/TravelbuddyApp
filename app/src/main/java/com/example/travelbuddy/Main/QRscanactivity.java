@@ -92,7 +92,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
             buttonok.setOnClickListener(view -> {
                 EditText edit = dialog.findViewById(R.id.typeinqr);
                 String qrcode = edit.getText().toString();
-                goNextActivity();
+                goNextActivity(edit.getText().toString());
                 finish();
                 dialog.dismiss();
             });
@@ -164,7 +164,8 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
 
     }
 
-    void goNextActivity(){
+    void goNextActivity(String qrcode){
+        GlobalVariable.getInstance().qrcode = qrcode;
         GlobalVariable.getInstance().isscan = true;
         Intent intent = new Intent(QRscanactivity.this, OnboardingActivity.class);
         startActivity(intent);
@@ -181,7 +182,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
                     boolean check = Checkindb(rawresult);
                     if(check){
                         builder.setTitle("QR succesful press ok");
-                        goNextActivity();
+                        goNextActivity(rawresult);
                     } else {
                         builder.setTitle("scan unsuccesful try again");
                     }
