@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Debug;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
     MediaPlayer mediaPlayer;
     SeekBar seekbar;
    ChipNavigationBar chipNavigationBar;
+   Runnable runnable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +45,10 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
         mainActivityViewModel.getsong().observe(this, m ->{
             mediaPlayer = m;
             seekbar.setMax(mediaPlayer.getDuration());
+            playbtn.setClickable(true);
+            if(runnable == null){
+                updateSeekbar();
+            }
         } );
         mainActivityViewModel.getButtontext().observe(this, s -> playbtn.setText(s));
         mainActivityViewModel.getSeekbar().observe(this, new Observer<Integer>(){
@@ -52,17 +58,20 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
             }
         });
 
-        if(savedInstanceState == null){
-                Fragmenthandler("HomeFragment");
+        if(savedInstanceState == null) {
+            Fragmenthandler("HomeFragment");
         }
 
         playbtn.setOnClickListener(v->{
+            //Avoid nullpointers with simple check
+            if(mediaPlayer == null){
+                return;
+            }
             if(mediaPlayer.isPlaying()){
                 mediaPlayer.pause();
                 mainActivityViewModel.selectbtntext("sound is paused");
             } else {
                 mediaPlayer.start();
-                updateSeekbar();
                 mainActivityViewModel.selectbtntext("sound is playing");
 
             }
@@ -97,14 +106,14 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
     private void updateSeekbar() {
         int currpos = mediaPlayer.getCurrentPosition()/100;
         mainActivityViewModel.selectseekbar(currpos*100);
-        Runnable runnable = new Runnable() {
+        runnable = new Runnable() {
             @Override
             public void run() {
                 updateSeekbar();
             }
         };
         Handler handler = new Handler();
-        handler.postDelayed(runnable, 10);
+        handler.postDelayed(runnable, 100);
     }
 
 

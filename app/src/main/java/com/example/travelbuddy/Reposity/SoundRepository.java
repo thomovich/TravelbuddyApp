@@ -9,22 +9,12 @@ import androidx.lifecycle.MutableLiveData;
 public class SoundRepository
 {
 
-    private final MutableLiveData <MediaPlayer> media = new MutableLiveData<MediaPlayer>();
-
-
-    public void selectMedia(MediaPlayer mediaPlayer){
-        media.postValue(mediaPlayer);
-    }
-
-    public LiveData<MediaPlayer> getMedia(){
-        return media;
-    }
-
-
-    public void getMediaplayer(String media){
+    public MediaPlayer getMediaplayer(String media){
+        MediaPlayer mediaPlayer;
         GetDataFromDb getDataFromDb;
         getDataFromDb = GetDataFromDb.getSingleinstance();
-        this.media.postValue(getDataFromDb.getsound(media));
+        mediaPlayer = getDataFromDb.getsound(media);
+        return mediaPlayer;
     }
 
 }

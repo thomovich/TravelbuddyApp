@@ -352,8 +352,9 @@ public class MapFragment extends Fragment {
 
             if (distance[0] > radiusContainer.get(i).getRadius()) {
                 //Toast.makeText(getActivity().getBaseContext(), "Outside", Toast.LENGTH_LONG).show();
-            } else {
                 onMapsEnterListener.EnteredZone("whatever");
+            } else {
+
             }
         }
 
