@@ -58,7 +58,7 @@ public class SightFragment extends Fragment implements SightAdapter.OnListItemCl
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        SightAdapter adapter = new SightAdapter(this);
+        SightAdapter adapter = new SightAdapter(this, getContext());
         recyclerView.setAdapter(adapter);
         viewModel = new ViewModelProvider(requireActivity()).get(SightViewModel.class);
         viewModel.getAllSights().observe(getViewLifecycleOwner(), adapter::updateList);

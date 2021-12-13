@@ -3,6 +3,7 @@ package com.example.travelbuddy.Reposity;
 import android.media.MediaPlayer;
 
 import com.example.travelbuddy.Models.MediaPlayerFactory;
+import com.example.travelbuddy.Models.Sights;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,12 +13,19 @@ import java.util.ArrayList;
 
 public class GetDataFromDb implements dblookups{
     Connection connection;
+    private static GetDataFromDb singleinstance = null;
 
 
     public GetDataFromDb(){
         ConnectionManager connectionManager = new ConnectionManager();
         connection = connectionManager.connectionclass();
-        //connection = DatabaseConnector.getConnection();
+    }
+
+    public static GetDataFromDb getSingleinstance(){
+        if(singleinstance == null){
+            singleinstance = new GetDataFromDb();
+        }
+        return singleinstance;
     }
     @Override
     public boolean checkqr(String Qrcode) {
@@ -68,5 +76,28 @@ public class GetDataFromDb implements dblookups{
 
         MediaPlayerFactory mediaPlayerFactory = new MediaPlayerFactory();
         return mediaPlayerFactory.createPreparedmedia(base64);
+    }
+
+    @Override
+    public ArrayList<Sights> getSights(String Qrcode) {
+        ArrayList<Sights> sights = new ArrayList<>();
+        Connection con;
+        ConnectionManager connectionManager = new ConnectionManager();
+        con = connectionManager.connectionclass();
+        String preparedstatement = "Select Tour.Tour_image, Tourvariant.Tour_name, Tour_description from\n" +
+                "Tour\n" +
+                "left join\n" +
+                "tourvariant\n" +
+                "on Tour.ID = Tourvariant.Tour_ID " +
+                "where ?";
+        try {
+            PreparedStatement pstmt = con.prepareStatement(preparedstatement);
+            pstmt.setString(1,Qrcode);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+
+        return sights;
     }
 }

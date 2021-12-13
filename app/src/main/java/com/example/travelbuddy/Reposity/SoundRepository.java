@@ -8,30 +8,13 @@ import androidx.lifecycle.MutableLiveData;
 
 public class SoundRepository
 {
-    private static SoundRepository singletonisntance = null;
 
-    private final MutableLiveData <MediaPlayer> media = new MutableLiveData<MediaPlayer>();
-
-    public static SoundRepository getSoundRepositoryInstance(){
-        if(singletonisntance == null){
-            singletonisntance = new SoundRepository();
-        }
-        return singletonisntance;
-    }
-
-    public void selectMedia(MediaPlayer mediaPlayer){
-        media.postValue(mediaPlayer);
-    }
-
-    public LiveData<MediaPlayer> getMedia(){
-        return media;
-    }
-
-
-    public void getMediaplayer(String media){
-        GetDataFromDb getDataFromDb = new GetDataFromDb();
-        this.media.postValue(getDataFromDb.getsound(media));
-
+    public MediaPlayer getMediaplayer(String media){
+        MediaPlayer mediaPlayer;
+        GetDataFromDb getDataFromDb;
+        getDataFromDb = GetDataFromDb.getSingleinstance();
+        mediaPlayer = getDataFromDb.getsound(media);
+        return mediaPlayer;
     }
 
 }

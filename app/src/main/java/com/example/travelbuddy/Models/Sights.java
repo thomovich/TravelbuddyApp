@@ -4,11 +4,11 @@ public class Sights {
 
     private String sName;
     private String detailedinfo;
-    private int img;
+    private byte [] imgbase64;
 
-    public Sights(String name, int Id, String detailedinfo) {
+    public Sights(String name, byte[] imgstring, String detailedinfo) {
         this.sName = name;
-        this.img = Id;
+        this.imgbase64 = imgstring;
         this.detailedinfo = detailedinfo;
     }
 
@@ -16,8 +16,8 @@ public class Sights {
         return sName;
     }
 
-    public int getImg() {
-        return img;
+    public byte[] getImg() {
+        return imgbase64;
     }
 
     public String getDetailedinfo(){

@@ -11,21 +11,14 @@ import com.example.travelbuddy.Reposity.SoundRepository;
 
 public class MainActivityViewModel extends ViewModel {
    private final MutableLiveData<MediaPlayer> song = new MutableLiveData<MediaPlayer>();
-    SoundRepository soundRepository = SoundRepository.getSoundRepositoryInstance();
+    SoundRepository soundRepository;
     private final MutableLiveData<Integer> seekbarprgs = new MutableLiveData<Integer>();
     private final MutableLiveData<String> Buttontext = new MutableLiveData<String>();
+    public String currentlyloaded;
 
     public MainActivityViewModel(){
-        soundRepository.getMedia().observeForever(new Observer<MediaPlayer>() {
-            @Override
-            public void onChanged(MediaPlayer mediaPlayer) {
-                song.postValue(mediaPlayer);
-            }
-        });
-
-
+        soundRepository = new SoundRepository();
     }
-
 
     public void selectbtntext(String buttontext){
 
@@ -33,16 +26,14 @@ public class MainActivityViewModel extends ViewModel {
     }
 
 
-
-
     public void selectSong(String song){
-        soundRepository.getMediaplayer(song);
+
+        this.song.postValue(soundRepository.getMediaplayer(song));
     }
 
     public LiveData<MediaPlayer> getsong(){
         return this.song;
     }
-
 
 
     public void selectseekbar(Integer seekbar){

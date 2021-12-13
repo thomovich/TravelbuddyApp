@@ -18,8 +18,6 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
-
 import com.example.travelbuddy.MapsClasses.IMapsModel;
 import com.example.travelbuddy.MapsClasses.MapsModel;
 import com.example.travelbuddy.Models.Sight;
@@ -156,7 +154,7 @@ public class MapFragment extends Fragment {
                 for (int i = 0; i < markerOptions.size(); i++) {
                     CircleOptions circly = new CircleOptions()
                             .center(markerOptions.get(i).getPosition())
-                            .radius(1000)
+                            .radius(10000)
                             .fillColor(Color.BLUE);
                     radiusContainer.add(circly);
                     googleMap.addMarker(markerOptions.get(i));
@@ -290,6 +288,13 @@ public class MapFragment extends Fragment {
 
     }
 
+    /*
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        mapView = getView();
+        moveZoomControls(mapView,  20,20,-1000,-300,true,false);
+        super.onSaveInstanceState(outState);
+    }*/
 
     @SuppressLint("MissingPermission")
     private void checkGPS() {
@@ -342,11 +347,11 @@ public class MapFragment extends Fragment {
                     markerOptions.get(i).getPosition().latitude, markerOptions.get(i).getPosition().longitude, distance);
 
             if (distance[0] > radiusContainer.get(i).getRadius()) {
-                Toast.makeText(getActivity().getBaseContext(), "Outside", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity().getBaseContext(), "Outside", Toast.LENGTH_LONG).show();
             } else {
                 //viewModel.getMarkerLocation();
                 //Her skal der kaldes til main activity for at loade ny lyd
-                Toast.makeText(getActivity().getBaseContext(), "Inside", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity().getBaseContext(), "Inside", Toast.LENGTH_LONG).show();
             }
         }
 
