@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">Travelbuddy</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Who are we:</string>
-    <string name="wellcome" translatable="false">About us</string>
+    <string name="wellcome">About us:</string>
     <string name="text_frederik" translatable="false">This is Frederik. He is 26 years old and work in the company as the CEO</string>
     <string name="text_simon" translatable="false">This is Simon. He is 22 years old, and work as CEO</string>
     <string name="text_thomas" translatable="false">This is Thomas. He is head og the janitors in the company</string>

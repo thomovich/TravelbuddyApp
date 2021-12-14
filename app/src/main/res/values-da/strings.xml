@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Travelbuddy</string>
-    <string name="hello_blank_fragment" translatable="false">Hvem er vi:</string>
-    <string name="wellcome" translatable="false">Om os</string>
+    <string name="wellcome" translatable="false">Om os:</string>
     <string name="sights">Seværdigheder</string>
     <string name="welcome_home">Velkommen til TravelBuddy!</string>
     <string name="sdg_goals">SDG Mål</string>
