@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SightAdapter extends RecyclerView.Adapter<SightAdapter.ViewHolder> {
-    // We want the data from the Craving objects to the RecycleView items.
+    // We want the data from the Sight objects to the RecycleView items.
     //Set to new ArrayList to make sure it is not NULL, before we get first Live data update.
     //Create new items, Populates the items with data, and return the information.
     private List<Sights> sightList = new ArrayList<>();
@@ -50,7 +50,6 @@ public class SightAdapter extends RecyclerView.Adapter<SightAdapter.ViewHolder> 
 
         this.mOnListItemClickListener = listener;
         this.context = context;
-
     }
 
     @NonNull
@@ -62,14 +61,13 @@ public class SightAdapter extends RecyclerView.Adapter<SightAdapter.ViewHolder> 
     }
 
 
-    //Get the data from the single craving java object into the views of our cravingholder.
+    //Get the data from the single sight java object into the views of our sightholder.
     public void onBindViewHolder(@NonNull SightAdapter.ViewHolder holder, int position) {
         holder.SightDescription.setText(sightList.get(position).getName());
         Glide.with(context).
                 load(sightList.
                         get(position).
                         getImg()).into(holder.icon);
-        //Glide.with(CaptchaFragment.this).load(decodedBytes).crossFade().fitCenter().into(mCatpchaImageView);
     }
 
     public void updateList(List<Sights> sightList) {

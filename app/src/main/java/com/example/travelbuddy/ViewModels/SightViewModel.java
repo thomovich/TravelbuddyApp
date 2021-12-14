@@ -1,21 +1,15 @@
 package com.example.travelbuddy.ViewModels;
 
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.SavedStateHandle;
 import androidx.lifecycle.ViewModel;
-
-import com.example.travelbuddy.Models.Sight;
 import com.example.travelbuddy.Models.Sights;
 import com.example.travelbuddy.Reposity.SightRepository;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class SightViewModel extends ViewModel {
+
     int posindex;
     int topview;
     private final MutableLiveData<Sights> Sights = new MutableLiveData<Sights>();
@@ -52,7 +46,5 @@ public class SightViewModel extends ViewModel {
         this.posindex = posindex;
         this.topview = topview;
     }
-
-
 }
 

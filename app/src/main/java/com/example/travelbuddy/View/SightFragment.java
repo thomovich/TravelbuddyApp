@@ -25,8 +25,6 @@ public class SightFragment extends Fragment implements SightAdapter.OnListItemCl
     RecyclerView recyclerView;
     int lastpos;
 
-
-
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_sight, container, false);
@@ -45,7 +43,6 @@ public class SightFragment extends Fragment implements SightAdapter.OnListItemCl
             }
         });
         return view;
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -63,11 +60,7 @@ public class SightFragment extends Fragment implements SightAdapter.OnListItemCl
         viewModel = new ViewModelProvider(requireActivity()).get(SightViewModel.class);
         viewModel.getAllSights().observe(getViewLifecycleOwner(), adapter::updateList);
         viewModel.createdata(2);
-
     }
-
-
-
 
     @Override
     public void onPause() {

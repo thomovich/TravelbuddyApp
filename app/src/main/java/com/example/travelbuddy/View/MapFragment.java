@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.os.Handler;
 import android.util.Log;
@@ -27,6 +28,7 @@ import com.example.travelbuddy.Models.Sight;
 import com.example.travelbuddy.R;
 
 import com.example.travelbuddy.ViewModels.MapViewModel;
+import com.example.travelbuddy.ViewModels.SightViewModel;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -64,7 +66,7 @@ public class MapFragment extends Fragment {
     ArrayList<LatLng> locationList = new ArrayList<>();
     ArrayList<Circle> cirleList = new ArrayList<>();
     ArrayList<MarkerOptions> markers =new ArrayList<>();
-    ArrayList<MarkerOptions> markerOptions;
+    ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
     ArrayList<CircleOptions> radiusContainer = new ArrayList<>();
 
     //google's API for location services. Majority of the app functions using this class.
@@ -152,32 +154,38 @@ public class MapFragment extends Fragment {
 
 
                 //marker
+                viewModel = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
+                viewModel.createdata(2);
+                viewModel.getSights().observe(getViewLifecycleOwner(),sights->{
+                    Log.d("observed change", "mapsfrag");
 
-                sights = new MapViewModel().getMarkerLocation();
+                    for(int i=0;i < sights.size();i++){
+                        Log.d("creating map", "sights");
+                        MarkerOptions marker = new MarkerOptions();
+                        LatLng latLng = new LatLng(sights.get(i).getLat(), sights.get(i).getLong());
+                        marker.position(latLng)
+                                .title(sights.get(i).getLanguageVariant().getName());
+                        markerOptions.add(marker);
 
-                markerOptions = new MapsModel().getMarkerLocation();
+                        CircleOptions circly = new CircleOptions()
+                                .center(marker.getPosition())
+                                .radius(sights.get(i).getRadius())
+                                .fillColor(Color.BLUE);
+                        radiusContainer.add(circly);
+                        googleMap.addMarker(marker);
+                        googleMap.addCircle(circly);
+
+                    }
+                });
 
 
 
 
-                for(int i=0;i < sights.size();i++){
 
-                    MarkerOptions marker = new MarkerOptions();
-                    LatLng latLng = new LatLng(sights.get(i).getLat(), sights.get(i).getLong());
-                    marker.position(latLng)
-                            .title(sights.get(i).getLanguageVariant().getName())
-                            .icon(BitmapDescriptorFactory.fromResource(sights.get(i).getImage()));
-                    markerOptions.add(marker);
 
-                    CircleOptions circly = new CircleOptions()
-                            .center(marker.getPosition())
-                            .radius(sights.get(i).getRadius())
-                            .fillColor(Color.BLUE);
-                    radiusContainer.add(circly);
-                    googleMap.addMarker(marker);
-                    googleMap.addCircle(circly);
 
-                }
+
+
 
 
 
@@ -259,16 +267,23 @@ public class MapFragment extends Fragment {
         this.currentLocation = location;
         for (int i = 0; i < markerOptions.size() ; i++) {
 
-            float[] distance = new float[1];
-            Location.distanceBetween(location.getLatitude(), location.getLongitude(),
-                    markerOptions.get(i).getPosition().latitude, markerOptions.get(i).getPosition().longitude, distance);
 
-            if (distance[0] > radiusContainer.get(i).getRadius()) {
-                //outside
-            } else {
-                //inside
-             //   onMapsEnterListener.EnteredZone(markerOptions.get(i).getTitle());
-            }
+
+
+
+                float[] distance = new float[1];
+                Location.distanceBetween(location.getLatitude(), location.getLongitude(),
+                        markerOptions.get(i).getPosition().latitude, markerOptions.get(i).getPosition().longitude, distance);
+
+                if (distance[0] > radiusContainer.get(i).getRadius()) {
+                    //outside
+
+                } else {
+                    //inside
+                    Log.d("dsa", markerOptions.get(i).getTitle());
+                    onMapsEnterListener.EnteredZone(markerOptions.get(i).getTitle());
+                }
+
         }
 
 
