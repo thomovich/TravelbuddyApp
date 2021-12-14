@@ -12,11 +12,8 @@ public class AboutViewModel extends ViewModel {
 
     AboutRepository repository = new AboutRepository();
 
-
     public LiveData<List<About>> getAllAbouts() {
 
         return repository.getAllAbouts();
     }
-
-
 }

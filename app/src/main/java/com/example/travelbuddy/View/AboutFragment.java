@@ -36,7 +36,6 @@ public class AboutFragment extends Fragment implements AboutAdapter.OnListItemCl
         viewModel.getAllAbouts().observe(getViewLifecycleOwner(), adapter::updateList);
 
         return view;
-
     }
 
     @Override

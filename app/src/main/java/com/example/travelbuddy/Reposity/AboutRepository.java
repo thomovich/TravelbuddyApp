@@ -14,15 +14,6 @@ public class AboutRepository {
     private ArrayList<About> aboutList = new ArrayList<>();
     private final MutableLiveData<List<About>> Abouts = new MutableLiveData<>();
 
-    /**
-     String asbjorn_text = getResources().getString(R.string.text_asbjorn);
-    String frederik_text = getResources().getString(R.string.text_frederik);
-    String simon_text = getResources().getString(R.string.text_simon);
-    String rasmus_text = getResources().getString(R.string.text_ralle);
-    String thomas_text = getResources().getString(R.string.text_thomas;
-    String info_text = getResources().getString(R.string.text_info;
-    */
-
     public AboutRepository() {
     if (Locale.getDefault().getLanguage().equals("da")) {
         aboutList.add(new About("Dette er Asbjørn. Han er 24 år gammel og er vores Lead-Designer", R.drawable.asbjorn));

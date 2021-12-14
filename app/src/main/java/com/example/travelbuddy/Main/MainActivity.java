@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
             Fragmenthandler("HomeFragment");
         }
 
-
         playbtn.setOnClickListener(v->{
             //Avoid nullpointers with simple check
             if(mediaPlayer == null){
