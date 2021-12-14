@@ -3,6 +3,8 @@ package com.example.travelbuddy.View;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -21,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.bumptech.glide.Glide;
 import com.example.travelbuddy.Listener.OnMapsEnterListener;
 import com.example.travelbuddy.MapsClasses.IMapsModel;
 import com.example.travelbuddy.MapsClasses.MapsModel;
@@ -39,12 +42,15 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 
@@ -157,13 +163,16 @@ public class MapFragment extends Fragment {
                 viewModel = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
                 viewModel.createdata(2);
                 viewModel.getSights().observe(getViewLifecycleOwner(),sights->{
-                    Log.d("observed change", "mapsfrag");
 
                     for(int i=0;i < sights.size();i++){
-                        Log.d("creating map", "sights");
+
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(sights.get(i).getImage(),0,sights.get(i).getImage().length);
+
+                       //BitmapFactory bitmap= BitmapFactory.decodeByteArray(sights.get(i).getImage(),0,sights.get(i).getImage().length)
+
                         MarkerOptions marker = new MarkerOptions();
                         LatLng latLng = new LatLng(sights.get(i).getLat(), sights.get(i).getLong());
-                        marker.position(latLng)
+                        marker.position(latLng).icon(BitmapDescriptorFactory.fromBitmap(bitmap))
                                 .title(sights.get(i).getLanguageVariant().getName());
                         markerOptions.add(marker);
 
@@ -266,10 +275,6 @@ public class MapFragment extends Fragment {
 
         this.currentLocation = location;
         for (int i = 0; i < markerOptions.size() ; i++) {
-
-
-
-
 
                 float[] distance = new float[1];
                 Location.distanceBetween(location.getLatitude(), location.getLongitude(),

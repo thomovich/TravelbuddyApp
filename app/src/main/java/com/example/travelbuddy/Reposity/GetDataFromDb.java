@@ -82,11 +82,11 @@ public class GetDataFromDb implements dblookups{
             ResultSet rs = pstmt.executeQuery();
             con.close();
             while(rs.next()){
-                //final byte[] decodedBytes = Base64.decode(rs.getString("sight_image"), Base64.DEFAULT);
+                final byte[] decodedBytes = Base64.decode(rs.getString("sight_image"), Base64.DEFAULT);
                 Sight sights = new Sight(Double.parseDouble(rs.getString("latitude")),
                         Double.parseDouble(rs.getString("longitude")),
                         rs.getInt("radius_in_meters"),
-                        0,//rs.getInt(4)
+                        decodedBytes,
                         new LanguageVariant(rs.getString("sight_name"),
                                 rs.getString("sight_description")));
                 Log.d("empty array", "array");
