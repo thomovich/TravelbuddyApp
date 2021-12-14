@@ -13,4 +13,9 @@
     <string name="welcome_home">Welcome to the TravelBuddy App!</string>
     <string name="home_info">When using the TravelBuddy application, you will contribute to some of UN\'s SDG Goals. If you want to know which, you can press the button down below.</string>
     <string name="sdg_goals">SDG Goals</string>
+    <string name="activity_main_play_b">play</string>
+    <string name="sights_navbar">sights</string>
+    <string name="about_navbar">about</string>
+    <string name="map_navbar">map</string>
+    <string name="home_navbar">home</string>
 </resources>
