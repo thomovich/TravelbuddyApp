@@ -33,25 +33,39 @@ public class GetDataFromDb implements dblookups{
     }
     @Override
     public boolean checkqr(String Qrcode) {
+        boolean qrok = false;
+        int qrcodeint;
+        try{
+            qrcodeint = Integer.parseInt(Qrcode);
+        } catch (Exception e){
+            return  false;
+        }
 
+        Connection con;
+        ConnectionManager connectionManager = new ConnectionManager();
+        con = connectionManager.connectionclass();
         // Assume a database connection, conn.
-        PreparedStatement stmnt = null;
-        ResultSet rs = null;
-        try
-        {
-            // Create the PreparedStatement
-            stmnt = connection.prepareStatement("select * from Ticket");
+        String preparedstm =
+                "select*from travelbuddy.purchases where ticket_id = ?";
 
-            // Execute the query to obtain the ResultSet
-            rs = stmnt.executeQuery();
+        try {
+            PreparedStatement stmnt = con.prepareStatement(preparedstm);
+            stmnt.setInt(1, qrcodeint);
+            ResultSet rs = stmnt.executeQuery();
+            con.close();
+            String result = null;
+            if(rs.next()){
+                result = rs.getString("payment_method");
+            }
+
+            if(!result.isEmpty()){
+                qrok = true;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        catch(Exception ex)
-        {
-            System.err.println("Database exception: " + ex);
-        }
 
-
-        return true;
+        return qrok;
     }
 
     @Override
@@ -160,5 +174,34 @@ public class GetDataFromDb implements dblookups{
         }
 
         return sightslist;
+    }
+
+    @Override
+    public ArrayList<String> getLanguages(int Qrcode) {
+        ArrayList<String> languagecodes = new ArrayList<>();
+        Connection con;
+        ConnectionManager connectionManager = new ConnectionManager();
+        con = connectionManager.connectionclass();
+        String preparedstatement = "select distinct travelbuddy.sight_variants.language_code\n" +
+                "from travelbuddy.sights\n" +
+                "inner join travelbuddy.sight_variants\n" +
+                "on travelbuddy.sight_variants.sight_id = travelbuddy.sights.sight_id\n" +
+                "inner join travelbuddy.purchases\n" +
+                "on travelbuddy.sights.tour_id = travelbuddy.purchases.tour_id\n" +
+                "where travelbuddy.purchases.ticket_id = ?";
+        try {
+            PreparedStatement pstmt = con.prepareStatement(preparedstatement);
+            pstmt.setInt(1, Qrcode);
+            ResultSet rs = pstmt.executeQuery();
+            con.close();
+            while (rs.next()){
+                Log.d("getting codes", "tag");
+                languagecodes.add(rs.getString("language_code"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return languagecodes;
     }
 }

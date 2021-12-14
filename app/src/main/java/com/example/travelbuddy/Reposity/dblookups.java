@@ -12,4 +12,5 @@ public interface dblookups {
     ArrayList<Sight> getcoord(int Qrcode);
     MediaPlayer getsound(String Qrcode);
     ArrayList<Sights> getSights(int Qrcode);
+    ArrayList<String> getLanguages(int Qrcode);
 }

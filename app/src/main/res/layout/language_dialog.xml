@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="120dp"
+    android:background="@drawable/green">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="choose your language"
+        android:id="@+id/langtext"
+        android:gravity="center"
+        android:textSize="20sp"
+        >
+
+    </TextView>
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/languagedropdown">
+        android:id="@+id/languagedropdown"
+        android:layout_below="@+id/langtext">
     </Spinner>
     <Button
-        android:layout_width="48dp"
+        android:layout_width="70dp"
         android:layout_height="48dp"
         android:layout_below="@id/languagedropdown"
         android:layout_centerHorizontal="true"
         android:id="@+id/languageok"
+        android:text="ok"
         >
 
     </Button>
