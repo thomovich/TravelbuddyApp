@@ -96,8 +96,9 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
             buttonok.setOnClickListener(view -> {
                 EditText edit = dialog.findViewById(R.id.typeinqr);
                 String qrcode = edit.getText().toString();
-                goNextActivity(edit.getText().toString());
-                finish();
+                Createspinner(edit.getText().toString());
+                //goNextActivity(edit.getText().toString());
+                //finish();
                 dialog.dismiss();
             });
 
@@ -169,7 +170,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
     }
 
     void goNextActivity(String qrcode){
-        int qrcodeint = Integer.getInteger(qrcode);
+        int qrcodeint = Integer.parseInt(qrcode);
         GlobalVariable.getInstance().qrcode = qrcodeint;
         GlobalVariable.getInstance().isscan = true;
         Intent intent = new Intent(QRscanactivity.this, OnboardingActivity.class);
@@ -217,18 +218,31 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         }
     }
 
-    private void Createspinner(){
+    private void Createspinner(String qrcode){
+        int qrcodeint = Integer.parseInt(qrcode);
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.language_dialog);
         Button buttonok;
         Spinner spinner;
         buttonok = dialog.findViewById(R.id.languageok);
-        spinner = dialog.findViewById(R.id.languagedropdown);
-        ArrayList<String> spinnerArray = new ArrayList<String>();
-
+        buttonok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
         spinner = new Spinner(this);
+        spinner = dialog.findViewById(R.id.languagedropdown);
+        GetDataFromDb getDataFromDb = GetDataFromDb.getSingleinstance();
+        ArrayList<String> spinnerArray = new ArrayList<String>();
+        spinnerArray = getDataFromDb.getLanguages(qrcodeint);
+        //spinnerArray.add("DA");
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_spinner_item,
                         spinnerArray);
+        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerArrayAdapter);
+        dialog.show();
     }
+
 }

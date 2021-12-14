@@ -3,7 +3,7 @@ package com.example.travelbuddy.Models;
 public class GlobalVariable {
     private static GlobalVariable mInstance= null;
 
-    public boolean isscan = true;
+    public boolean isscan = false;
     public int qrcode =2;
 
     protected GlobalVariable(){}

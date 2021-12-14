@@ -2,6 +2,7 @@ package com.example.travelbuddy.Reposity;
 
 import android.media.MediaPlayer;
 import android.util.Base64;
+import android.util.Log;
 
 import com.example.travelbuddy.Models.LanguageVariant;
 import com.example.travelbuddy.Models.MediaPlayerFactory;
@@ -154,5 +155,34 @@ public class GetDataFromDb implements dblookups{
         }
 
         return sightslist;
+    }
+
+    @Override
+    public ArrayList<String> getLanguages(int Qrcode) {
+        ArrayList<String> languagecodes = new ArrayList<>();
+        Connection con;
+        ConnectionManager connectionManager = new ConnectionManager();
+        con = connectionManager.connectionclass();
+        String preparedstatement = "select distinct travelbuddy.sight_variants.language_code\n" +
+                "from travelbuddy.sights\n" +
+                "inner join travelbuddy.sight_variants\n" +
+                "on travelbuddy.sight_variants.sight_id = travelbuddy.sights.sight_id\n" +
+                "inner join travelbuddy.purchases\n" +
+                "on travelbuddy.sights.tour_id = travelbuddy.purchases.tour_id\n" +
+                "where travelbuddy.purchases.ticket_id = ?";
+        try {
+            PreparedStatement pstmt = con.prepareStatement(preparedstatement);
+            pstmt.setInt(1, Qrcode);
+            ResultSet rs = pstmt.executeQuery();
+            con.close();
+            while (rs.next()){
+                Log.d("getting codes", "tag");
+                languagecodes.add(rs.getString("language_code"));
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return languagecodes;
     }
 }
