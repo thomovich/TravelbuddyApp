@@ -60,6 +60,8 @@ public class GetDataFromDb implements dblookups{
 
             if(!result.isEmpty()){
                 qrok = true;
+            } else {
+                qrok = false;
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
