@@ -45,7 +45,8 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
             mediaPlayer = m;
             seekbar.setMax(mediaPlayer.getDuration());
             playbtn.setClickable(true);
-            playbtn.setText("Sound ready");
+            String play_b_ready = getResources().getString(R.string.activity_main_play_b_ready);
+            playbtn.setText(play_b_ready);
             if(runnable == null){
                 updateSeekbar();
             }
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
 //     yourYesResponse = "C\'est bon " + usersName + "!";
 // }
 
-        String mystring = getResources().getString(R.string.activity_main_play_b);
+
 
         playbtn.setOnClickListener(v->{
             //Avoid nullpointers with simple check
@@ -77,10 +78,12 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
             }
             if(mediaPlayer.isPlaying()  ){
                 mediaPlayer.pause();
-                mainActivityViewModel.selectbtntext("sound is paused");
+                String play_b = getResources().getString(R.string.activity_main_play_b);
+                mainActivityViewModel.selectbtntext(play_b);
             } else  {
                 mediaPlayer.start();
-                mainActivityViewModel.selectbtntext("sound is playing");
+                String paused_b = getResources().getString(R.string.button_paused);
+                mainActivityViewModel.selectbtntext(paused_b);
             }
         });
         chipNavigationBar = findViewById(R.id.bottom_nav_menu);

@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Travelbuddy</string>
-    <string name="hello_blank_fragment" translatable="false">Hvem er vi:</string>
-    <string name="wellcome" translatable="false">Om os</string>
+    <string name="wellcome" translatable="false">Om os:</string>
     <string name="sights">Seværdigheder</string>
     <string name="welcome_home">Velkommen til TravelBuddy!</string>
     <string name="sdg_goals">SDG Mål</string>
     <string name="home_info">Når du anvender TravelBuddy støtter du UN 17 verdensmål. Tryk på knappen for at læse mere om de mål du støtter.</string>
-    <string name="activity_main_play_b">afspil</string>
+    <string name="activity_main_play_b">Afspil</string>
+    <string name="button_paused">Sæt på pause</string>
+    <string name="activity_main_play_b_ready">Lyd er klar</string>
     <string name="sights_navbar">seværdigheder</string>
     <string name="about_navbar">Om</string>
-    <string name="map_navbar">kort</string>
-    <string name="home_navbar">hjem</string>
+    <string name="map_navbar">Kort</string>
+    <string name="home_navbar">Hjem</string>
+    <string name="back_button">Tilbage</string>
+    <string name="type_in_qr_code">Indtast QR kode</string>
 </resources>
