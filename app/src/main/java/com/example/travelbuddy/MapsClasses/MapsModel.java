@@ -13,7 +13,7 @@ public class MapsModel implements IMapsModel{
 
     ArrayList<Sight> sights = new ArrayList<>();
 
-    private String qrCode;
+    private int qrCode;
 
 
     @Override

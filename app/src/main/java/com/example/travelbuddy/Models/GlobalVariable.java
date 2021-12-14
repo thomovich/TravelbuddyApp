@@ -4,7 +4,7 @@ public class GlobalVariable {
     private static GlobalVariable mInstance= null;
 
     public boolean isscan = true;
-    public int qrcode;
+    public int qrcode =2;
 
     protected GlobalVariable(){}
 

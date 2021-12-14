@@ -169,7 +169,8 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
     }
 
     void goNextActivity(String qrcode){
-        GlobalVariable.getInstance().qrcode = qrcode;
+        int qrcodeint = Integer.getInteger(qrcode);
+        GlobalVariable.getInstance().qrcode = qrcodeint;
         GlobalVariable.getInstance().isscan = true;
         Intent intent = new Intent(QRscanactivity.this, OnboardingActivity.class);
         startActivity(intent);

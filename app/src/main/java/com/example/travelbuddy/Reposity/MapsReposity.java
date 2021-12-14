@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class MapsReposity {
 
     private int qrCode;
-    private dblookups dblookups;
+    private GetDataFromDb dblookups = new GetDataFromDb();
     private ArrayList<Sight> sights = new ArrayList<>();
     private ArrayList<Sight> returnsights = new ArrayList<>();
     private ArrayList<LanguageVariant> variants = new ArrayList<>();
@@ -38,7 +38,8 @@ public class MapsReposity {
 
         //sights=dblookups.getSights(qrCode);
 
-        ArrayList<Sight> sightsToMap= dblookups.getcoord(qrCode);
+        ArrayList<Sight> sightsToMap;
+        sightsToMap = dblookups.getcoord(qrCode);
 
         /*Sight sight = new Sight(
                     1,

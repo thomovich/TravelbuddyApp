@@ -56,8 +56,6 @@ public class GetDataFromDb implements dblookups{
     @Override
     public ArrayList<Sight> getcoord(int Qrcode) {
 
-
-
         ArrayList<Sight> sightslist = new ArrayList<>();
         Connection con;
         ConnectionManager connectionManager = new ConnectionManager();
