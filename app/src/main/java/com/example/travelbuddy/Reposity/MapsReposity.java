@@ -64,25 +64,17 @@ public class MapsReposity {
             GetDataFromDb getDataFromDb = GetDataFromDb.getSingleinstance();
             sightList = getDataFromDb.getcoord(sql);
             Sights.postValue(sightList);
-            Log.d("kalder dbs", "tag");
+            Log.d("kalder dbs fra maps", "tag");
         }
 
 
 
     }
 
-    public LiveData<List<com.example.travelbuddy.Models.Sight>> getAllSights() {
+    public LiveData<List<Sight>> getAllSights() {
 
         return Sights;
 
-    }
-
-    public void selectsights(List<Sight> sights){
-        this.Sights.postValue(sights);
-    }
-
-    public ArrayList<Sight> getSightList(){
-        return sightList;
     }
 
 

@@ -2,6 +2,7 @@ package com.example.travelbuddy.Reposity;
 
 import android.media.MediaPlayer;
 import android.util.Base64;
+import android.util.Log;
 
 import com.example.travelbuddy.Models.LanguageVariant;
 import com.example.travelbuddy.Models.MediaPlayerFactory;
@@ -60,18 +61,20 @@ public class GetDataFromDb implements dblookups{
         Connection con;
         ConnectionManager connectionManager = new ConnectionManager();
         con = connectionManager.connectionclass();
-        String preparedstatement = "select travelbuddy.sight.Latitude," +
-                "travelbuddy.sight.longitude," +
-                "travelbuddy.sight.radius," +
-                "travelbuddy.sight.sight_image," +
+        String preparedstatement = "select travelbuddy.sights.latitude," +
+                "travelbuddy.sights.longitude," +
+                "travelbuddy.sights.radius_in_meters," +
+                "travelbuddy.sights.sight_image," +
                 "travelbuddy.sight_variants.sight_name," +
-                "travelbuddy.sight_variants.sight_description," +
-                "from travelbuddy.sights\n" +
-                "inner join travelbuddy.sight_variants \n" +
-                "on travelbuddy.sight_variants.sight_id = travelbuddy.sights.sight_id\n" +
-                "inner join travelbuddy.purchases\n" +
-                "on travelbuddy.sights.tour_id = travelbuddy.purchases.tour_id\n" +
+                "travelbuddy.sight_variants.sight_description " +
+                "from travelbuddy.sights " +
+                "inner join travelbuddy.sight_variants " +
+                "on travelbuddy.sight_variants.sight_id = travelbuddy.sights.sight_id " +
+                "inner join travelbuddy.purchases " +
+                "on travelbuddy.sights.tour_id = travelbuddy.purchases.tour_id " +
                 "where travelbuddy.purchases.ticket_id = ?";
+
+        Log.d("d",preparedstatement);
 
         try {
             PreparedStatement pstmt = con.prepareStatement(preparedstatement);
@@ -80,12 +83,13 @@ public class GetDataFromDb implements dblookups{
             con.close();
             while(rs.next()){
                 //final byte[] decodedBytes = Base64.decode(rs.getString("sight_image"), Base64.DEFAULT);
-                Sight sights = new Sight(rs.getInt("sight_latitude"),
-                        rs.getInt("sight_longitude"),
-                        rs.getInt("sight_radius"),
-                        rs.getInt("sight_image"),
+                Sight sights = new Sight(Double.parseDouble(rs.getString("latitude")),
+                        Double.parseDouble(rs.getString("longitude")),
+                        rs.getInt("radius_in_meters"),
+                        0,//rs.getInt(4)
                         new LanguageVariant(rs.getString("sight_name"),
                                 rs.getString("sight_description")));
+                Log.d("empty array", "array");
                         //Sight(rs.getString("sight_name"),decodedBytes,rs.getString("sight_description"));
                 sightslist.add(sights);
             }
@@ -93,6 +97,8 @@ public class GetDataFromDb implements dblookups{
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+
 
         return sightslist;
     }
