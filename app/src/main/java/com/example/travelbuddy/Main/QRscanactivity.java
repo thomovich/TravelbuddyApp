@@ -192,15 +192,18 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     public void handleResult(Result result) {
         final String rawresult = result.getText();
-        final int rawint = Integer.parseInt(rawresult);
+
+
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("scan result");
+        boolean check = Checkindb(rawresult);
         builder.setPositiveButton(
                 "ok", (dialogInterface, i) -> {
-                    boolean check = Checkindb(rawresult);
                     if(check){
+                        int rawint = Integer.parseInt(rawresult);
                         builder.setTitle("QR succesful press ok");
-                        goNextActivity(rawint, true);
+                        Createspinner(rawresult);
                     } else {
                         builder.setTitle("scan unsuccesful try again");
                     }
@@ -211,7 +214,12 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
                 "Cancel", (dialogInterface, i) -> {
                     scannerView.resumeCameraPreview(QRscanactivity.this);
                 });
-        builder.setMessage(result.getText());
+        if(check){
+            builder.setMessage("QR scanned succesfully");
+        } else {
+            builder.setMessage("QR not correct");
+        }
+
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
 
@@ -240,11 +248,11 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         buttonok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goNextActivity(qrcodeint,true);
                 dialog.dismiss();
                 String selected = spinner.getSelectedItem().toString();
                 GlobalVariable.getInstance().languagechosen = selected;
                 Log.d(selected, "selected lang");
+                goNextActivity(qrcodeint,true);
             }
         });
         spinner = new Spinner(this);

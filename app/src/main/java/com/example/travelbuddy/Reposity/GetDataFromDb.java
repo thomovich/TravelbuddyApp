@@ -58,7 +58,9 @@ public class GetDataFromDb implements dblookups{
                 result = rs.getString("payment_method");
             }
 
-            if(!result.isEmpty()){
+            if(result == null){
+                qrok = false;
+            } else {
                 qrok = true;
             }
         } catch (SQLException throwables) {
