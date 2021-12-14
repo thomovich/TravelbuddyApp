@@ -9,13 +9,13 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 public class Sight {
 
 
-    private double Lat=56.505966;
-    private double Long=9.717303;
-    private int radius=5;
-    private int image = R.drawable.asbjorn;
+    private double Lat;
+    private double Long;
+    private int radius;
+    private byte[] image;
     private LanguageVariant languageVariant;
 
-    public Sight(double lat, double aLong, int radius, int image, LanguageVariant languageVariant) {
+    public Sight(double lat, double aLong, int radius, byte[] image, LanguageVariant languageVariant) {
 
         Lat = lat;
         Long = aLong;
@@ -37,7 +37,7 @@ public class Sight {
         return radius;
     }
 
-    public int getImage() {
+    public byte[] getImage() {
         return image;
     }
 
