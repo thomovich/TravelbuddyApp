@@ -94,7 +94,7 @@ public class GetDataFromDb implements dblookups{
             throwables.printStackTrace();
         }
 
-        return null;
+        return sightslist;
     }
 
     @Override
