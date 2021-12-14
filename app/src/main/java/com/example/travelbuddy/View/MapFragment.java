@@ -167,9 +167,6 @@ public class MapFragment extends Fragment {
                     for(int i=0;i < sights.size();i++){
 
                         Bitmap bitmap = BitmapFactory.decodeByteArray(sights.get(i).getImage(),0,sights.get(i).getImage().length);
-
-                       //BitmapFactory bitmap= BitmapFactory.decodeByteArray(sights.get(i).getImage(),0,sights.get(i).getImage().length)
-
                         MarkerOptions marker = new MarkerOptions();
                         LatLng latLng = new LatLng(sights.get(i).getLat(), sights.get(i).getLong());
                         marker.position(latLng).icon(BitmapDescriptorFactory.fromBitmap(bitmap))
@@ -178,8 +175,9 @@ public class MapFragment extends Fragment {
 
                         CircleOptions circly = new CircleOptions()
                                 .center(marker.getPosition())
-                                .radius(sights.get(i).getRadius())
-                                .fillColor(Color.BLUE);
+                                .radius(10000)
+                                .strokeColor(Color.parseColor("#2271cce7"))
+                                .fillColor(Color.parseColor("#2271cce7"));
                         radiusContainer.add(circly);
                         googleMap.addMarker(marker);
                         googleMap.addCircle(circly);
