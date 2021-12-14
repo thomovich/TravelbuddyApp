@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="text_frederik">Dette er Frederik. Han er 26 år gammel og arbejder som CEO</string>
+    <string name="text_simon"> Dette er Simon. Han er 22 år gammel or arbejder som CEO</string>
+    <string name="text_thomas"> Dette er Thomas. Han er 25 år gammel og arbejder som HR-medarbejder</string>
+    <string name="text_ralle">Dette er rasmus. Han er 25 år gammel og arbejder som vicevært</string>
+    <string name="text_asbjorn">Dette er Asbjørn. Han er 24 år gammel og er vores Lead-Designer</string>
+    <string name="text_info">Virksomheden er 6 måneder gammel. Vores mål er at lave en applikation der kan hjælpe folk med at oplever byer og kulturer rundt omkring i verden, imens de bliver aktiveret både fysisk og mentalt</string>
     <string name="app_name">Travelbuddy</string>
     <string name="wellcome" translatable="false">Om os:</string>
     <string name="sights">Seværdigheder</string>

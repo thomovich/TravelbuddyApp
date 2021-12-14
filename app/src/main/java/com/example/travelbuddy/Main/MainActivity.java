@@ -62,13 +62,6 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
         if(savedInstanceState == null) {
             Fragmenthandler("HomeFragment");
         }
-// if (Locale.getDefault().getLanguage().equals("en")) {
-//     yourYesResponse = "That is great " + usersName + "!";
-// }
-// else if (Locale.getDefault().getLanguage().equals("da")) {
-//     yourYesResponse = "C\'est bon " + usersName + "!";
-// }
-
 
 
         playbtn.setOnClickListener(v->{
