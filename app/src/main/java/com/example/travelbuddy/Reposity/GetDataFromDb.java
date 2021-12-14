@@ -3,6 +3,7 @@ package com.example.travelbuddy.Reposity;
 import android.media.MediaPlayer;
 import android.util.Base64;
 
+import com.example.travelbuddy.Models.LanguageVariant;
 import com.example.travelbuddy.Models.MediaPlayerFactory;
 import com.example.travelbuddy.Models.Sight;
 import com.example.travelbuddy.Models.Sights;
@@ -53,7 +54,48 @@ public class GetDataFromDb implements dblookups{
     }
 
     @Override
-    public ArrayList<Sight> getcoord(String Qrcode) {
+    public ArrayList<Sight> getcoord(int Qrcode) {
+
+
+
+        ArrayList<Sight> sightslist = new ArrayList<>();
+        Connection con;
+        ConnectionManager connectionManager = new ConnectionManager();
+        con = connectionManager.connectionclass();
+        String preparedstatement = "select travelbuddy.sight.Latitude," +
+                "travelbuddy.sight.longitude," +
+                "travelbuddy.sight.radius," +
+                "travelbuddy.sight.sight_image," +
+                "travelbuddy.sight_variants.sight_name," +
+                "travelbuddy.sight_variants.sight_description," +
+                "from travelbuddy.sights\n" +
+                "inner join travelbuddy.sight_variants \n" +
+                "on travelbuddy.sight_variants.sight_id = travelbuddy.sights.sight_id\n" +
+                "inner join travelbuddy.purchases\n" +
+                "on travelbuddy.sights.tour_id = travelbuddy.purchases.tour_id\n" +
+                "where travelbuddy.purchases.ticket_id = ?";
+
+        try {
+            PreparedStatement pstmt = con.prepareStatement(preparedstatement);
+            pstmt.setInt(1,Qrcode);
+            ResultSet rs = pstmt.executeQuery();
+            con.close();
+            while(rs.next()){
+                //final byte[] decodedBytes = Base64.decode(rs.getString("sight_image"), Base64.DEFAULT);
+                Sight sights = new Sight(rs.getInt("sight_latitude"),
+                        rs.getInt("sight_longitude"),
+                        rs.getInt("sight_radius"),
+                        rs.getInt("sight_image"),
+                        new LanguageVariant(rs.getString("sight_name"),
+                                rs.getString("sight_description")));
+                        //Sight(rs.getString("sight_name"),decodedBytes,rs.getString("sight_description"));
+                sightslist.add(sights);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
         return null;
     }
 

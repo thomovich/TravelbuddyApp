@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public interface dblookups {
     boolean checkqr (String Qrcode);
-    ArrayList<Sight> getcoord(String Qrcode);
+    ArrayList<Sight> getcoord(int Qrcode);
     MediaPlayer getsound(String Qrcode);
     ArrayList<Sights> getSights(int Qrcode);
 }

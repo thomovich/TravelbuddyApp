@@ -8,17 +8,15 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 
 public class Sight {
 
-    private int Id=1;
-    private int TourId=1;
+
     private double Lat=56.505966;
     private double Long=9.717303;
     private int radius=5;
     private int image = R.drawable.asbjorn;
     private LanguageVariant languageVariant;
 
-    public Sight(int id, int tourId, double lat, double aLong, int radius, int image, LanguageVariant languageVariant) {
-        Id = id;
-        TourId = tourId;
+    public Sight(double lat, double aLong, int radius, int image, LanguageVariant languageVariant) {
+
         Lat = lat;
         Long = aLong;
         this.radius = radius;
@@ -26,13 +24,6 @@ public class Sight {
         this.languageVariant = languageVariant;
     }
 
-    public int getId() {
-        return Id;
-    }
-
-    public int getTourId() {
-        return TourId;
-    }
 
     public double getLat() {
         return Lat;
