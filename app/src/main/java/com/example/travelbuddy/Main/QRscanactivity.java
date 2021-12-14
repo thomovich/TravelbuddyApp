@@ -203,7 +203,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
                     if(check){
                         int rawint = Integer.parseInt(rawresult);
                         builder.setTitle("QR succesful press ok");
-                        goNextActivity(rawint, true);
+                        Createspinner(rawresult);
                     } else {
                         builder.setTitle("scan unsuccesful try again");
                     }
@@ -248,11 +248,11 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         buttonok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goNextActivity(qrcodeint,true);
                 dialog.dismiss();
                 String selected = spinner.getSelectedItem().toString();
                 GlobalVariable.getInstance().languagechosen = selected;
                 Log.d(selected, "selected lang");
+                goNextActivity(qrcodeint,true);
             }
         });
         spinner = new Spinner(this);
