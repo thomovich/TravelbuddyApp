@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> {
-    // We want the data from the Craving objects to the RecycleView items.
+    // We want the data from the About objects to the RecycleView items.
     //Set to new ArrayList to make sure it is not NULL, before we get first Live data update.
     //Create new items, Populates the items with data, and return the information.
     private List<About> aboutList = new ArrayList<>();
@@ -54,7 +54,7 @@ public class AboutAdapter extends RecyclerView.Adapter<AboutAdapter.ViewHolder> 
         return new AboutAdapter.ViewHolder(view);
     }
 
-    //Get the data from the single craving java object into the views of our cravingholder.
+    //Get the data from the single about java object into the views of our aboutolder.
     public void onBindViewHolder(@NonNull AboutAdapter.ViewHolder holder, int position) {
         holder.AboutDescription.setText(aboutList.get(position).getName());
         holder.icon.setImageResource(aboutList.get(position).getId());

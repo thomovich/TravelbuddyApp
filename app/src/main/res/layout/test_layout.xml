@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:padding="5dp"
-        android:text="24342"
+        android:text="@string/hello_blank_fragment"
         android:layout_below="@id/text_view_about1"/>
 
     <ImageView

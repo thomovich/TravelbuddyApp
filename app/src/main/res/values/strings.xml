@@ -4,8 +4,8 @@
     <string name="wellcome">About us:</string>
     <string name="text_frederik" translatable="false">This is Frederik. He is 26 years old and work in the company as the CEO</string>
     <string name="text_simon" translatable="false">This is Simon. He is 22 years old, and work as CEO</string>
-    <string name="text_thomas" translatable="false">This is Thomas. He is head og the janitors in the company</string>
-    <string name="text_ralle" translatable="false">This is rasmus. He is 25 years old. He is in charge of all pickles.</string>
+    <string name="text_thomas" translatable="false">This is Thomas. He is 22 years old and is HR-employee</string>
+    <string name="text_ralle" translatable="false">This is rasmus. He is 25 years old. He is the Janitor</string>
     <string name="text_asbjorn" translatable="false">This is Asbjørn. He is 24 years old and is our lead designer</string>
     <string name="text_info" translatable="false">The company is 6 months and our goal is to make an application that can help people experience great citites and wonders around the world while being active physicaly and mentally</string>
     <string name="sights">Sights</string>
