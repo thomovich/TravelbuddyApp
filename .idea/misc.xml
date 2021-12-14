@@ -4,11 +4,9 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/about_item.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/activity_main.xml" value="0.24537037037037038" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/fragment_about.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/fragment_sight.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/qractivity.xml" value="0.24537037037037038" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/sight_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/drawable/gray_round.xml" value="0.2703125" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/drawable/green_round.xml" value="0.2703125" />
@@ -41,7 +39,7 @@
         <entry key="..\:/Users/thoma/AndroidStudioProjects/Travelbuddy/app/src/main/res/layout/map_fragment.xml" value="0.17753623188405798" />
         <entry key="..\:/Users/thoma/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/about_item.xml" value="0.1" />
         <entry key="..\:/Users/thoma/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/activity_main.xml" value="0.10144927536231885" />
-        <entry key="..\:/Users/thoma/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/custom_dialog.xml" value="0.1" />
+        <entry key="..\:/Users/thoma/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/custom_dialog.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/thoma/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/detailedsight.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/thoma/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/fragment_about.xml" value="0.1" />
         <entry key="..\:/Users/thoma/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/fragment_sight.xml" value="0.1" />

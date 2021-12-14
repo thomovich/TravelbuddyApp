@@ -33,25 +33,39 @@ public class GetDataFromDb implements dblookups{
     }
     @Override
     public boolean checkqr(String Qrcode) {
+        boolean qrok = false;
+        int qrcodeint;
+        try{
+            qrcodeint = Integer.parseInt(Qrcode);
+        } catch (Exception e){
+            return  false;
+        }
 
+        Connection con;
+        ConnectionManager connectionManager = new ConnectionManager();
+        con = connectionManager.connectionclass();
         // Assume a database connection, conn.
-        PreparedStatement stmnt = null;
-        ResultSet rs = null;
-        try
-        {
-            // Create the PreparedStatement
-            stmnt = connection.prepareStatement("select * from Ticket");
+        String preparedstm =
+                "select*from travelbuddy.purchases where ticket_id = ?";
 
-            // Execute the query to obtain the ResultSet
-            rs = stmnt.executeQuery();
+        try {
+            PreparedStatement stmnt = con.prepareStatement(preparedstm);
+            stmnt.setInt(1, qrcodeint);
+            ResultSet rs = stmnt.executeQuery();
+            con.close();
+            String result = null;
+            if(rs.next()){
+                result = rs.getString("payment_method");
+            }
+
+            if(!result.isEmpty()){
+                qrok = true;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
-        catch(Exception ex)
-        {
-            System.err.println("Database exception: " + ex);
-        }
 
-
-        return true;
+        return qrok;
     }
 
     @Override

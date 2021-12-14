@@ -13,12 +13,14 @@ import android.content.pm.PackageManager;
 import android.hardware.camera2.*;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.travelbuddy.Models.GlobalVariable;
@@ -37,6 +39,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
     private static final int REQUEST_CAMERA = 1;
     int currentapiversion = Build.VERSION.SDK_INT;
     private String qrCode;
+    Spinner spinner;
     CameraManager cameraManager;
 
 
@@ -88,18 +91,27 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         manualbtn.setOnClickListener(v->{
             final Dialog dialog = new Dialog(QRscanactivity.this);
             dialog.setContentView(R.layout.custom_dialog);
-
+            TextView textView;
             Button buttonok, buttoncancel;
+            textView = dialog.findViewById(R.id.txt_dia);
             buttonok = dialog.findViewById(R.id.btn_ok);
             buttoncancel = dialog.findViewById(R.id.btn_cancel);
 
             buttonok.setOnClickListener(view -> {
                 EditText edit = dialog.findViewById(R.id.typeinqr);
                 String qrcode = edit.getText().toString();
-                Createspinner(edit.getText().toString());
+                if(Checkindb(qrcode)){
+                    Createspinner(qrcode);
+                    dialog.dismiss();
+                } else {
+                    textView.setText("Wrong qr code");
+                }
+
+
+
                 //goNextActivity(edit.getText().toString());
                 //finish();
-                dialog.dismiss();
+
             });
 
             buttoncancel.setOnClickListener(view -> dialog.dismiss());
@@ -112,7 +124,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
     }
 
     private boolean Checkindb(String qrcode) {
-        dblookups dbl = new GetDataFromDb();
+        dblookups dbl = GetDataFromDb.getSingleinstance();
         return dbl.checkqr(qrcode);
     }
 
@@ -169,10 +181,9 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
 
     }
 
-    void goNextActivity(String qrcode){
-        int qrcodeint = Integer.parseInt(qrcode);
-        GlobalVariable.getInstance().qrcode = qrcodeint;
-        GlobalVariable.getInstance().isscan = true;
+    void goNextActivity(int qrcode, boolean scanned){
+        GlobalVariable.getInstance().qrcode = qrcode;
+        GlobalVariable.getInstance().isscan = scanned;
         Intent intent = new Intent(QRscanactivity.this, OnboardingActivity.class);
         startActivity(intent);
         finish();
@@ -181,6 +192,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     public void handleResult(Result result) {
         final String rawresult = result.getText();
+        final int rawint = Integer.parseInt(rawresult);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("scan result");
         builder.setPositiveButton(
@@ -188,7 +200,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
                     boolean check = Checkindb(rawresult);
                     if(check){
                         builder.setTitle("QR succesful press ok");
-                        goNextActivity(rawresult);
+                        goNextActivity(rawint, true);
                     } else {
                         builder.setTitle("scan unsuccesful try again");
                     }
@@ -223,12 +235,16 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.language_dialog);
         Button buttonok;
-        Spinner spinner;
+
         buttonok = dialog.findViewById(R.id.languageok);
         buttonok.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                goNextActivity(qrcodeint,true);
                 dialog.dismiss();
+                String selected = spinner.getSelectedItem().toString();
+                GlobalVariable.getInstance().languagechosen = selected;
+                Log.d(selected, "selected lang");
             }
         });
         spinner = new Spinner(this);
@@ -236,7 +252,6 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         GetDataFromDb getDataFromDb = GetDataFromDb.getSingleinstance();
         ArrayList<String> spinnerArray = new ArrayList<String>();
         spinnerArray = getDataFromDb.getLanguages(qrcodeint);
-        //spinnerArray.add("DA");
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>
                 (this, android.R.layout.simple_spinner_item,
                         spinnerArray);
