@@ -22,8 +22,9 @@
      android:layout_height="wrap_content"
      android:layout_alignBottom="@id/zxscanner"
      android:layout_centerHorizontal="true"
-     android:backgroundTint="@color/black"
-     android:text="type in qr code">
+     android:backgroundTint="@color/green"
+     android:textColor="@color/black"
+     android:text="@string/type_in_qr_code">
 
  </Button>
  <ImageButton

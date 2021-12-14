@@ -24,7 +24,8 @@
     <Button
         android:layout_width="80dp"
         android:layout_height="60dp"
-        android:text="Back"
+        android:text="@string/back_button"
+        android:backgroundTint="@color/green"
         android:textColor="@color/black"
         android:id="@+id/backbutton"
         />
