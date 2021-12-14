@@ -14,9 +14,11 @@ import android.hardware.camera2.*;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.travelbuddy.Models.GlobalVariable;
@@ -24,6 +26,8 @@ import com.example.travelbuddy.R;
 import com.example.travelbuddy.Reposity.GetDataFromDb;
 import com.example.travelbuddy.Reposity.dblookups;
 import com.google.zxing.Result;
+
+import java.util.ArrayList;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -210,5 +214,20 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void Createspinner(){
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.language_dialog);
+        Button buttonok;
+        Spinner spinner;
+        buttonok = dialog.findViewById(R.id.languageok);
+        spinner = dialog.findViewById(R.id.languagedropdown);
+        ArrayList<String> spinnerArray = new ArrayList<String>();
+
+        spinner = new Spinner(this);
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>
+                (this, android.R.layout.simple_spinner_item,
+                        spinnerArray);
     }
 }

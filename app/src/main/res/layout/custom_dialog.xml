@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="fill_parent"
-    android:layout_height="120dp"
+    android:layout_height="160dp"
     android:background="@color/cardview_dark_background">
 
     <TextView
@@ -27,7 +27,7 @@
         <Button
             android:id="@+id/btn_ok"
             android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_height="48dp"
             android:backgroundTint="@color/black"
             android:clickable="true"
             android:text="Ok"
@@ -37,7 +37,7 @@
         <Button
             android:id="@+id/btn_cancel"
             android:layout_width="100dp"
-            android:layout_height="30dp"
+            android:layout_height="48dp"
             android:layout_marginLeft="5dp"
             android:backgroundTint="@color/black"
             android:clickable="true"
@@ -51,8 +51,9 @@
     </LinearLayout>
     <EditText
         android:layout_width="400dp"
-        android:layout_height="40dp"
+        android:layout_height="48dp"
         android:hint="qrcode"
+        android:layout_marginTop="10dp"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:id="@+id/typeinqr"
