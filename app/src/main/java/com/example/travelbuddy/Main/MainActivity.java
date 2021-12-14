@@ -19,6 +19,7 @@ import com.example.travelbuddy.R;
 import com.example.travelbuddy.ViewModels.MainActivityViewModel;
 import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import java.io.FileNotFoundException;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity implements OnMapsEnterListener {
@@ -60,19 +61,26 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
         if(savedInstanceState == null) {
             Fragmenthandler("HomeFragment");
         }
+// if (Locale.getDefault().getLanguage().equals("en")) {
+//     yourYesResponse = "That is great " + usersName + "!";
+// }
+// else if (Locale.getDefault().getLanguage().equals("da")) {
+//     yourYesResponse = "C\'est bon " + usersName + "!";
+// }
+
+        String mystring = getResources().getString(R.string.activity_main_play_b);
 
         playbtn.setOnClickListener(v->{
             //Avoid nullpointers with simple check
             if(mediaPlayer == null){
                 return;
             }
-            if(mediaPlayer.isPlaying()){
+            if(mediaPlayer.isPlaying()  ){
                 mediaPlayer.pause();
                 mainActivityViewModel.selectbtntext("sound is paused");
-            } else {
+            } else  {
                 mediaPlayer.start();
                 mainActivityViewModel.selectbtntext("sound is playing");
-
             }
         });
         chipNavigationBar = findViewById(R.id.bottom_nav_menu);
