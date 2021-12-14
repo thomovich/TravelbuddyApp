@@ -52,6 +52,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class MapFragment extends Fragment {
@@ -69,6 +70,7 @@ public class MapFragment extends Fragment {
     Location currentLocation = null;
     ArrayList<Sight> sights;
     Circle circle;
+    List<Integer> ids = new ArrayList<>();
     ArrayList<LatLng> locationList = new ArrayList<>();
     ArrayList<Circle> cirleList = new ArrayList<>();
     ArrayList<MarkerOptions> markers =new ArrayList<>();
@@ -164,8 +166,9 @@ public class MapFragment extends Fragment {
                 viewModel.createdata(2);
                 viewModel.getSights().observe(getViewLifecycleOwner(),sights->{
 
-                    for(int i=0;i < sights.size();i++){
 
+                    for(int i=0;i < sights.size();i++){
+                        ids.add(sights.get(i).getId());
                         Bitmap bitmap = BitmapFactory.decodeByteArray(sights.get(i).getImage(),0,sights.get(i).getImage().length);
                         MarkerOptions marker = new MarkerOptions();
                         LatLng latLng = new LatLng(sights.get(i).getLat(), sights.get(i).getLong());
@@ -175,7 +178,7 @@ public class MapFragment extends Fragment {
 
                         CircleOptions circly = new CircleOptions()
                                 .center(marker.getPosition())
-                                .radius(10000)
+                                .radius(25000)
                                 .strokeColor(Color.parseColor("#2271cce7"))
                                 .fillColor(Color.parseColor("#2271cce7"));
                         radiusContainer.add(circly);
@@ -284,7 +287,7 @@ public class MapFragment extends Fragment {
                 } else {
                     //inside
                     Log.d("dsa", markerOptions.get(i).getTitle());
-                    onMapsEnterListener.EnteredZone(markerOptions.get(i).getTitle());
+                    onMapsEnterListener.EnteredZone(ids.get(i).toString());
                 }
 
         }

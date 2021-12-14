@@ -78,7 +78,8 @@ public class GetDataFromDb implements dblookups{
         Connection con;
         ConnectionManager connectionManager = new ConnectionManager();
         con = connectionManager.connectionclass();
-        String preparedstatement = "select travelbuddy.sights.latitude," +
+        String preparedstatement = "select travelbuddy.sights.sight_id," +
+                "travelbuddy.sights.latitude," +
                 "travelbuddy.sights.longitude," +
                 "travelbuddy.sights.radius_in_meters," +
                 "travelbuddy.sights.sight_image," +
@@ -100,7 +101,8 @@ public class GetDataFromDb implements dblookups{
             con.close();
             while(rs.next()){
                 final byte[] decodedBytes = Base64.decode(rs.getString("sight_image"), Base64.DEFAULT);
-                Sight sights = new Sight(Double.parseDouble(rs.getString("latitude")),
+                Sight sights = new Sight(rs.getInt("sight_id"),
+                        Double.parseDouble(rs.getString("latitude")),
                         Double.parseDouble(rs.getString("longitude")),
                         rs.getInt("radius_in_meters"),
                         decodedBytes,
@@ -122,26 +124,35 @@ public class GetDataFromDb implements dblookups{
 
     @Override
     public MediaPlayer getsound(String id) {
+
         String base64 = null;
         Connection con;
         ConnectionManager connectionManager = new ConnectionManager();
         con = connectionManager.connectionclass();
 
+        Log.d("d",id);
+        String statement="select sight_audio from travelbuddy.sight_variants " +
+                "where sight_id = ?" +
+                "  and language_code = ?";
         try {
             //String til at vælge den rigtige lyd fra dbs baseret på sprog
             //Select sight_audio from travelbuddy.sight_variants
             //where sight_id = ? and language_code = ?
-            PreparedStatement pstmt = con.
-                    prepareStatement("Select sight_audio from travelbuddy.sight_variants");
+            PreparedStatement pstmt = con.prepareStatement(statement);
+            pstmt.setDouble(1,Integer.parseInt(id));
+            pstmt.setString(2, GlobalVariable.getInstance().languagechosen);
+
             ResultSet rs = pstmt.executeQuery();
             con.close();
 
             if(rs.next()){
+                Log.d("d","HALLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
                 base64 = rs.getString(1);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
 
 
 
