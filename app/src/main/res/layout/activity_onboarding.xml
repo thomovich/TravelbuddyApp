@@ -4,27 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/onboarding_fragment_container"
-    tools:context=".Main.OnboardingActivity">
+    tools:context=".Main.OnboardingActivity"
+    android:background="@drawable/bg">
 
+    <androidx.fragment.app.FragmentContainerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/onboarding_fragment_container">
 
-
+    </androidx.fragment.app.FragmentContainerView>
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/travelbuddyfinal">
-
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/travelbuddyfinal"
+        android:layout_marginBottom="200dp"
+        android:layout_above="@id/buttonToMain">
     </ImageView>
+
+
     <Button
         android:id="@+id/buttonToMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="9dp"
-        android:layout_marginBottom="724dp"
-        android:backgroundTint="@color/teal_700"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
         android:onClick="navigateToMain"
-        android:text="skip" />
+        android:text="skip"
+        android:backgroundTint="@color/teal_700"
+        android:layout_marginVertical="200dp"
+        />
 </RelativeLayout>

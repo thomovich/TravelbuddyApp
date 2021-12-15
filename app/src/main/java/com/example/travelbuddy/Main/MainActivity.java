@@ -102,7 +102,6 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
         });
 
         bottomMenu();
-       // EnteredZone("test");
 
     }
 

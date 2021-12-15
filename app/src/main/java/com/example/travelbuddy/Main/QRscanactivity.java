@@ -14,7 +14,9 @@ import android.hardware.camera2.*;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -90,7 +92,11 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
 
         manualbtn.setOnClickListener(v->{
             final Dialog dialog = new Dialog(QRscanactivity.this);
+            if(dialog.isShowing()){
+                return;
+            }
             dialog.setContentView(R.layout.custom_dialog);
+            dialog.setCanceledOnTouchOutside(false);
             TextView textView;
             Button buttonok, buttoncancel;
             textView = dialog.findViewById(R.id.txt_dia);
@@ -107,10 +113,6 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
                     textView.setText("Wrong qr code");
                 }
 
-
-
-                //goNextActivity(edit.getText().toString());
-                //finish();
 
             });
 
@@ -192,9 +194,6 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
     @Override
     public void handleResult(Result result) {
         final String rawresult = result.getText();
-
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("scan result");
         boolean check = Checkindb(rawresult);
@@ -242,6 +241,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         int qrcodeint = Integer.parseInt(qrcode);
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.language_dialog);
+        dialog.setCanceledOnTouchOutside(false);
         Button buttonok;
 
         buttonok = dialog.findViewById(R.id.languageok);
@@ -261,9 +261,9 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
         ArrayList<String> spinnerArray = new ArrayList<String>();
         spinnerArray = getDataFromDb.getLanguages(qrcodeint);
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>
-                (this, android.R.layout.simple_spinner_item,
+                (this, R.layout.my_spinner_style,
                         spinnerArray);
-        spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerArrayAdapter.setDropDownViewResource(R.layout.my_spinner_style);
         spinner.setAdapter(spinnerArrayAdapter);
         dialog.show();
     }

@@ -2,12 +2,18 @@
     <string name="app_name">Travelbuddy</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="wellcome">About us:</string>
-    <string name="text_frederik" translatable="false">This is Frederik. He is 26 years old and work in the company as the CEO</string>
-    <string name="text_simon" translatable="false">This is Simon. He is 22 years old, and work as CEO</string>
-    <string name="text_thomas" translatable="false">This is Thomas. He is 22 years old and is HR-employee</string>
-    <string name="text_ralle" translatable="false">This is rasmus. He is 25 years old. He is the Janitor</string>
-    <string name="text_asbjorn" translatable="false">This is Asbjørn. He is 24 years old and is our lead designer</string>
-    <string name="text_info" translatable="false">The company is 6 months and our goal is to make an application that can help people experience great citites and wonders around the world while being active physicaly and mentally</string>
+    <string name="navigate">Navigate</string>
+    <string name="lyt">Listen</string>
+    <string name="story">"Listen to the story by entering the blue circle and hit the play button"</string>
+    <string name="travel">Navigate through the landscape to the places you find interesting by looking at the map</string>
+    <string name="search">Search</string>
+    <string name="unlock">Now that you have scanned your QR code, a set of sights have been unlocked for you to search</string>
+    <string name="text_frederik">This is Frederik. He is 26 years old and work in the company as the CEO</string>
+    <string name="text_simon" >This is Simon. He is 22 years old, and work as CEO</string>
+    <string name="text_thomas" >This is Thomas. He is 22 years old and is HR-employee</string>
+    <string name="text_ralle">This is rasmus. He is 25 years old. He is the Janitor</string>
+    <string name="text_asbjorn" >This is Asbjørn. He is 24 years old and is our lead designer</string>
+    <string name="text_info" >The company is 6 months and our goal is to make an application that can help people experience great citites and wonders around the world while being active physicaly and mentally</string>
     <string name="sights">Sights</string>
     <string name="welcome_home">Welcome to the TravelBuddy App!</string>
     <string name="home_info">When using the TravelBuddy application, you will contribute to some of UN\'s SDG Goals. If you want to know which, you can press the button down below.</string>
@@ -21,5 +27,5 @@
     <string name="home_navbar">Home</string>
     <string name="back_button">Back</string>
     <string name="type_in_qr_code">Type in qr code</string>
-    <string name="choose_your_language">choose your language</string>
+    <string name="choose_your_language">choose preferred listening language</string>
 </resources>

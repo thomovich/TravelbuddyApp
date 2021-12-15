@@ -20,15 +20,15 @@
 
 
     <androidx.cardview.widget.CardView
-        android:layout_width="0dp"
-        android:layout_height="125dp"
+        android:layout_width="310dp"
+        android:layout_height="279dp"
         android:layout_below="@+id/header_title"
         android:layout_alignStart="@+id/detailedphoto"
         android:layout_alignEnd="@+id/detailedphoto"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="0dp"
-        app:cardBackgroundColor="@android:color/system_accent1_700"
+        android:layout_marginStart="-43dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="-74dp"
+        app:cardBackgroundColor="@color/teal_700"
         app:cardCornerRadius="50dp"
         app:cardElevation="10dp"
         app:contentPadding="10dp">
@@ -37,9 +37,12 @@
             android:id="@+id/detailedtext"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:autoSizeMaxTextSize="100sp"
+            android:autoSizeMinTextSize="8sp"
+            android:autoSizeStepGranularity="2sp"
+            android:autoSizeTextType="uniform"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="12sp"
             android:textStyle="italic" />
     </androidx.cardview.widget.CardView>
 

@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="search">Søg</string>
+    <string name="navigate">Naviger</string>
+    <string name="lyt">Lyt</string>
+    <string name="story">Lyt til historien ved at gå ind i den blå cirkel på kortet og derefter tryk på play</string>
+    <string name="travel">Naviger gennem landskabet og find interresante steder ved at kigge på kortet</string>
+    <string name="unlock">Nu hvor du har scannet din qr kode kan du nu fri udforske kortet og komme ud se de seværdigheder er er en del af din tour</string>
     <string name="text_frederik">Dette er Frederik. Han er 26 år gammel og arbejder som CEO</string>
     <string name="text_simon"> Dette er Simon. Han er 22 år gammel or arbejder som CEO</string>
     <string name="text_thomas"> Dette er Thomas. Han er 25 år gammel og arbejder som HR-medarbejder</string>
@@ -7,12 +13,12 @@
     <string name="text_asbjorn">Dette er Asbjørn. Han er 24 år gammel og er vores Lead-Designer</string>
     <string name="text_info">Virksomheden er 6 måneder gammel. Vores mål er at lave en applikation der kan hjælpe folk med at oplever byer og kulturer rundt omkring i verden, imens de bliver aktiveret både fysisk og mentalt</string>
     <string name="app_name">Travelbuddy</string>
-    <string name="wellcome" translatable="false">Om os:</string>
-    <string name="sights">Seværdigheder</string>
+    <string name="wellcome" >Om os:</string>
+    <string name="sights">Særværdigheder</string>
     <string name="welcome_home">Velkommen til TravelBuddy!</string>
     <string name="sdg_goals">SDG Mål</string>
     <string name="home_info">Når du anvender TravelBuddy støtter du UN 17 verdensmål. Tryk på knappen for at læse mere om de mål du støtter.</string>
-    <string name="activity_main_play_b">Afspil</string>
+    <string name="activity_main_play_b">Venter på lyd</string>
     <string name="button_paused">Sæt på pause</string>
     <string name="activity_main_play_b_ready">Lyd er klar</string>
     <string name="sights_navbar">seværdigheder</string>
@@ -21,5 +27,5 @@
     <string name="home_navbar">Hjem</string>
     <string name="back_button">Tilbage</string>
     <string name="type_in_qr_code">Indtast QR kode</string>
-    <string name="choose_your_language">Vælg dit sprog</string>
+    <string name="choose_your_language">Foretrukket lytte sprog</string>
 </resources>

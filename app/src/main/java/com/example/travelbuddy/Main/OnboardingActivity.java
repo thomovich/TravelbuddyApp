@@ -36,14 +36,14 @@ public class OnboardingActivity extends AppCompatActivity {
 
     private ArrayList<PaperOnboardingPage> getDataForOnboarding() {
 
-        PaperOnboardingPage src = new PaperOnboardingPage("Search","Now that you have scanned your QR code, a set of sights have been unlocked for you to search",
-                R.drawable.bg,R.mipmap.onboardimg1_foreground,R.drawable.ic_search_standard_foreground);
+        PaperOnboardingPage src = new PaperOnboardingPage(getResources().getString(R.string.search),getResources().getString(R.string.unlock),
+                Color.parseColor("#804DA6F9"),R.mipmap.onboardimg1_foreground,R.drawable.ic_search_standard_foreground);
 
-        PaperOnboardingPage src1 = new PaperOnboardingPage("Navigate","Navigate through the landscape to the places you find interesting by looking at the map",
-                Color.parseColor("#dce9f1"),R.mipmap.ic_navigate_foreground,R.drawable.ic_navigate_standard_foreground);
+        PaperOnboardingPage src1 = new PaperOnboardingPage(getResources().getString(R.string.navigate),getResources().getString(R.string.travel),
+                Color.parseColor("#804DF961"),R.mipmap.onboardimg2_foreground,R.drawable.ic_navigate_standard_foreground);
 
-        PaperOnboardingPage src2 = new PaperOnboardingPage("Listen","Listen to the story by entering the blue circle and hit the play button",
-                Color.parseColor("#dce9f1"),R.mipmap.ic_listen_foreground,R.drawable.ic_listen_standard_foreground);
+        PaperOnboardingPage src2 = new PaperOnboardingPage(getResources().getString(R.string.lyt),getResources().getString(R.string.story),
+                Color.parseColor("#80FFFFFF"),R.mipmap.onboardimg3_foreground,R.drawable.ic_listen_standard_foreground);
         ArrayList<PaperOnboardingPage> elements = new ArrayList<>();
         elements.add(src);
         elements.add(src1);
