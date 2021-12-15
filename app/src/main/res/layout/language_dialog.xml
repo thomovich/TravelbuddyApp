@@ -6,7 +6,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:text="choose your language"
+        android:text="@string/choose_your_language"
         android:id="@+id/langtext"
         android:gravity="center"
         android:textSize="20sp"
@@ -22,6 +22,9 @@
     <Button
         android:layout_width="70dp"
         android:layout_height="48dp"
+        android:backgroundTint="@color/green"
+        android:textColor="@color/black"
+        android:textStyle="italic"
         android:layout_below="@id/languagedropdown"
         android:layout_centerHorizontal="true"
         android:id="@+id/languageok"
