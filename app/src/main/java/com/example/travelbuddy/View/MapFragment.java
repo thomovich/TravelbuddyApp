@@ -69,12 +69,7 @@ public class MapFragment extends Fragment {
 
     MapViewModel viewModel = null;
     Location currentLocation = null;
-    ArrayList<Sight> sights;
-    Circle circle;
     List<Integer> ids = new ArrayList<>();
-    ArrayList<LatLng> locationList = new ArrayList<>();
-    ArrayList<Circle> cirleList = new ArrayList<>();
-    ArrayList<MarkerOptions> markers =new ArrayList<>();
     ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
     ArrayList<CircleOptions> radiusContainer = new ArrayList<>();
 
@@ -87,8 +82,6 @@ public class MapFragment extends Fragment {
     //location callback is the callback that is triggered when the interval ends
 
     LocationCallback callback;
-
-
 
 
     @Override
@@ -116,7 +109,6 @@ public class MapFragment extends Fragment {
 
                 //triggers when interval is triggered
                 callback = new LocationCallback() {
-
                     @Override
                     public void onLocationResult(LocationResult locationResult) {
                         checkLocationToMarker(locationResult.getLastLocation());
@@ -125,7 +117,6 @@ public class MapFragment extends Fragment {
                 };
                 checkGPS();
                 startLocationUpdates();
-
 
                 //markers to explore
 
@@ -141,18 +132,12 @@ public class MapFragment extends Fragment {
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 
-                googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-
-                    @Override
-                    public boolean onMyLocationButtonClick() {
-                        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
-                                .target(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
-                                .zoom(15)
-                                .build()));
-                        return true;
-                    }
-
-
+                googleMap.setOnMyLocationButtonClickListener(() -> {
+                    googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
+                            .target(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
+                            .zoom(15)
+                            .build()));
+                    return true;
                 });
 
                 googleMap.getUiSettings().setZoomControlsEnabled(true);
@@ -192,8 +177,6 @@ public class MapFragment extends Fragment {
                     }
                 });
 
-
-
                 moveZoomControls(mapView, -20, -20, 950, 1350, true, true);
 
                 googleMap.getUiSettings().setZoomControlsEnabled(true);
@@ -202,10 +185,7 @@ public class MapFragment extends Fragment {
                 googleMap.getUiSettings().setScrollGesturesEnabled(true);
                 googleMap.getUiSettings().setScrollGesturesEnabledDuringRotateOrZoom(true);
 
-
                 //virker ikke
-
-
             }
         });
 
@@ -277,10 +257,7 @@ public class MapFragment extends Fragment {
                     Log.d("dsa", markerOptions.get(i).getTitle());
                     onMapsEnterListener.EnteredZone(ids.get(i).toString());
                 }
-
         }
-
-
     }
 
     @Override
