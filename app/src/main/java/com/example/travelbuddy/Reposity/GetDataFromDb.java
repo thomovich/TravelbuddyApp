@@ -90,13 +90,14 @@ public class GetDataFromDb implements dblookups{
                 "on travelbuddy.sight_variants.sight_id = travelbuddy.sights.sight_id " +
                 "inner join travelbuddy.purchases " +
                 "on travelbuddy.sights.tour_id = travelbuddy.purchases.tour_id " +
-                "where travelbuddy.purchases.ticket_id = ?";
+                "where travelbuddy.purchases.ticket_id = ? and travelbuddy.sight_variants.language_code = ?";
 
         Log.d("d",preparedstatement);
 
         try {
             PreparedStatement pstmt = con.prepareStatement(preparedstatement);
             pstmt.setInt(1,Qrcode);
+            pstmt.setString(2, GlobalVariable.getInstance().languagechosen);
             ResultSet rs = pstmt.executeQuery();
             con.close();
             while(rs.next()){

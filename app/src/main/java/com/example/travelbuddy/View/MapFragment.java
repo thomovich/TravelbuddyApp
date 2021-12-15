@@ -178,7 +178,7 @@ public class MapFragment extends Fragment {
 
                         CircleOptions circly = new CircleOptions()
                                 .center(marker.getPosition())
-                                .radius(25000)
+                                .radius(sights.get(i).getRadius())
                                 .strokeColor(Color.parseColor("#2271cce7"))
                                 .fillColor(Color.parseColor("#2271cce7"));
                         radiusContainer.add(circly);
