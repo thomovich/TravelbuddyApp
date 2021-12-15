@@ -174,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
                 e.printStackTrace();
             }
         } else {
+
             Log.d("Sound already loaded", "TAG");
         }
 

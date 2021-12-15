@@ -21,4 +21,5 @@
     <string name="home_navbar">Hjem</string>
     <string name="back_button">Tilbage</string>
     <string name="type_in_qr_code">Indtast QR kode</string>
+    <string name="choose_your_language">Vælg dit sprog</string>
 </resources>

@@ -12,7 +12,7 @@
     <string name="welcome_home">Welcome to the TravelBuddy App!</string>
     <string name="home_info">When using the TravelBuddy application, you will contribute to some of UN\'s SDG Goals. If you want to know which, you can press the button down below.</string>
     <string name="sdg_goals">SDG Goals</string>
-    <string name="activity_main_play_b">Play</string>
+    <string name="activity_main_play_b">waiting for sound</string>
     <string name="button_paused">Paused</string>
     <string name="activity_main_play_b_ready">Sound is ready</string>
     <string name="sights_navbar">Sights</string>
@@ -21,4 +21,5 @@
     <string name="home_navbar">Home</string>
     <string name="back_button">Back</string>
     <string name="type_in_qr_code">Type in qr code</string>
+    <string name="choose_your_language">choose your language</string>
 </resources>

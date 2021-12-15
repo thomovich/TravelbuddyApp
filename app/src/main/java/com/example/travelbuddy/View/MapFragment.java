@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Icon;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -68,12 +69,7 @@ public class MapFragment extends Fragment {
 
     MapViewModel viewModel = null;
     Location currentLocation = null;
-    ArrayList<Sight> sights;
-    Circle circle;
     List<Integer> ids = new ArrayList<>();
-    ArrayList<LatLng> locationList = new ArrayList<>();
-    ArrayList<Circle> cirleList = new ArrayList<>();
-    ArrayList<MarkerOptions> markers =new ArrayList<>();
     ArrayList<MarkerOptions> markerOptions = new ArrayList<>();
     ArrayList<CircleOptions> radiusContainer = new ArrayList<>();
 
@@ -86,8 +82,6 @@ public class MapFragment extends Fragment {
     //location callback is the callback that is triggered when the interval ends
 
     LocationCallback callback;
-
-
 
 
     @Override
@@ -115,7 +109,6 @@ public class MapFragment extends Fragment {
 
                 //triggers when interval is triggered
                 callback = new LocationCallback() {
-
                     @Override
                     public void onLocationResult(LocationResult locationResult) {
                         checkLocationToMarker(locationResult.getLastLocation());
@@ -124,7 +117,6 @@ public class MapFragment extends Fragment {
                 };
                 checkGPS();
                 startLocationUpdates();
-
 
                 //markers to explore
 
@@ -140,18 +132,12 @@ public class MapFragment extends Fragment {
                 googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
 
-                googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
-
-                    @Override
-                    public boolean onMyLocationButtonClick() {
-                        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
-                                .target(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
-                                .zoom(15)
-                                .build()));
-                        return true;
-                    }
-
-
+                googleMap.setOnMyLocationButtonClickListener(() -> {
+                    googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(new CameraPosition.Builder()
+                            .target(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
+                            .zoom(15)
+                            .build()));
+                    return true;
                 });
 
                 googleMap.getUiSettings().setZoomControlsEnabled(true);
@@ -170,16 +156,19 @@ public class MapFragment extends Fragment {
                     for(int i=0;i < sights.size();i++){
                         ids.add(sights.get(i).getId());
                         Bitmap bitmap = BitmapFactory.decodeByteArray(sights.get(i).getImage(),0,sights.get(i).getImage().length);
+                        Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap,150,150,false);
+                        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(bitmap1);
+
                         MarkerOptions marker = new MarkerOptions();
                         LatLng latLng = new LatLng(sights.get(i).getLat(), sights.get(i).getLong());
-                        marker.position(latLng).icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                        marker.position(latLng).icon(bitmapDescriptor)
                                 .title(sights.get(i).getLanguageVariant().getName());
                         markerOptions.add(marker);
 
                         CircleOptions circly = new CircleOptions()
                                 .center(marker.getPosition())
                                 .radius(sights.get(i).getRadius())
-                                .strokeColor(Color.parseColor("#2271cce7"))
+                                .strokeColor(Color.parseColor("#107DAC"))
                                 .fillColor(Color.parseColor("#2271cce7"));
                         radiusContainer.add(circly);
                         googleMap.addMarker(marker);
@@ -187,17 +176,6 @@ public class MapFragment extends Fragment {
 
                     }
                 });
-
-
-
-
-
-
-
-
-
-
-
 
                 moveZoomControls(mapView, -20, -20, 950, 1350, true, true);
 
@@ -207,10 +185,7 @@ public class MapFragment extends Fragment {
                 googleMap.getUiSettings().setScrollGesturesEnabled(true);
                 googleMap.getUiSettings().setScrollGesturesEnabledDuringRotateOrZoom(true);
 
-
                 //virker ikke
-
-
             }
         });
 
@@ -223,13 +198,6 @@ public class MapFragment extends Fragment {
 
     }
 
-    /*
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        mapView = getView();
-        moveZoomControls(mapView,  20,20,-1000,-300,true,false);
-        super.onSaveInstanceState(outState);
-    }*/
 
     @SuppressLint("MissingPermission")
     private void checkGPS() {
@@ -289,10 +257,7 @@ public class MapFragment extends Fragment {
                     Log.d("dsa", markerOptions.get(i).getTitle());
                     onMapsEnterListener.EnteredZone(ids.get(i).toString());
                 }
-
         }
-
-
     }
 
     @Override

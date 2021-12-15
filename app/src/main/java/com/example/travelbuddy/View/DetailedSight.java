@@ -26,7 +26,7 @@ import com.example.travelbuddy.ViewModels.SightViewModel;
 
 public class DetailedSight extends Fragment {
 
-    TextView detailedtext;
+    TextView detailedtext,header;
     ImageView Img;
     Button backbtn;
 
@@ -35,6 +35,7 @@ public class DetailedSight extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.detailedsight, container, false);
         detailedtext = view.findViewById(R.id.detailedtext);
+        header = view.findViewById(R.id.header_title);
         Img = view.findViewById(R.id.detailedphoto);
         backbtn = view.findViewById(R.id.backbutton);
         backbtn.setOnClickListener(view1 -> {
@@ -50,7 +51,9 @@ public class DetailedSight extends Fragment {
         SightViewModel viewModel = new ViewModelProvider(requireActivity()).get(SightViewModel.class);
 
         viewModel.getSights().observe(getViewLifecycleOwner(), Sights->{
-            this.detailedtext.setText("test");
+
+            //this.detailedtext.setText("test");
+            this.header.setText(Sights.getName());
             this.detailedtext.setText(Sights.getDetailedinfo());
             Glide.with(view).
                     load(Sights.getImg()).into(this.Img);
