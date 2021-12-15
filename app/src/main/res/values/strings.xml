@@ -21,4 +21,5 @@
     <string name="home_navbar">Home</string>
     <string name="back_button">Back</string>
     <string name="type_in_qr_code">Type in qr code</string>
+    <string name="choose_your_language">choose your language</string>
 </resources>
