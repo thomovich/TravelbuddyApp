@@ -4,9 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/about_item.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/activity_onboarding.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/custom_dialog.xml" value="0.25025641025641027" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/fragment_about.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/fragment_sight.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/qractivity.xml" value="0.25025641025641027" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp/app/src/main/res/layout/sight_item.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/drawable/gray_round.xml" value="0.2703125" />
         <entry key="..\:/Users/freum/AndroidStudioProjects/TravelbuddyApp1/app/src/main/res/drawable/green_round.xml" value="0.2703125" />
