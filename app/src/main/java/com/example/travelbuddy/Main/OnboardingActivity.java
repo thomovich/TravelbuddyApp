@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +37,7 @@ public class OnboardingActivity extends AppCompatActivity {
     private ArrayList<PaperOnboardingPage> getDataForOnboarding() {
 
         PaperOnboardingPage src = new PaperOnboardingPage("Search","Now that you have scanned your QR code, a set of sights have been unlocked for you to search",
-                Color.parseColor("#dce9f1"),R.mipmap.ic_searchicon_foreground,R.drawable.ic_search_standard_foreground);
+                R.drawable.bg,R.mipmap.onboardimg1_foreground,R.drawable.ic_search_standard_foreground);
 
         PaperOnboardingPage src1 = new PaperOnboardingPage("Navigate","Navigate through the landscape to the places you find interesting by looking at the map",
                 Color.parseColor("#dce9f1"),R.mipmap.ic_navigate_foreground,R.drawable.ic_navigate_standard_foreground);

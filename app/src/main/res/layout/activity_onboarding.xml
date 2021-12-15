@@ -8,14 +8,23 @@
     tools:context=".Main.OnboardingActivity">
 
 
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/travelbuddyfinal">
+
+    </ImageView>
     <Button
         android:id="@+id/buttonToMain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="724dp"
+        android:backgroundTint="@color/teal_700"
         android:onClick="navigateToMain"
         android:text="skip" />
 </RelativeLayout>
