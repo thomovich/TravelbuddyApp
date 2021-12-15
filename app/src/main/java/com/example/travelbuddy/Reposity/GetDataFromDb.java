@@ -147,7 +147,7 @@ public class GetDataFromDb implements dblookups{
             con.close();
 
             if(rs.next()){
-                Log.d("d","HALLOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
+
                 base64 = rs.getString(1);
             }
         } catch (SQLException throwables) {

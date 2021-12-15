@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Icon;
 import android.location.Location;
 import android.os.Bundle;
 
@@ -170,16 +171,19 @@ public class MapFragment extends Fragment {
                     for(int i=0;i < sights.size();i++){
                         ids.add(sights.get(i).getId());
                         Bitmap bitmap = BitmapFactory.decodeByteArray(sights.get(i).getImage(),0,sights.get(i).getImage().length);
+                        Bitmap bitmap1 = Bitmap.createScaledBitmap(bitmap,150,150,false);
+                        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(bitmap1);
+
                         MarkerOptions marker = new MarkerOptions();
                         LatLng latLng = new LatLng(sights.get(i).getLat(), sights.get(i).getLong());
-                        marker.position(latLng).icon(BitmapDescriptorFactory.fromBitmap(bitmap))
+                        marker.position(latLng).icon(bitmapDescriptor)
                                 .title(sights.get(i).getLanguageVariant().getName());
                         markerOptions.add(marker);
 
                         CircleOptions circly = new CircleOptions()
                                 .center(marker.getPosition())
                                 .radius(sights.get(i).getRadius())
-                                .strokeColor(Color.parseColor("#2271cce7"))
+                                .strokeColor(Color.parseColor("#107DAC"))
                                 .fillColor(Color.parseColor("#2271cce7"));
                         radiusContainer.add(circly);
                         googleMap.addMarker(marker);
@@ -187,15 +191,6 @@ public class MapFragment extends Fragment {
 
                     }
                 });
-
-
-
-
-
-
-
-
-
 
 
 
@@ -223,13 +218,6 @@ public class MapFragment extends Fragment {
 
     }
 
-    /*
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        mapView = getView();
-        moveZoomControls(mapView,  20,20,-1000,-300,true,false);
-        super.onSaveInstanceState(outState);
-    }*/
 
     @SuppressLint("MissingPermission")
     private void checkGPS() {
