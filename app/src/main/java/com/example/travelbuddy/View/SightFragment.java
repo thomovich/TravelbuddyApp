@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.travelbuddy.Adapters.SightAdapter;
+import com.example.travelbuddy.Models.GlobalVariable;
 import com.example.travelbuddy.R;
 import com.example.travelbuddy.ViewModels.SightViewModel;
 
@@ -59,7 +60,7 @@ public class SightFragment extends Fragment implements SightAdapter.OnListItemCl
         recyclerView.setAdapter(adapter);
         viewModel = new ViewModelProvider(requireActivity()).get(SightViewModel.class);
         viewModel.getAllSights().observe(getViewLifecycleOwner(), adapter::updateList);
-        viewModel.createdata(2);
+        viewModel.createdata(GlobalVariable.getInstance().qrcode);
     }
 
     @Override
