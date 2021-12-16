@@ -20,6 +20,8 @@
     <string name="home_info">Når du anvender TravelBuddy støtter du UN 17 verdensmål. Tryk på knappen for at læse mere om de mål du støtter.</string>
     <string name="activity_main_play_b">Venter på lyd</string>
     <string name="button_paused">Sæt på pause</string>
+    <string name="button_play">Afspil lyd</string>
+    <string name="activity_main_loading">Indlæser lyd</string>
     <string name="activity_main_play_b_ready">Lyd er klar</string>
     <string name="sights_navbar">seværdigheder</string>
     <string name="about_navbar">Om</string>

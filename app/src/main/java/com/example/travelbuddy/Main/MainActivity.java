@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
             }
             if(mediaPlayer.isPlaying()  ){
                 mediaPlayer.pause();
-                String play_b = getResources().getString(R.string.button_paused);
+                String play_b = getResources().getString(R.string.button_play);
                 mainActivityViewModel.selectbtntext(play_b);
             } else  {
                 mediaPlayer.start();
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
 
 
     private void fetchaudiofromRepo(String song) throws FileNotFoundException {
-        mainActivityViewModel.selectbtntext("Loading sound");
+        mainActivityViewModel.selectbtntext(getResources().getString(R.string.activity_main_loading));
         mainActivityViewModel.createsong(song);
     }
 
