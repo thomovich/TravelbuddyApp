@@ -58,7 +58,7 @@ public class QRscanactivity extends AppCompatActivity implements ZXingScannerVie
 
         if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)){
             if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_FLASH)){
-                switchOn.setVisibility(View.VISIBLE);
+                switchOn.setVisibility(View.INVISIBLE);
             } else {
                 //Device has no flash
             }
