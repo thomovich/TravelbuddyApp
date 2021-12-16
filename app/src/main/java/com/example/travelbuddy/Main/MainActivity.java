@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements OnMapsEnterListen
             }
             if(mediaPlayer.isPlaying()  ){
                 mediaPlayer.pause();
-                String play_b = getResources().getString(R.string.activity_main_play_b);
+                String play_b = getResources().getString(R.string.button_paused);
                 mainActivityViewModel.selectbtntext(play_b);
             } else  {
                 mediaPlayer.start();
