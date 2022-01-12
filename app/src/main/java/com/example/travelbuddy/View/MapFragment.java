@@ -28,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.example.travelbuddy.Listener.OnMapsEnterListener;
 import com.example.travelbuddy.MapsClasses.IMapsModel;
 import com.example.travelbuddy.MapsClasses.MapsModel;
+import com.example.travelbuddy.Models.GlobalVariable;
 import com.example.travelbuddy.Models.Sight;
 import com.example.travelbuddy.R;
 
@@ -149,7 +150,7 @@ public class MapFragment extends Fragment {
 
                 //marker
                 viewModel = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
-                viewModel.createdata(2);
+                viewModel.createdata(GlobalVariable.getInstance().qrcode);
                 viewModel.getSights().observe(getViewLifecycleOwner(),sights->{
 
 
